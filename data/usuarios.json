@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Sofía Martínez",
+    "email": "admin@coopfinanzas.com.co",
+    "password": "Admin@2026!",
+    "rol": "Administrador",
+    "avatar": "SM"
+  },
+  {
+    "id": 2,
+    "nombre": "Carlos Herrera",
+    "email": "operador@coopfinanzas.com.co",
+    "password": "Oper@2026!",
+    "rol": "Operador",
+    "avatar": "CH"
+  },
+  {
+    "id": 3,
+    "nombre": "Laura Gómez",
+    "email": "supervisor@coopfinanzas.com.co",
+    "password": "Super@2026!",
+    "rol": "Supervisor",
+    "avatar": "LG"
+  }
+]

@@ -1,0 +1,441 @@
+[
+  {
+    "id": "FPQRS-2024-001",
+    "tipo": "Petición",
+    "asunto": "Solicitud de información sobre póliza vigente",
+    "servicio": "Seguros",
+    "categoria": "Pólizas",
+    "subcategoria": "Consulta de vigencia",
+    "estado": "Radicado",
+    "prioridad": "Alta",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-01T09:00:00",
+    "fechaLimite": "2024-06-15T23:59:59",
+    "solicitante": "Juan Pérez",
+    "email": "juan.perez@email.com",
+    "telefono": "3001234567",
+    "identificacion": "CC 1020304050",
+    "direccion": "Calle 45 # 12-34, Bogotá",
+    "responsable": "Carlos Herrera",
+    "descripcion": "El ciudadano solicita copia de su póliza vigente número POL-2024-789 y el detalle de coberturas incluidas en el contrato actual.",
+    "comentarios": [
+      { "fecha": "2024-06-02T11:00:00", "texto": "Se contactó al solicitante vía email para confirmar recepción.", "usuario": "Carlos Herrera" },
+      { "fecha": "2024-06-03T09:30:00", "texto": "Documento solicitado al área de pólizas.", "usuario": "Carlos Herrera" }
+    ],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-01T09:00:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-02T10:30:00", "accion": "Asignado a revisión", "usuario": "Admin" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-002",
+    "tipo": "Queja",
+    "asunto": "Cobro indebido en cuenta de ahorros",
+    "servicio": "Cuentas de Ahorro",
+    "categoria": "Cobros",
+    "subcategoria": "Cargos no autorizados",
+    "estado": "En Gestión",
+    "prioridad": "Alta",
+    "semaforo": "rojo",
+    "fechaCreacion": "2024-05-20T08:15:00",
+    "fechaLimite": "2024-06-03T23:59:59",
+    "solicitante": "María López",
+    "email": "maria.lopez@email.com",
+    "telefono": "3109876543",
+    "identificacion": "CC 4050607080",
+    "direccion": "Av. 68 # 45-67, Bogotá",
+    "responsable": "Laura Gómez",
+    "descripcion": "Se realizó un cobro de $45.000 por concepto de cuota de manejo no acordada. El cliente solicita reversa inmediata y explicación detallada del cargo.",
+    "comentarios": [
+      { "fecha": "2024-05-21T10:00:00", "texto": "Se verificó el cobro con el área contable. Se confirma el error.", "usuario": "Laura Gómez" },
+      { "fecha": "2024-05-22T14:00:00", "texto": "Solicitud de reversa enviada al área financiera.", "usuario": "Laura Gómez" },
+      { "fecha": "2024-05-25T09:00:00", "texto": "Reversa aprobada, pendiente aplicación en sistema.", "usuario": "Sofía Martínez" }
+    ],
+    "adjuntos": [
+      { "nombre": "extracto_mayo.pdf", "tipo": "application/pdf", "tamano": "234 KB" },
+      { "nombre": "pantallazocobro.png", "tipo": "image/png", "tamano": "87 KB" }
+    ],
+    "historial": [
+      { "fecha": "2024-05-20T08:15:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-05-21T08:00:00", "accion": "Asignado a revisión", "usuario": "Sofía Martínez" },
+      { "fecha": "2024-05-22T14:00:00", "accion": "Estado cambiado a En Gestión", "usuario": "Laura Gómez" },
+      { "fecha": "2024-05-25T09:00:00", "accion": "Escalado a administración", "usuario": "Laura Gómez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-003",
+    "tipo": "Reclamo",
+    "asunto": "Crédito desembolsado con tasa incorrecta",
+    "servicio": "Créditos",
+    "categoria": "Desembolso",
+    "subcategoria": "Error en tasa de interés",
+    "estado": "Pendiente de Información",
+    "prioridad": "Crítica",
+    "semaforo": "rojo",
+    "fechaCreacion": "2024-05-10T10:30:00",
+    "fechaLimite": "2024-05-24T23:59:59",
+    "solicitante": "Pedro Ramírez",
+    "email": "pedro.ramirez@email.com",
+    "telefono": "3205551234",
+    "identificacion": "CC 9080706050",
+    "direccion": "Carrera 15 # 80-20, Medellín",
+    "responsable": "Sofía Martínez",
+    "descripcion": "El crédito 2024-CR-4567 fue desembolsado con una TEA del 28% cuando el contrato firmado estipulaba el 22%. Se solicita corrección inmediata y reliquidación del crédito.",
+    "comentarios": [
+      { "fecha": "2024-05-11T09:00:00", "texto": "Se solicitó al cliente enviar copia del contrato firmado.", "usuario": "Sofía Martínez" }
+    ],
+    "adjuntos": [
+      { "nombre": "contrato_credito.pdf", "tipo": "application/pdf", "tamano": "1.2 MB" }
+    ],
+    "historial": [
+      { "fecha": "2024-05-10T10:30:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-05-11T08:00:00", "accion": "Asignado a Sofía Martínez", "usuario": "Admin" },
+      { "fecha": "2024-05-12T10:00:00", "accion": "Estado cambiado a Pendiente de Información", "usuario": "Sofía Martínez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-004",
+    "tipo": "Sugerencia",
+    "asunto": "Implementar notificaciones push para vencimientos",
+    "servicio": "Canales Digitales",
+    "categoria": "App Móvil",
+    "subcategoria": "Notificaciones",
+    "estado": "Radicado",
+    "prioridad": "Baja",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-05T14:00:00",
+    "fechaLimite": "2024-06-19T23:59:59",
+    "solicitante": "Ana Torres",
+    "email": "ana.torres@email.com",
+    "telefono": "3154443322",
+    "identificacion": "CC 1122334455",
+    "direccion": "Calle 100 # 50-10, Cali",
+    "responsable": "Carlos Herrera",
+    "descripcion": "Se sugiere agregar notificaciones push a la aplicación móvil para alertar sobre vencimientos de cuotas con 5 días de anticipación.",
+    "comentarios": [],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-05T14:00:00", "accion": "Caso creado", "usuario": "Sistema" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-005",
+    "tipo": "Felicitación",
+    "asunto": "Excelente atención en sucursal Norte",
+    "servicio": "Atención al Cliente",
+    "categoria": "Servicio Presencial",
+    "subcategoria": "Calidad de atención",
+    "estado": "Cerrado",
+    "prioridad": "Normal",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-03T11:00:00",
+    "fechaLimite": "2024-06-17T23:59:59",
+    "solicitante": "Roberto Silva",
+    "email": "roberto.silva@email.com",
+    "telefono": "3001112233",
+    "identificacion": "CC 6677889900",
+    "direccion": "Transversal 40 # 22-15, Barranquilla",
+    "responsable": "Laura Gómez",
+    "descripcion": "El asociado felicita la gestión del asesor Marcos Díaz en la sucursal Norte, quien le brindó atención excepcional durante su trámite de renovación de crédito.",
+    "comentarios": [
+      { "fecha": "2024-06-04T09:00:00", "texto": "Felicitación trasladada al asesor Marcos Díaz y a su jefe inmediato.", "usuario": "Laura Gómez" }
+    ],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-03T11:00:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-04T09:00:00", "accion": "Trasladada al equipo", "usuario": "Laura Gómez" },
+      { "fecha": "2024-06-05T16:00:00", "accion": "Caso cerrado", "usuario": "Laura Gómez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-006",
+    "tipo": "Queja",
+    "asunto": "Bloqueo injustificado de tarjeta débito",
+    "servicio": "Tarjetas",
+    "categoria": "Tarjeta Débito",
+    "subcategoria": "Bloqueo de tarjeta",
+    "estado": "En Gestión",
+    "prioridad": "Alta",
+    "semaforo": "amarillo",
+    "fechaCreacion": "2024-06-08T07:45:00",
+    "fechaLimite": "2024-06-22T23:59:59",
+    "solicitante": "Claudia Moreno",
+    "email": "claudia.moreno@email.com",
+    "telefono": "3177778888",
+    "identificacion": "CC 2233445566",
+    "direccion": "Calle 72 # 10-45, Bogotá",
+    "responsable": "Carlos Herrera",
+    "descripcion": "La tarjeta débito con terminación 4521 fue bloqueada sin previo aviso, ocasionando inconvenientes en compras del día. El sistema marcó una transacción legítima como fraudulenta.",
+    "comentarios": [
+      { "fecha": "2024-06-08T10:00:00", "texto": "Caso escalado al área de seguridad bancaria.", "usuario": "Carlos Herrera" }
+    ],
+    "adjuntos": [
+      { "nombre": "comprobante_compra.jpg", "tipo": "image/jpeg", "tamano": "156 KB" }
+    ],
+    "historial": [
+      { "fecha": "2024-06-08T07:45:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-08T09:00:00", "accion": "Asignado a revisión", "usuario": "Admin" },
+      { "fecha": "2024-06-08T10:00:00", "accion": "Estado cambiado a En Gestión", "usuario": "Carlos Herrera" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-007",
+    "tipo": "Petición",
+    "asunto": "Certificado de paz y salvo crediticio",
+    "servicio": "Créditos",
+    "categoria": "Certificados",
+    "subcategoria": "Paz y salvo",
+    "estado": "Cerrado",
+    "prioridad": "Normal",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-05-28T13:30:00",
+    "fechaLimite": "2024-06-11T23:59:59",
+    "solicitante": "Fernando Castro",
+    "email": "fernando.castro@email.com",
+    "telefono": "3009998877",
+    "identificacion": "CC 3344556677",
+    "direccion": "Av. El Dorado # 69-76, Bogotá",
+    "responsable": "Carlos Herrera",
+    "descripcion": "El asociado solicita certificado de paz y salvo de su crédito hipotecario número 2021-HP-1234, cancelado en mayo de 2024, para trámite notarial.",
+    "comentarios": [
+      { "fecha": "2024-05-29T10:00:00", "texto": "Certificado generado y enviado al correo del solicitante.", "usuario": "Carlos Herrera" }
+    ],
+    "adjuntos": [
+      { "nombre": "paz_salvo_credito.pdf", "tipo": "application/pdf", "tamano": "89 KB" }
+    ],
+    "historial": [
+      { "fecha": "2024-05-28T13:30:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-05-29T10:00:00", "accion": "Documento generado y enviado", "usuario": "Carlos Herrera" },
+      { "fecha": "2024-05-29T10:05:00", "accion": "Caso cerrado", "usuario": "Carlos Herrera" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-008",
+    "tipo": "Reclamo",
+    "asunto": "Transferencia no procesada por falla en plataforma",
+    "servicio": "Canales Digitales",
+    "categoria": "Banca en Línea",
+    "subcategoria": "Fallas en transacciones",
+    "estado": "En Gestión",
+    "prioridad": "Alta",
+    "semaforo": "rojo",
+    "fechaCreacion": "2024-06-10T06:00:00",
+    "fechaLimite": "2024-06-14T23:59:59",
+    "solicitante": "Valentina Ríos",
+    "email": "valentina.rios@email.com",
+    "telefono": "3123334455",
+    "identificacion": "CC 5566778899",
+    "direccion": "Cra. 50 # 34-12, Cali",
+    "responsable": "Sofía Martínez",
+    "descripcion": "El 10 de junio a las 5:45 AM se realizó una transferencia de $1.200.000 que fue debitada de la cuenta origen pero no acreditada en el destino. El saldo fue descontado y la transacción no aparece en el extracto.",
+    "comentarios": [
+      { "fecha": "2024-06-10T09:00:00", "texto": "Se verificó en los logs del sistema la transacción fallida. Caso urgente.", "usuario": "Sofía Martínez" },
+      { "fecha": "2024-06-10T11:00:00", "texto": "Reversión iniciada por el área técnica.", "usuario": "Sofía Martínez" }
+    ],
+    "adjuntos": [
+      { "nombre": "comprobante_transaccion.pdf", "tipo": "application/pdf", "tamano": "45 KB" }
+    ],
+    "historial": [
+      { "fecha": "2024-06-10T06:00:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-10T08:00:00", "accion": "Escalado a alta prioridad", "usuario": "Admin" },
+      { "fecha": "2024-06-10T09:00:00", "accion": "En investigación técnica", "usuario": "Sofía Martínez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-009",
+    "tipo": "Sugerencia",
+    "asunto": "Mejorar tiempos de respuesta en línea telefónica",
+    "servicio": "Atención al Cliente",
+    "categoria": "Call Center",
+    "subcategoria": "Tiempos de espera",
+    "estado": "Radicado",
+    "prioridad": "Baja",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-12T15:00:00",
+    "fechaLimite": "2024-06-26T23:59:59",
+    "solicitante": "Jorge Vargas",
+    "email": "jorge.vargas@email.com",
+    "telefono": "3166665544",
+    "identificacion": "CC 7788990011",
+    "direccion": "Calle 23 # 14-56, Bucaramanga",
+    "responsable": "Laura Gómez",
+    "descripcion": "El tiempo de espera en la línea de atención supera los 15 minutos. Se sugiere ampliar el equipo de asesores en horario de 12-2 PM que es cuando hay mayor demanda.",
+    "comentarios": [],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-12T15:00:00", "accion": "Caso creado", "usuario": "Sistema" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-010",
+    "tipo": "Queja",
+    "asunto": "Error en liquidación de CDT al vencimiento",
+    "servicio": "Inversiones",
+    "categoria": "CDT",
+    "subcategoria": "Liquidación",
+    "estado": "Pendiente de Información",
+    "prioridad": "Alta",
+    "semaforo": "amarillo",
+    "fechaCreacion": "2024-06-07T09:20:00",
+    "fechaLimite": "2024-06-21T23:59:59",
+    "solicitante": "Carmen Jiménez",
+    "email": "carmen.jimenez@email.com",
+    "telefono": "3011122334",
+    "identificacion": "CC 8899001122",
+    "direccion": "Av. 30 de Agosto # 40-10, Pereira",
+    "responsable": "Sofía Martínez",
+    "descripcion": "El CDT número 2022-CDT-8901 venció el 5 de junio. La liquidación aplicada fue $2.340.000 cuando según el certificado debería ser $2.410.000. Hay una diferencia de $70.000 sin explicar.",
+    "comentarios": [
+      { "fecha": "2024-06-08T10:00:00", "texto": "Se solicitó al cliente el certificado original del CDT.", "usuario": "Sofía Martínez" }
+    ],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-07T09:20:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-08T08:00:00", "accion": "Asignado a revisión", "usuario": "Admin" },
+      { "fecha": "2024-06-08T10:00:00", "accion": "Solicitada información adicional", "usuario": "Sofía Martínez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-011",
+    "tipo": "Petición",
+    "asunto": "Cambio de datos de contacto registrados",
+    "servicio": "Atención al Cliente",
+    "categoria": "Actualización de datos",
+    "subcategoria": "Datos personales",
+    "estado": "Cerrado",
+    "prioridad": "Normal",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-02T10:00:00",
+    "fechaLimite": "2024-06-16T23:59:59",
+    "solicitante": "Andrés Molina",
+    "email": "andres.molina@email.com",
+    "telefono": "3145556677",
+    "identificacion": "CC 2200334455",
+    "direccion": "Calle 85 # 20-30, Bogotá",
+    "responsable": "Carlos Herrera",
+    "descripcion": "Solicitud de actualización de número de celular (3145556677) y dirección de residencia en los sistemas de la cooperativa.",
+    "comentarios": [
+      { "fecha": "2024-06-03T11:00:00", "texto": "Datos actualizados en el sistema CRM.", "usuario": "Carlos Herrera" }
+    ],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-02T10:00:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-03T11:00:00", "accion": "Datos actualizados en CRM", "usuario": "Carlos Herrera" },
+      { "fecha": "2024-06-03T11:05:00", "accion": "Caso cerrado", "usuario": "Carlos Herrera" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-012",
+    "tipo": "Reclamo",
+    "asunto": "Seguro de vida descontado sin autorización",
+    "servicio": "Seguros",
+    "categoria": "Seguros de Vida",
+    "subcategoria": "Cobro no autorizado",
+    "estado": "En Gestión",
+    "prioridad": "Alta",
+    "semaforo": "rojo",
+    "fechaCreacion": "2024-06-09T08:30:00",
+    "fechaLimite": "2024-06-13T23:59:59",
+    "solicitante": "Patricia Medina",
+    "email": "patricia.medina@email.com",
+    "telefono": "3178889900",
+    "identificacion": "CC 3344112233",
+    "direccion": "Cra. 7 # 32-18, Bogotá",
+    "responsable": "Laura Gómez",
+    "descripcion": "Se realizó un débito de $89.000 por concepto de seguro de vida sin que el asociado haya firmado ningún documento de autorización. El cobro se hizo directamente a la cuenta de ahorros.",
+    "comentarios": [
+      { "fecha": "2024-06-09T10:00:00", "texto": "Verificada la ausencia de formulario de autorización.", "usuario": "Laura Gómez" },
+      { "fecha": "2024-06-10T08:00:00", "texto": "Iniciado proceso de reversa del cobro.", "usuario": "Laura Gómez" }
+    ],
+    "adjuntos": [
+      { "nombre": "extracto_cuenta.pdf", "tipo": "application/pdf", "tamano": "198 KB" }
+    ],
+    "historial": [
+      { "fecha": "2024-06-09T08:30:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-09T09:00:00", "accion": "Asignado a Laura Gómez", "usuario": "Admin" },
+      { "fecha": "2024-06-09T10:00:00", "accion": "Verificación completada", "usuario": "Laura Gómez" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-013",
+    "tipo": "Felicitación",
+    "asunto": "Agilidad en aprobación de crédito hipotecario",
+    "servicio": "Créditos",
+    "categoria": "Crédito Hipotecario",
+    "subcategoria": "Proceso de aprobación",
+    "estado": "Cerrado",
+    "prioridad": "Baja",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-04T16:30:00",
+    "fechaLimite": "2024-06-18T23:59:59",
+    "solicitante": "Iván Morales",
+    "email": "ivan.morales@email.com",
+    "telefono": "3022223344",
+    "identificacion": "CC 4455667788",
+    "direccion": "Calle 140 # 110-50, Bogotá",
+    "responsable": "Carlos Herrera",
+    "descripcion": "Agradezco enormemente la rapidez con que fue procesada y aprobada mi solicitud de crédito hipotecario. En solo 3 días hábiles obtuve respuesta positiva. Excelente equipo.",
+    "comentarios": [],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-04T16:30:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-05T09:00:00", "accion": "Trasladada al equipo de créditos", "usuario": "Carlos Herrera" },
+      { "fecha": "2024-06-05T09:30:00", "accion": "Caso cerrado", "usuario": "Carlos Herrera" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-014",
+    "tipo": "Queja",
+    "asunto": "App móvil no permite login con huella dactilar",
+    "servicio": "Canales Digitales",
+    "categoria": "App Móvil",
+    "subcategoria": "Autenticación biométrica",
+    "estado": "Radicado",
+    "prioridad": "Normal",
+    "semaforo": "amarillo",
+    "fechaCreacion": "2024-06-11T13:00:00",
+    "fechaLimite": "2024-06-25T23:59:59",
+    "solicitante": "Sandra Otalvaro",
+    "email": "sandra.otalvaro@email.com",
+    "telefono": "3189990011",
+    "identificacion": "CC 5566112233",
+    "direccion": "Carrera 80 # 45-20, Medellín",
+    "responsable": "Carlos Herrera",
+    "descripcion": "Desde la última actualización de la app (versión 3.2.1) la autenticación por huella dactilar dejó de funcionar en dispositivos Android 14. Se solicita corrección urgente.",
+    "comentarios": [],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-11T13:00:00", "accion": "Caso creado", "usuario": "Sistema" }
+    ]
+  },
+  {
+    "id": "FPQRS-2024-015",
+    "tipo": "Petición",
+    "asunto": "Ampliación de cupo en tarjeta de crédito",
+    "servicio": "Tarjetas",
+    "categoria": "Tarjeta de Crédito",
+    "subcategoria": "Ampliación de cupo",
+    "estado": "En Gestión",
+    "prioridad": "Normal",
+    "semaforo": "verde",
+    "fechaCreacion": "2024-06-06T11:45:00",
+    "fechaLimite": "2024-06-20T23:59:59",
+    "solicitante": "Diego Espinosa",
+    "email": "diego.espinosa@email.com",
+    "telefono": "3133334455",
+    "identificacion": "CC 6677991122",
+    "direccion": "Calle 53 # 43-90, Bogotá",
+    "responsable": "Laura Gómez",
+    "descripcion": "Solicitud de ampliación del cupo de la tarjeta de crédito MasterCard terminación 7823 de $3.000.000 a $6.000.000. El cliente tiene historial crediticio positivo de 4 años.",
+    "comentarios": [
+      { "fecha": "2024-06-07T10:00:00", "texto": "Se validó el score crediticio del asociado: 820 puntos. Apto para ampliación.", "usuario": "Laura Gómez" }
+    ],
+    "adjuntos": [],
+    "historial": [
+      { "fecha": "2024-06-06T11:45:00", "accion": "Caso creado", "usuario": "Sistema" },
+      { "fecha": "2024-06-07T08:00:00", "accion": "Asignado a revisión crediticia", "usuario": "Admin" },
+      { "fecha": "2024-06-07T10:00:00", "accion": "Análisis crediticio completado", "usuario": "Laura Gómez" }
+    ]
+  }
+]
