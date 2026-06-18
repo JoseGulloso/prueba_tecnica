@@ -57,7 +57,7 @@ if (window.location.pathname.includes('detalle-caso')) {
       $('#stripTipo').html(getBadgeTipo(c.tipo));
       $('#stripEstado').html(getBadgeEstado(c.estado));
       $('#stripPrioridad').html(getBadgePrioridad(c.prioridad));
-      $('#stripSemaforo').html(getSemaforo(c.semaforo));
+      $('#stripSemaforo').html(getSemaforo(c.semaforo, c.estado));
 
       // Modal de cierre — ID
       $('#cerrarCasoId').text(c.id);

@@ -271,7 +271,7 @@ $(document).ready(function () {
       subcategoria:  $('#fpqrsSubcategoria').val(),
       estado:        'Radicado',
       prioridad:     'Normal',
-      semaforo:      'verde',
+      semaforo:      'en tiempo',
       fechaCreacion: new Date().toISOString(),
       fechaLimite:   new Date(Date.now() + 15 * 24 * 3600 * 1000).toISOString(),
       solicitante:   $('#fpqrsNombre').val().trim(),

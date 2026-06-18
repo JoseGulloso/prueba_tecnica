@@ -85,6 +85,10 @@
   --transition-base: 250ms ease;
 }
 
+.border-gray-100 {
+  border-color: var(--color-border-light) !important;
+}
+
 /* ----------------------------------------------------------
    2. Reset mínimo
    ---------------------------------------------------------- */

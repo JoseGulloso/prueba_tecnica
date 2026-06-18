@@ -27,6 +27,7 @@ if (window.location.pathname.includes('bandeja-casos')) {
         allCasos = mergeCasos(data);
         filteredCasos = [...allCasos];
         renderMetrics(allCasos);
+        populateFilterOptions();
         applyFilters();
       })
       .fail(function () {
@@ -42,9 +43,9 @@ if (window.location.pathname.includes('bandeja-casos')) {
        -------------------------------------------------- */
     function renderMetrics(casos) {
       const activos    = casos.filter(c => c.estado !== 'Cerrado' && c.estado !== 'Anulado').length;
-      const proxVencer = casos.filter(c => c.semaforo === 'amarillo' || c.semaforo === 'rojo').length;
+      const proxVencer = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'proximo-a-vencer').length;
       const sinAsignar = casos.filter(c => !c.responsable || c.responsable.trim() === '').length;
-      const escalados  = casos.filter(c => c.semaforo === 'rojo').length;
+      const escalados  = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'vencido').length;
 
       $('#metricActivos').text(activos);
       $('#metricProxVencer').text(proxVencer);
@@ -58,13 +59,26 @@ if (window.location.pathname.includes('bandeja-casos')) {
     /* --------------------------------------------------
        Filtros y búsqueda
        -------------------------------------------------- */
+    function populateFilterOptions() {
+      // Responsables únicos
+      const responsables = [...new Set(allCasos
+        .map(c => c.responsable)
+        .filter(r => r && r.trim() !== '')
+      )].sort();
+      
+      const responsableSelect = $('#filterResponsable');
+      responsables.forEach(r => {
+        responsableSelect.append(`<option value="${r}">${r}</option>`);
+      });
+    }
+
     let searchTimeout;
     $('#searchInput').on('input', function () {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(applyFilters, 300);
     });
 
-    $('#filterEstado, #filterTipo, #filterPrioridad').on('change', applyFilters);
+    $('#filterEstado, #filterTipo, #filterPrioridad, #filterServicio, #filterResponsable, #filterSlaVencidos, #filterSlaProximos').on('change', applyFilters);
 
     $('#btnFiltrar').on('click', function () {
       const panel = $('#filterPanel');
@@ -74,7 +88,8 @@ if (window.location.pathname.includes('bandeja-casos')) {
 
     $('#btnLimpiarFiltros').on('click', function () {
       $('#searchInput').val('');
-      $('#filterEstado, #filterTipo, #filterPrioridad').val('');
+      $('#filterEstado, #filterTipo, #filterPrioridad, #filterServicio, #filterResponsable').val('');
+      $('#filterSlaVencidos, #filterSlaProximos').prop('checked', false);
       applyFilters();
     });
 
@@ -83,6 +98,12 @@ if (window.location.pathname.includes('bandeja-casos')) {
       const estado   = $('#filterEstado').val();
       const tipo     = $('#filterTipo').val();
       const prioridad = $('#filterPrioridad').val();
+      const servicio = $('#filterServicio').val();
+      const responsable = $('#filterResponsable').val();
+      const slaVencidos = $('#filterSlaVencidos').is(':checked');
+      const slaProximos = $('#filterSlaProximos').is(':checked');
+
+      const now = new Date();
 
       filteredCasos = allCasos.filter(c => {
         const matchSearch = !search || [
@@ -92,8 +113,25 @@ if (window.location.pathname.includes('bandeja-casos')) {
         const matchEstado    = !estado    || c.estado === estado;
         const matchTipo      = !tipo      || c.tipo === tipo;
         const matchPrioridad = !prioridad || c.prioridad === prioridad;
+        const matchServicio  = !servicio  || c.servicio === servicio;
+        const matchResponsable = !responsable || c.responsable === responsable;
 
-        return matchSearch && matchEstado && matchTipo && matchPrioridad;
+        // SLA filters
+        let matchSla = true;
+        if (slaVencidos || slaProximos) {
+          const fechaLimite = new Date(c.fechaLimite);
+          const daysUntilExpiry = Math.ceil((fechaLimite - now) / (1000 * 60 * 60 * 24));
+          
+          if (slaVencidos && slaProximos) {
+            matchSla = daysUntilExpiry <= 0 || (daysUntilExpiry > 0 && daysUntilExpiry <= 3);
+          } else if (slaVencidos) {
+            matchSla = daysUntilExpiry <= 0;
+          } else if (slaProximos) {
+            matchSla = daysUntilExpiry > 0 && daysUntilExpiry <= 3;
+          }
+        }
+
+        return matchSearch && matchEstado && matchTipo && matchPrioridad && matchServicio && matchResponsable && matchSla;
       });
 
       currentPage = 1;
@@ -154,7 +192,7 @@ if (window.location.pathname.includes('bandeja-casos')) {
 
       if (!page.length) {
         $('#tableBody').html(`
-          <tr><td colspan="14" class="text-center text-muted py-5">
+          <tr><td colspan="13" class="text-center text-muted py-5">
             <i class="bi bi-search me-2"></i>No se encontraron casos con los filtros actuales.
           </td></tr>`);
       } else {
@@ -165,30 +203,21 @@ if (window.location.pathname.includes('bandeja-casos')) {
       renderPagination(total);
     }
 
-    function formatMonth(isoStr) {
-      if (!isoStr) return '—';
-      const d = new Date(isoStr);
-      return d.toLocaleDateString('es-CO', { month: 'short', year: 'numeric' });
-    }
-
     function renderRow(c) {
-      const desc   = c.descripcion || c.asunto || '';
-      const info   = c.asunto || '';
       return `
         <tr class="caso-row" data-id="${c.id}" role="button" tabindex="0" aria-label="Ver caso ${c.id}">
           <td><a href="${PAGES_PATH}detalle-caso.html?id=${encodeURIComponent(c.id)}" class="case-id-link" onclick="event.stopPropagation()">${c.id}</a></td>
-          <td>${getBadgePrioridad(c.prioridad)}</td>
-          <td class="text-nowrap">${formatMonth(c.fechaCreacion)}</td>
-          <td class="text-truncate" style="max-width:120px;" title="${c.servicio || ''}">${c.servicio || '—'}</td>
-          <td class="text-truncate" style="max-width:110px;" title="${c.categoria || ''}">${c.categoria || '—'}</td>
+          <td class="text-nowrap">${formatDate(c.fechaCreacion)}</td>
           <td>${getBadgeTipo(c.tipo)}</td>
+          <td class="text-truncate" style="max-width:110px;" title="${c.servicio || ''}">${c.servicio || '—'}</td>
+          <td class="text-truncate" style="max-width:110px;" title="${c.categoria || ''}">${c.categoria || '—'}</td>
           <td class="text-truncate" style="max-width:110px;" title="${c.subcategoria || ''}">${c.subcategoria || '—'}</td>
-          <td class="text-truncate" style="max-width:140px;" title="${desc}">${desc}</td>
+          <td class="text-truncate" style="max-width:110px;" title="${c.solicitante || ''}">${c.solicitante || '—'}</td>
           <td class="text-nowrap">${c.responsable || '—'}</td>
-          <td class="text-truncate" style="max-width:130px;" title="${info}">${info}</td>
+          <td>${getBadgePrioridad(c.prioridad)}</td>
           <td>${getBadgeEstado(c.estado)}</td>
           <td class="text-nowrap">${formatDate(c.fechaLimite)}</td>
-          <td class="text-nowrap">${formatDate(c.fechaCreacion)}</td>
+          <td class="text-start">${getSemaforo(c.semaforo, c.estado)}</td>
           <td class="text-center">
             <a href="${PAGES_PATH}detalle-caso.html?id=${encodeURIComponent(c.id)}"
                class="btn btn-sm btn-outline-primary py-0 px-2"
@@ -256,11 +285,11 @@ if (window.location.pathname.includes('bandeja-casos')) {
        Exportar CSV simulado
        -------------------------------------------------- */
     $('#btnExportar').on('click', function () {
-      const headers = ['Radicado','Prioridad','Mes','Operador','Categoría','Condición','Subcategoría','Descripción','Responsable','Información de caso','Estado','Cert SLA','Creación'];
+      const headers = ['Radicado','Fecha Rad.','Tipo','Servicio','Categoría','Subcategoría','Asociado','Responsable','Prioridad','Estado','Límite SLA','Semáforo'];
       const rows    = filteredCasos.map(c => [
-        c.id, c.prioridad, formatMonth(c.fechaCreacion), c.servicio, c.categoria,
-        c.tipo, c.subcategoria, (c.descripcion || c.asunto || ''), c.responsable,
-        (c.asunto || ''), c.estado, formatDate(c.fechaLimite), formatDate(c.fechaCreacion)
+        c.id, formatDate(c.fechaCreacion), c.tipo, c.servicio, c.categoria,
+        c.subcategoria, c.solicitante, c.responsable, c.prioridad, c.estado, 
+        formatDate(c.fechaLimite), getSemaforoLabel(c.semaforo, c.estado)
       ].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(','));
       const csv     = [headers.join(','), ...rows].join('\n');
       const blob    = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

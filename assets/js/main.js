@@ -102,15 +102,7 @@ function getBadgeEstado(estado) {
     'Anulado':               'anulado',
   };
   const cls = map[estado] || 'radicado';
-  const icons = {
-    'Radicado': 'bi-inbox',
-    'En Gestión': 'bi-arrow-repeat',
-    'Pendiente de Información': 'bi-clock',
-    'Cerrado': 'bi-check-circle',
-    'Anulado': 'bi-x-circle',
-  };
-  const icon = icons[estado] || 'bi-circle';
-  return `<span class="badge-estado ${cls}"><i class="bi ${icon}"></i>${estado}</span>`;
+  return `<span class="badge-estado ${cls}">${estado}</span>`;
 }
 
 function getBadgeTipo(tipo) {
@@ -120,17 +112,47 @@ function getBadgeTipo(tipo) {
 
 function getBadgePrioridad(prioridad) {
   const map = {
-    'Baja':    { cls: 'baja',    icon: 'bi-arrow-down' },
-    'Normal':  { cls: 'normal',  icon: 'bi-dash' },
-    'Alta':    { cls: 'alta',    icon: 'bi-arrow-up' },
-    'Crítica': { cls: 'critica', icon: 'bi-exclamation-triangle-fill' },
+    'Baja':    { cls: 'baja' },
+    'Normal':  { cls: 'normal' },
+    'Alta':    { cls: 'alta' },
+    'Crítica': { cls: 'critica' },
   };
-  const m = map[prioridad] || { cls: 'normal', icon: 'bi-dash' };
-  return `<span class="badge-prioridad ${m.cls}"><i class="bi ${m.icon}"></i>${prioridad}</span>`;
+  const m = map[prioridad] || { cls: 'normal' };
+  return `<span class="badge-prioridad ${m.cls}">${prioridad}</span>`;
 }
 
-function getSemaforo(valor) {
-  return `<span class="semaforo ${valor}" title="${valor.charAt(0).toUpperCase()+valor.slice(1)}"></span>`;
+function normalizeSemaforo(valor, estado) {
+  const raw = String(valor || '').trim().toLowerCase();
+  const status = String(estado || '').trim().toLowerCase();
+
+  if (status === 'cerrado' || raw === 'cerrado') return 'cerrado';
+  if (raw === 'verde' || raw === 'en tiempo' || raw === 'en-tiempo') return 'en-tiempo';
+  if (raw === 'amarillo' || raw === 'proximo a vencer' || raw === 'próximo a vencer' || raw === 'proximo-a-vencer') return 'proximo-a-vencer';
+  if (raw === 'rojo' || raw === 'vencido') return 'vencido';
+
+  return 'en-tiempo';
+}
+
+function getSemaforo(valor, estado) {
+  const key = normalizeSemaforo(valor, estado);
+  const meta = {
+    'cerrado': { label: 'Cerrado', cls: 'cerrado' },
+    'en-tiempo': { label: 'En tiempo', cls: 'en-tiempo' },
+    'proximo-a-vencer': { label: 'Proximo a vencer', cls: 'proximo-a-vencer' },
+    'vencido': { label: 'Vencido', cls: 'vencido' },
+  }[key] || { label: 'En tiempo', cls: 'en-tiempo' };
+
+  return `<span class="semaforo-badge ${meta.cls}" title="${meta.label}"><span class="semaforo-dot" aria-hidden="true"></span><span class="semaforo-text">${meta.label}</span></span>`;
+}
+
+function getSemaforoLabel(valor, estado) {
+  const key = normalizeSemaforo(valor, estado);
+  return {
+    'cerrado': 'Cerrado',
+    'en-tiempo': 'En tiempo',
+    'proximo-a-vencer': 'Proximo a vencer',
+    'vencido': 'Vencido',
+  }[key] || 'En tiempo';
 }
 
 /* ============================================================

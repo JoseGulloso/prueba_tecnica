@@ -4,6 +4,29 @@
    ============================================================ */
 
 /* ----------------------------------------------------------
+  0. Inputs redondeados
+  ---------------------------------------------------------- */
+.input-rounded {
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.input-rounded:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.1);
+}
+
+.label-muted-global {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.label-muted-global.block {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* ----------------------------------------------------------
    1. Sidebar
    ---------------------------------------------------------- */
 .sidebar-brand {
@@ -524,47 +547,102 @@
 .badge-prioridad {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: flex-start;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
   font-size: 11px;
   font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
 }
 
 .badge-prioridad.baja {
   color: var(--color-success);
+  background: #e8f7e8;
+  border-color: #d7efd7;
 }
 
 .badge-prioridad.normal {
-  color: var(--color-warning);
+  color: #d97706;
+  background: #fff4dd;
+  border-color: #fde7bf;
 }
 
 .badge-prioridad.alta {
   color: var(--color-danger);
+  background: #fee2e2;
+  border-color: #fecaca;
 }
 
 .badge-prioridad.critica {
   color: #7c3aed;
+  background: #ede9fe;
+  border-color: #ddd6fe;
   font-weight: 700;
 }
 
 /* Semáforo */
-.semaforo {
-  width: 20px;
-  height: 20px;
+.semaforo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 2px 10px 2px 8px;
   border-radius: var(--radius-full);
-  display: inline-block;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+  border: 1px solid transparent;
 }
 
-.semaforo.verde {
-  background: var(--color-success);
+.semaforo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
-.semaforo.amarillo {
+.semaforo-badge.cerrado {
+  background: #eef2f7;
+  color: #6b7280;
+  border-color: #e5e7eb;
+}
+
+.semaforo-badge.cerrado .semaforo-dot {
+  background: #9ca3af;
+}
+
+.semaforo-badge.en-tiempo {
+  background: #e8f7e8;
+  color: #2f7d32;
+  border-color: #d7efd7;
+}
+
+.semaforo-badge.en-tiempo .semaforo-dot {
+  background: #4caf50;
+}
+
+.semaforo-badge.proximo-a-vencer {
+  background: #fff4dd;
+  color: #f59e0b;
+  border-color: #fde7bf;
+}
+
+.semaforo-badge.proximo-a-vencer .semaforo-dot {
   background: #f59e0b;
 }
 
-.semaforo.rojo {
-  background: var(--color-danger);
+.semaforo-badge.vencido {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.semaforo-badge.vencido .semaforo-dot {
+  background: #dc2626;
 }
 
 /* ----------------------------------------------------------

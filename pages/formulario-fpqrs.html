@@ -67,7 +67,7 @@
                 <label for="fpqrsTipoId" class="form-label fw-semibold">
                   Tipo de identificación <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <select id="fpqrsTipoId" name="tipoId" class="form-select" required aria-required="true">
+                <select id="fpqrsTipoId" name="tipoId" class="form-select input-rounded" required aria-required="true">
                   <option value="">— Selecciona —</option>
                   <option value="CC">Cédula de ciudadanía (CC)</option>
                   <option value="CE">Cédula de extranjería (CE)</option>
@@ -82,7 +82,7 @@
                 <label for="fpqrsNumId" class="form-label fw-semibold">
                   Número de identificación <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <input type="text" id="fpqrsNumId" name="numId" class="form-control"
+                <input type="text" id="fpqrsNumId" name="numId" class="form-control input-rounded"
                   placeholder="Ej: 1020304050"
                   required aria-required="true"
                   pattern="[0-9A-Za-z\-]{5,20}"
@@ -94,7 +94,7 @@
                 <label for="fpqrsNombre" class="form-label fw-semibold">
                   Nombre completo <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <input type="text" id="fpqrsNombre" name="nombre" class="form-control"
+                <input type="text" id="fpqrsNombre" name="nombre" class="form-control input-rounded"
                   placeholder="Ej: Ana María Torres"
                   autocomplete="name"
                   required aria-required="true"
@@ -106,7 +106,7 @@
                 <label for="fpqrsEmail" class="form-label fw-semibold">
                   Correo electrónico <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <input type="email" id="fpqrsEmail" name="email" class="form-control"
+                <input type="email" id="fpqrsEmail" name="email" class="form-control input-rounded"
                   placeholder="tucorreo@email.com"
                   autocomplete="email"
                   required aria-required="true"
@@ -121,7 +121,7 @@
                 </label>
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-telephone" aria-hidden="true"></i></span>
-                  <input type="tel" id="fpqrsTelefono" name="telefono" class="form-control"
+                  <input type="tel" id="fpqrsTelefono" name="telefono" class="form-control input-rounded"
                     placeholder="Ej: 3001234567"
                     autocomplete="tel"
                     required aria-required="true"
@@ -134,7 +134,7 @@
                 <label for="fpqrsDireccion" class="form-label fw-semibold">
                   Dirección de residencia
                 </label>
-                <input type="text" id="fpqrsDireccion" name="direccion" class="form-control"
+                <input type="text" id="fpqrsDireccion" name="direccion" class="form-control input-rounded"
                   placeholder="Calle 45 # 12-34, Bogotá (opcional)"
                   autocomplete="street-address">
               </div>
@@ -156,7 +156,7 @@
                 <label for="fpqrsTipo" class="form-label fw-semibold">
                   Tipo de caso <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <select id="fpqrsTipo" name="tipo" class="form-select" required aria-required="true" aria-describedby="tipoFeedback">
+                <select id="fpqrsTipo" name="tipo" class="form-select input-rounded" required aria-required="true" aria-describedby="tipoFeedback">
                   <option value="">— Selecciona un tipo —</option>
                   <option value="Petición">Petición</option>
                   <option value="Queja">Queja</option>
@@ -176,7 +176,7 @@
                 <label for="fpqrsServicio" class="form-label fw-semibold">
                   Servicio <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <select id="fpqrsServicio" name="servicio" class="form-select" required aria-required="true" disabled aria-describedby="servicioFeedback">
+                <select id="fpqrsServicio" name="servicio" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="servicioFeedback">
                   <option value="">— Primero selecciona el tipo —</option>
                 </select>
                 <div id="servicioFeedback" class="invalid-feedback">Selecciona el servicio.</div>
@@ -186,7 +186,7 @@
                 <label for="fpqrsCategoria" class="form-label fw-semibold">
                   Categoría <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <select id="fpqrsCategoria" name="categoria" class="form-select" required aria-required="true" disabled aria-describedby="categoriaFeedback">
+                <select id="fpqrsCategoria" name="categoria" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="categoriaFeedback">
                   <option value="">— Primero selecciona el servicio —</option>
                 </select>
                 <div id="categoriaFeedback" class="invalid-feedback">Selecciona la categoría.</div>
@@ -196,7 +196,7 @@
                 <label for="fpqrsSubcategoria" class="form-label fw-semibold">
                   Subcategoría <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <select id="fpqrsSubcategoria" name="subcategoria" class="form-select" required aria-required="true" disabled aria-describedby="subcategoriaFeedback">
+                <select id="fpqrsSubcategoria" name="subcategoria" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="subcategoriaFeedback">
                   <option value="">— Primero selecciona la categoría —</option>
                 </select>
                 <div id="subcategoriaFeedback" class="invalid-feedback">Selecciona la subcategoría.</div>
@@ -205,7 +205,7 @@
               <!-- Campo dinámico: urgencia (Queja / Reclamo) -->
               <div class="col-12 col-md-6 d-none" id="campoUrgencia">
                 <label for="fpqrsUrgencia" class="form-label fw-semibold">Nivel de urgencia</label>
-                <select id="fpqrsUrgencia" name="urgencia" class="form-select">
+                <select id="fpqrsUrgencia" name="urgencia" class="form-select input-rounded">
                   <option value="Normal">Normal</option>
                   <option value="Alta">Alta</option>
                   <option value="Crítica">Crítica</option>
@@ -215,7 +215,7 @@
               <!-- Campo dinámico: área sugerida (Sugerencia) -->
               <div class="col-12 col-md-6 d-none" id="campoSugerenciaDetalle">
                 <label for="fpqrsAreaSugerida" class="form-label fw-semibold">Área de mejora sugerida</label>
-                <input type="text" id="fpqrsAreaSugerida" name="areaSugerida" class="form-control"
+                <input type="text" id="fpqrsAreaSugerida" name="areaSugerida" class="form-control input-rounded"
                   placeholder="Ej: equipo de soporte digital">
               </div>
 
@@ -223,7 +223,7 @@
                 <label for="fpqrsDescripcion" class="form-label fw-semibold">
                   Descripción detallada <span class="text-danger" aria-hidden="true">*</span>
                 </label>
-                <textarea id="fpqrsDescripcion" name="descripcion" class="form-control" rows="5"
+                <textarea id="fpqrsDescripcion" name="descripcion" class="form-control input-rounded" rows="5"
                   placeholder="Describe tu caso con detalle. Incluye fechas, montos, números de transacción o cualquier información relevante…"
                   required aria-required="true" minlength="20"
                   aria-describedby="descripcionFeedback descripcionHelp"></textarea>

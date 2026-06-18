@@ -50,11 +50,12 @@
             </div>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-outline-secondary" id="btnActualizar" aria-label="Actualizar tabla">
-              <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>Actualizar
-            </button>
-            <button class="btn btn-sm btn-outline-success" id="btnExportar" aria-label="Exportar casos a CSV">
+            <button class="btn btn-md btn-light border-gray-100" id="btnExportar"
+              aria-label="Exportar casos a CSV">
               <i class="bi bi-cloud-download me-1" aria-hidden="true"></i>Exportar
+            </button>
+            <button class="btn btn-md btn-light border-gray-100" id="btnActualizar" aria-label="Actualizar tabla">
+              <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>Actualizar
             </button>
           </div>
         </div>
@@ -120,7 +121,7 @@
               <!-- Búsqueda -->
               <div class="search-input-wrap">
                 <i class="bi bi-search" aria-hidden="true"></i>
-                <input type="search" id="searchInput" class="form-control form-control-md"
+                <input type="search" id="searchInput" class="form-control form-control-md input-rounded"
                   placeholder="Buscar por radicado, solicitante…" aria-label="Buscar casos">
               </div>
               <button class="btn btn-sm btn-outline-primary" id="btnFiltrar" aria-label="Mostrar filtros">
@@ -131,37 +132,95 @@
 
           <!-- Panel de filtros colapsable -->
           <div id="filterPanel"
-            style="display:none; padding:.75rem 1rem; border-top:1px solid var(--color-border,#e2e8f0); background:#f8fafc;">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-              <select id="filterEstado" class="form-select form-select-sm" style="width:140px;"
-                aria-label="Filtrar por estado">
-                <option value="">Estado</option>
-                <option>Radicado</option>
-                <option>En Gestión</option>
-                <option>Pendiente de Información</option>
-                <option>Cerrado</option>
-                <option>Anulado</option>
-              </select>
-              <select id="filterTipo" class="form-select form-select-sm" style="width:130px;"
-                aria-label="Filtrar por tipo">
-                <option value="">Tipo</option>
-                <option>Petición</option>
-                <option>Queja</option>
-                <option>Reclamo</option>
-                <option>Sugerencia</option>
-                <option>Felicitación</option>
-              </select>
-              <select id="filterPrioridad" class="form-select form-select-sm" style="width:130px;"
-                aria-label="Filtrar por prioridad">
-                <option value="">Prioridad</option>
-                <option>Baja</option>
-                <option>Normal</option>
-                <option>Alta</option>
-                <option>Crítica</option>
-              </select>
-              <button class="btn btn-sm btn-outline-secondary" id="btnLimpiarFiltros" aria-label="Limpiar filtros">
-                <i class="bi bi-x-circle me-1" aria-hidden="true"></i>Limpiar
-              </button>
+            style="display:none; padding:1rem; border-top:1px solid var(--color-border,#e2e8f0); background:#f8fafc;">
+            <div class="row g-3">
+              <!-- Estado -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="filterEstado" class="form-label small text-uppercase fw-600 label-muted-global">Estado</label>
+                <select id="filterEstado" class="form-select form-select-md input-rounded"
+                  aria-label="Filtrar por estado">
+                  <option value="">Todos</option>
+                  <option>Radicado</option>
+                  <option>En Gestión</option>
+                  <option>Pendiente de Información</option>
+                  <option>Cerrado</option>
+                  <option>Anulado</option>
+                </select>
+              </div>
+
+              <!-- Tipo de Caso -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="filterTipo" class="form-label small text-uppercase fw-600 label-muted-global">Tipo de Caso</label>
+                <select id="filterTipo" class="form-select form-select-md input-rounded" aria-label="Filtrar por tipo">
+                  <option value="">Todos</option>
+                  <option>Petición</option>
+                  <option>Queja</option>
+                  <option>Reclamo</option>
+                  <option>Sugerencia</option>
+                  <option>Felicitación</option>
+                </select>
+              </div>
+
+              <!-- Servicio -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="filterServicio" class="form-label small text-uppercase fw-600 label-muted-global">Servicio</label>
+                <select id="filterServicio" class="form-select form-select-md input-rounded"
+                  aria-label="Filtrar por servicio">
+                  <option value="">Todos</option>
+                  <option>Seguros</option>
+                  <option>Cuentas de Ahorro</option>
+                  <option>Créditos</option>
+                  <option>Transferencias Nacionales</option>
+                  <option>Canales Digitales</option>
+                  <option>Ahorro y Captación</option>
+                </select>
+              </div>
+
+              <!-- Responsable -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="filterResponsable" class="form-label small text-uppercase fw-600 label-muted-global">Responsable</label>
+                <select id="filterResponsable" class="form-select form-select-md input-rounded"
+                  aria-label="Filtrar por responsable">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+
+              <!-- Prioridad -->
+              <div class="col-12 col-sm-6 col-lg-2">
+                <label for="filterPrioridad" class="form-label small text-uppercase fw-600 label-muted-global">Prioridad</label>
+                <select id="filterPrioridad" class="form-select form-select-md input-rounded"
+                  aria-label="Filtrar por prioridad">
+                  <option value="">Todas</option>
+                  <option>Baja</option>
+                  <option>Normal</option>
+                  <option>Alta</option>
+                  <option>Crítica</option>
+                </select>
+              </div>
+
+              <!-- SLA Checkboxes -->
+              <div class="col-12 col-sm-6 col-lg-4">
+                <label class="form-label small text-uppercase fw-600 label-muted-global block">SLA</label>
+                <div class="form-check">
+                  <input type="checkbox" id="filterSlaVencidos" class="form-check-input" value="vencidos">
+                  <label class="form-check-label" for="filterSlaVencidos" style="color:#ef4444;">
+                    Solo vencidos
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="filterSlaProximos" class="form-check-input" value="proximos">
+                  <label class="form-check-label" for="filterSlaProximos" style="color:#f59e0b;">
+                    Próximos a vencer
+                  </label>
+                </div>
+              </div>
+
+              <!-- Botón Limpiar -->
+              <div class="col-12" style="text-align: right;">
+                <button class="btn btn-sm btn-outline-secondary" id="btnLimpiarFiltros" aria-label="Limpiar filtros">
+                  <i class="bi bi-x-circle me-1" aria-hidden="true"></i>Limpiar
+                </button>
+              </div>
             </div>
           </div>
 
@@ -172,29 +231,28 @@
                 <tr>
                   <th class="sortable-th" data-field="id" scope="col">Radicado <span class="sort-icon"
                       aria-hidden="true"></span></th>
-                  <th class="sortable-th" data-field="prioridad" scope="col">Prioridad <span class="sort-icon"
+                  <th class="sortable-th" data-field="fechaCreacion" scope="col">Fecha Rad. <span class="sort-icon"
                       aria-hidden="true"></span></th>
-                  <th scope="col">Mes</th>
-                  <th scope="col">Operador</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Servicio</th>
                   <th scope="col">Categoría</th>
-                  <th scope="col">Condición</th>
                   <th scope="col">Subcategoría</th>
-                  <th scope="col">Descripción</th>
+                  <th scope="col">Asociado</th>
                   <th class="sortable-th" data-field="responsable" scope="col">Responsable <span class="sort-icon"
                       aria-hidden="true"></span></th>
-                  <th scope="col">Información de caso</th>
+                  <th class="sortable-th" data-field="prioridad" scope="col">Prioridad <span class="sort-icon"
+                      aria-hidden="true"></span></th>
                   <th class="sortable-th" data-field="estado" scope="col">Estado <span class="sort-icon"
                       aria-hidden="true"></span></th>
-                  <th class="sortable-th" data-field="fechaLimite" scope="col">Cert SLA <span class="sort-icon"
+                  <th class="sortable-th" data-field="fechaLimite" scope="col">Límite SLA <span class="sort-icon"
                       aria-hidden="true"></span></th>
-                  <th class="sortable-th" data-field="fechaCreacion" scope="col">Creación <span class="sort-icon"
-                      aria-hidden="true"></span></th>
+                  <th scope="col" class="text-center">Semáforo</th>
                   <th scope="col" class="text-center">Gestión</th>
                 </tr>
               </thead>
               <tbody id="tableBody">
                 <tr>
-                  <td colspan="14" class="text-center py-5">
+                  <td colspan="13" class="text-center py-5">
                     <div class="spinner-border text-primary spinner-border-sm me-2" role="status" aria-label="Cargando">
                     </div>
                     Cargando casos…
@@ -202,25 +260,25 @@
                 </tr>
               </tbody>
             </table>
+            <!-- Footer: info + paginación -->
+            <div class="table-footer">
+              <div class="d-flex align-items-center gap-3 flex-wrap">
+                <span class="table-footer-info" id="tableInfo" aria-live="polite">Cargando…</span>
+                <div class="rows-per-page">
+                  <label for="rowsPerPage">Filas:</label>
+                  <select id="rowsPerPage" class="form-select form-select-md input-rounded" aria-label="Filas por página">
+                    <option value="10" selected>10 por página</option>
+                    <option value="25">25 por página</option>
+                    <option value="50">50 por página</option>
+                  </select>
+                </div>
+              </div>
+              <nav aria-label="Paginación de casos">
+                <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+              </nav>
+            </div>
           </div>
 
-          <!-- Footer: info + paginación -->
-          <div class="table-footer">
-            <div class="d-flex align-items-center gap-3 flex-wrap">
-              <span class="table-footer-info" id="tableInfo" aria-live="polite">Cargando…</span>
-              <div class="rows-per-page">
-                <label for="rowsPerPage">Filas:</label>
-                <select id="rowsPerPage" aria-label="Filas por página">
-                  <option value="10" selected>10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                </select>
-              </div>
-            </div>
-            <nav aria-label="Paginación de casos">
-              <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
-            </nav>
-          </div>
 
         </section>
 
