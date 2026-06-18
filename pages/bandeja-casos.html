@@ -42,9 +42,7 @@
         <!-- Encabezado de página -->
         <div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-3">
           <div>
-            <h1 class="page-title">
-              <i class="bi bi-inbox me-2" aria-hidden="true"></i>Bandeja de Casos
-            </h1>
+            <h1 class="page-title">Bandeja de Casos</h1>
             <div class="page-breadcrumb">
               Gestión de casos PFQRS &mdash; Actualizado: <span id="lastUpdated">—</span>
             </div>
@@ -60,53 +58,38 @@
         </div>
 
         <!-- Cards de métricas -->
-        <div class="row g-3 mb-5" role="region" aria-label="Resumen de métricas">
-          <div class="col-6 col-lg-3">
+        <div class="row g-2 mb-4 justify-content-center justify-content-lg-start" role="region" aria-label="Resumen de métricas">
+          <div class="col-5 col-lg-3">
             <div class="metric-card">
-              <div class="metric-icon bg-primary-soft" aria-hidden="true">
-                <i class="bi bi-folder2-open"></i>
-              </div>
-              <div>
-                <div class="metric-value" id="metricActivos">—</div>
-                <div class="metric-label">Casos en proceso</div>
-                <div class="metric-sublabel">Sin asignar</div>
-              </div>
+              <div class="metric-icon" aria-hidden="true"><i class="bi bi-folder2-open"></i></div>
+              <div class="metric-value" id="metricActivos">—</div>
+              <div class="metric-label">Casos activos</div>
+              <div class="metric-sublabel">En proceso de gestión</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
-            <div class="metric-card">
-              <div class="metric-icon bg-warning-soft" aria-hidden="true">
-                <i class="bi bi-clock-history"></i>
-              </div>
-              <div>
-                <div class="metric-value text-warning" id="metricProxVencer">—</div>
-                <div class="metric-label">Próximos a vencer</div>
-                <div class="metric-sublabel">Sin actualizar</div>
-              </div>
+          <div class="col-5 col-lg-3">
+            <div class="metric-card metric-card-danger">
+              <span class="metric-dot"></span>
+              <div class="metric-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle"></i></div>
+              <div class="metric-value" id="metricEscalados">—</div>
+              <div class="metric-label">SLA vencido</div>
+              <div class="metric-sublabel">Requieren atención urgente</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
-            <div class="metric-card">
-              <div class="metric-icon bg-danger-soft" aria-hidden="true">
-                <i class="bi bi-exclamation-circle"></i>
-              </div>
-              <div>
-                <div class="metric-value text-danger" id="metricSinAsignar">—</div>
-                <div class="metric-label">Sin prioridad</div>
-                <div class="metric-sublabel">Sin asignar</div>
-              </div>
+          <div class="col-5 col-lg-3">
+            <div class="metric-card metric-card-warning">
+              <div class="metric-icon" aria-hidden="true"><i class="bi bi-clock"></i></div>
+              <div class="metric-value" id="metricProxVencer">—</div>
+              <div class="metric-label">Próximos a vencer</div>
+              <div class="metric-sublabel">Vencen en las próximas 24 horas</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
-            <div class="metric-card">
-              <div class="metric-icon bg-secondary-soft" aria-hidden="true">
-                <i class="bi bi-arrow-up-circle"></i>
-              </div>
-              <div>
-                <div class="metric-value text-secondary" id="metricEscalados">—</div>
-                <div class="metric-label">Casos escalados</div>
-                <div class="metric-sublabel">&nbsp;</div>
-              </div>
+          <div class="col-5 col-lg-3">
+            <div class="metric-card metric-card-success">
+              <div class="metric-icon" aria-hidden="true"><i class="bi bi-check-circle"></i></div>
+              <div class="metric-value" id="metricCerradosHoy">—</div>
+              <div class="metric-label">Cerrados hoy</div>
+              <div class="metric-sublabel">Resueltos en el día</div>
             </div>
           </div>
         </div>
@@ -218,19 +201,12 @@
                   </label>
                 </div>
               </div>
-
-              <!-- Botón Limpiar -->
-              <div class="col-12" style="text-align: right;">
-                <button class="btn btn-sm btn-outline-secondary" id="btnLimpiarFiltros" aria-label="Limpiar filtros">
-                  <i class="bi bi-x-circle me-1" aria-hidden="true"></i>Limpiar
-                </button>
-              </div>
             </div>
           </div>
 
           <!-- Tabla responsive -->
           <div class="table-container" role="region" aria-label="Tabla de casos" tabindex="0">
-            <table class="table table-cases table-hover mb-0" id="tablaCasos">
+            <table class="table table-cases mb-0" id="tablaCasos">
               <thead>
                 <tr>
                   <th class="sortable-th" data-field="id" scope="col">Radicado <span class="sort-icon"
@@ -270,7 +246,7 @@
                 <span class="table-footer-info" id="tableInfo" aria-live="polite">Cargando…</span>
                 <div class="rows-per-page">
                   <label for="rowsPerPage">Filas:</label>
-                  <select id="rowsPerPage" class="form-select form-select-md input-rounded"
+                  <select id="rowsPerPage" class="input-rounded"
                     aria-label="Filas por página">
                     <option value="10" selected>10 por página</option>
                     <option value="25">25 por página</option>
@@ -283,8 +259,6 @@
               </nav>
             </div>
           </div>
-
-
         </section>
 
       </main>

@@ -42,15 +42,15 @@ if (window.location.pathname.includes('bandeja-casos')) {
        Métricas
        -------------------------------------------------- */
     function renderMetrics(casos) {
-      const activos    = casos.filter(c => c.estado !== 'Cerrado' && c.estado !== 'Anulado').length;
-      const proxVencer = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'proximo-a-vencer').length;
-      const sinAsignar = casos.filter(c => !c.responsable || c.responsable.trim() === '').length;
-      const escalados  = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'vencido').length;
+      const activos      = casos.filter(c => c.estado !== 'Cerrado' && c.estado !== 'Anulado').length;
+      const slaVencido   = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'vencido').length;
+      const proxVencer   = casos.filter(c => normalizeSemaforo(c.semaforo, c.estado) === 'proximo-a-vencer').length;
+      const cerradosHoy  = casos.filter(c => c.estado === 'Cerrado').length;
 
       $('#metricActivos').text(activos);
+      $('#metricEscalados').text(slaVencido);
       $('#metricProxVencer').text(proxVencer);
-      $('#metricSinAsignar').text(sinAsignar);
-      $('#metricEscalados').text(escalados);
+      $('#metricCerradosHoy').text(cerradosHoy);
 
       const now = new Date();
       $('#lastUpdated').text(now.toLocaleDateString('es-CO') + ' ' + now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' }));
@@ -205,8 +205,8 @@ if (window.location.pathname.includes('bandeja-casos')) {
 
     function renderRow(c) {
       return `
-        <tr class="caso-row" data-id="${c.id}" role="button" tabindex="0" aria-label="Ver caso ${c.id}">
-          <td><a href="${PAGES_PATH}detalle-caso.html?id=${encodeURIComponent(c.id)}" class="case-id-link" onclick="event.stopPropagation()">${c.id}</a></td>
+        <tr class="caso-row" data-id="${c.id}">
+          <td>${c.id}</td>
           <td class="text-nowrap">${formatDate(c.fechaCreacion)}</td>
           <td>${getBadgeTipo(c.tipo)}</td>
           <td class="text-truncate" style="max-width:110px;" title="${c.servicio || ''}">${c.servicio || '—'}</td>
@@ -220,7 +220,7 @@ if (window.location.pathname.includes('bandeja-casos')) {
           <td class="text-start">${getSemaforo(c.semaforo, c.estado)}</td>
           <td class="text-center">
             <a href="${PAGES_PATH}detalle-caso.html?id=${encodeURIComponent(c.id)}"
-               class="btn btn-sm btn-outline-primary py-0 px-2"
+               class="btn btn-sm border-0 text-primary py-0 px-2"
                title="Ver detalle del caso"
                aria-label="Ver detalle del caso ${c.id}"
                onclick="event.stopPropagation()">
@@ -230,15 +230,6 @@ if (window.location.pathname.includes('bandeja-casos')) {
         </tr>`;
     }
 
-    /* --------------------------------------------------
-       Click en fila → detalle
-       -------------------------------------------------- */
-    $(document).on('click keypress', '.caso-row', function (e) {
-      if (e.type === 'keypress' && e.which !== 13) return;
-      if ($(e.target).is('a, button') || $(e.target).closest('a, button').length) return;
-      const id = $(this).data('id');
-      window.location.href = `${PAGES_PATH}detalle-caso.html?id=${encodeURIComponent(id)}`;
-    });
 
     /* --------------------------------------------------
        Paginación

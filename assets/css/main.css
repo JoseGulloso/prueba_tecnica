@@ -136,6 +136,10 @@ a:hover {
   min-height: 100vh;
 }
 
+.app-shell.sidebar-collapsed {
+  --sidebar-width: var(--sidebar-collapsed);
+}
+
 /* Sidebar */
 .app-sidebar {
   width: var(--sidebar-width);
@@ -152,6 +156,29 @@ a:hover {
   z-index: 1040;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.sidebar-desktop-toggle {
+  position: absolute;
+  top: 18px;
+  right: -12px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: 1px solid #d7dde6;
+  background: #fff;
+  color: #6b7280;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.sidebar-desktop-toggle:hover {
+  background: #f8fafc;
+  color: var(--color-primary);
 }
 
 .app-sidebar::-webkit-scrollbar {
@@ -171,6 +198,74 @@ a:hover {
   flex-direction: column;
   min-height: 100vh;
   transition: margin-left var(--transition-base);
+}
+
+.app-shell.sidebar-collapsed .app-main {
+  margin-left: var(--sidebar-collapsed);
+}
+
+.app-shell.sidebar-collapsed .app-sidebar {
+  width: var(--sidebar-collapsed);
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand-text,
+.app-shell.sidebar-collapsed .sidebar-section-title,
+.app-shell.sidebar-collapsed .sidebar-item span,
+.app-shell.sidebar-collapsed .sidebar-user-info > div,
+.app-shell.sidebar-collapsed .sidebar-item-logout span {
+  display: none;
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand img {
+  width: 34px;
+  height: 34px;
+}
+
+.app-shell.sidebar-collapsed .sidebar-nav,
+.app-shell.sidebar-collapsed .sidebar-footer {
+  align-items: center;
+}
+
+.app-shell.sidebar-collapsed .sidebar-item {
+  justify-content: center;
+  gap: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 var(--space-2);
+  border-left: none;
+  border-radius: var(--radius-md);
+}
+
+.app-shell.sidebar-collapsed .sidebar-item i {
+  width: auto;
+}
+
+.app-shell.sidebar-collapsed .sidebar-divider {
+  margin-left: var(--space-2);
+  margin-right: var(--space-2);
+}
+
+.app-shell.sidebar-collapsed .sidebar-footer {
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+
+.app-shell.sidebar-collapsed .sidebar-user-info {
+  justify-content: center;
+}
+
+.app-shell.sidebar-collapsed .sidebar-user-info .sidebar-avatar {
+  margin: 0 auto;
+}
+
+.app-shell.sidebar-collapsed .sidebar-item.active {
+  border-left-color: transparent;
 }
 
 .app-navbar {
@@ -197,7 +292,7 @@ a:hover {
 
 .app-content {
   flex: 1;
-  padding: var(--space-6);
+  padding: var(--space-10) var(--space-12);
 }
 
 /* Sidebar colapsado en móvil */
@@ -216,7 +311,11 @@ a:hover {
   }
 
   .app-content {
-    padding: var(--space-4);
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .sidebar-desktop-toggle {
+    display: none !important;
   }
 }
 
