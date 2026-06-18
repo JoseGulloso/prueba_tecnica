@@ -538,6 +538,7 @@ a:hover {
   font-size: var(--font-size-sm);
   margin-bottom: 0.35rem;
 }
+
 .login-form-wrap .form-control {
   font-size: var(--font-size-sm);
 }
@@ -573,8 +574,11 @@ a:hover {
 
 /* Responsive */
 @media (min-width: 1280px) {
-  .login-left { width: 600px; }
+  .login-left {
+    width: 600px;
+  }
 }
+
 @media (max-width: 1023.98px) {
   .login-left {
     display: none;
