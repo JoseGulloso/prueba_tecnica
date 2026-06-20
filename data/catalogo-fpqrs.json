@@ -1,0 +1,101 @@
+{
+  "tiposCaso": ["Felicitación", "Petición", "Queja", "Reclamo", "Sugerencia"],
+  "servicios": [
+    {
+      "nombre": "Crédito",
+      "categorias": [
+        { "nombre": "Solicitud de crédito", "subcategorias": ["Crédito de consumo", "Crédito libre inversión", "Crédito hipotecario", "Crédito educativo", "Crédito empresarial"] },
+        { "nombre": "Desembolso", "subcategorias": ["Demora en desembolso", "Error en monto desembolsado", "Error en tasa de interés", "Condiciones no acordadas"] },
+        { "nombre": "Pagos y cuotas", "subcategorias": ["Cuota cobrada incorrectamente", "Pago no aplicado", "Pago duplicado", "Refinanciación de deuda"] },
+        { "nombre": "Extractos y certificados", "subcategorias": ["Error en extracto de cuenta", "Solicitud de paz y salvo", "Certificado de saldo de deuda"] }
+      ]
+    },
+    {
+      "nombre": "Ahorro y Captación",
+      "categorias": [
+        { "nombre": "Cuenta de ahorros", "subcategorias": ["Apertura de cuenta", "Cobro indebido de cuota manejo", "Bloqueo de cuenta injustificado", "Error en saldo", "Retiro no reconocido"] },
+        { "nombre": "CDT", "subcategorias": ["Apertura de CDT", "Renovación de CDT", "Cancelación anticipada", "Error en tasa de rendimiento"] },
+        { "nombre": "Depósitos", "subcategorias": ["Consignación no acreditada", "Error en depósito bancario", "Devolución de depósito"] }
+      ]
+    },
+    {
+      "nombre": "Canales Digitales",
+      "categorias": [
+        { "nombre": "App móvil", "subcategorias": ["Error de acceso / login", "Transacción fallida", "Funcionalidad no disponible", "Problema de seguridad"] },
+        { "nombre": "Portal web", "subcategorias": ["Error de acceso / login", "Transacción fallida", "Funcionalidad no disponible"] },
+        { "nombre": "Cajero automático", "subcategorias": ["Retiro fallido sin débito", "Débito sin entrega de efectivo", "Error en transacción"] },
+        { "nombre": "Corresponsal bancario", "subcategorias": ["Transacción no acreditada", "Cobro incorrecto", "Indisponibilidad del servicio"] }
+      ]
+    },
+    {
+      "nombre": "Atención al Asociado",
+      "categorias": [
+        { "nombre": "Calidad de servicio", "subcategorias": ["Trato inadecuado por parte de un funcionario", "Tiempo de espera excesivo", "Información incorrecta suministrada"] },
+        { "nombre": "Asesoría y orientación", "subcategorias": ["Asesoría de productos financieros", "Asesoría de crédito", "Orientación sobre trámites"] },
+        { "nombre": "Incumplimiento de promesas", "subcategorias": ["Promesa de servicio no cumplida", "Cita no atendida", "Compromiso de respuesta no honrado"] }
+      ]
+    },
+    {
+      "nombre": "Pagos y Transferencias",
+      "categorias": [
+        { "nombre": "Pago PSE", "subcategorias": ["Pago PSE no acreditado en destino", "Débito realizado sin crédito en destino", "Falla en pasarela de pago PSE"] },
+        { "nombre": "Transferencias entre cuentas", "subcategorias": ["Transferencia no recibida", "Transferencia duplicada", "Error en datos del beneficiario"] },
+        { "nombre": "Pago de servicios públicos", "subcategorias": ["Pago no aplicado al servicio", "Cobro doble", "Error en referencia de pago"] },
+        { "nombre": "Pagos a terceros", "subcategorias": ["Pago no reconocido por el beneficiario", "Error en monto pagado", "Devolución de pago"] }
+      ]
+    },
+    {
+      "nombre": "Seguros y Protección",
+      "categorias": [
+        { "nombre": "Seguro de vida asociado", "subcategorias": ["Solicitud de póliza", "Error en valor de prima", "Reclamación de siniestro", "Exclusión de cobertura"] },
+        { "nombre": "Seguro de deudores", "subcategorias": ["Cobertura aplicada incorrectamente", "Reclamación no procesada", "Cancelación injustificada"] },
+        { "nombre": "Seguro de desempleo", "subcategorias": ["Solicitud de activación de beneficio", "Reclamación rechazada", "Documentación requerida"] }
+      ]
+    },
+    {
+      "nombre": "Inversiones",
+      "categorias": [
+        { "nombre": "Portafolio de inversión", "subcategorias": ["Apertura de portafolio", "Error en rendimientos abonados", "Liquidación de inversión", "Cambio de portafolio"] },
+        { "nombre": "Fondos de inversión colectiva", "subcategorias": ["Afiliación al fondo", "Retiro de recursos", "Error en valor de la cuota"] }
+      ]
+    },
+    {
+      "nombre": "Centrales de Riesgo",
+      "categorias": [
+        { "nombre": "Reporte en centrales", "subcategorias": ["Reporte negativo indebido", "Actualización de datos incorrectos", "Solicitud de eliminación de reporte"] },
+        { "nombre": "Consulta de historial", "subcategorias": ["Acceso a historial crediticio", "Error en información reportada", "Certificación de buen deudor"] }
+      ]
+    },
+    {
+      "nombre": "Educación Cooperativa",
+      "categorias": [
+        { "nombre": "Capacitaciones y talleres", "subcategorias": ["Solicitud de inscripción", "Error en inscripción", "Certificado de participación no entregado"] },
+        { "nombre": "Programas educativos", "subcategorias": ["Información sobre programas disponibles", "Requisitos de acceso", "Beca o subsidio educativo"] }
+      ]
+    },
+    {
+      "nombre": "Vinculación y Retiro",
+      "categorias": [
+        { "nombre": "Proceso de vinculación", "subcategorias": ["Demora en proceso de afiliación", "Documentación requerida", "Error en datos de afiliación"] },
+        { "nombre": "Retiro voluntario", "subcategorias": ["Solicitud de retiro de la cooperativa", "Liquidación de aportes sociales", "Demora en pago de liquidación"] },
+        { "nombre": "Exclusión", "subcategorias": ["Impugnación de decisión de exclusión", "Información sobre proceso de exclusión"] }
+      ]
+    },
+    {
+      "nombre": "Cartera y Cobranza",
+      "categorias": [
+        { "nombre": "Cobro pre-jurídico", "subcategorias": ["Cobro indebido de cartera", "Solicitud de acuerdo de pago", "Error en estado de cartera"] },
+        { "nombre": "Cobro jurídico", "subcategorias": ["Proceso judicial indebido", "Acuerdo de pago en etapa judicial", "Suspensión de embargo"] },
+        { "nombre": "Reportes de mora", "subcategorias": ["Error en reporte de mora", "Actualización de estado de cuenta", "Constancia de al día en pagos"] }
+      ]
+    },
+    {
+      "nombre": "Certificaciones y Documentos",
+      "categorias": [
+        { "nombre": "Certificados de cuenta", "subcategorias": ["Certificado de existencia de cuenta", "Certificado de saldo", "Extracto de cuenta"] },
+        { "nombre": "Certificados de crédito", "subcategorias": ["Constancia de crédito vigente", "Certificado de deuda", "Paz y salvo de crédito"] },
+        { "nombre": "Documentos contractuales", "subcategorias": ["Copia de contrato de crédito", "Copia de pagaré", "Historia de pagos", "Copia de póliza"] }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,368 +8,384 @@
   <title>Registrar FPQRS — GestorFPQRS</title>
 
   <link rel="icon" type="image/webp" href="../assets/img/logo.webp">
-  <!-- Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/components.css">
 </head>
+
 <body>
+  <div class="portal-layout">
 
-<div class="sidebar-overlay" aria-hidden="true"></div>
-
-<div class="app-shell">
-  <aside class="app-sidebar" id="sidebar-placeholder" role="navigation" aria-label="Menú principal"></aside>
-
-  <div class="app-main d-flex flex-column flex-grow-1 min-vh-100">
-    <header class="app-navbar" id="navbar-placeholder" role="banner"></header>
-
-    <main class="app-content" role="main" id="main-content">
-
-      <!-- Encabezado -->
-      <div class="page-header">
-        <nav class="page-breadcrumb" aria-label="Miga de pan">
-          <a href="../index.html"><i class="bi bi-house"></i> Inicio</a>
-          <span class="mx-1 text-muted">/</span>
-          <a href="bandeja-casos.html">Bandeja de Casos</a>
-          <span class="mx-1 text-muted">/</span>
-          <span>Registrar FPQRS</span>
-        </nav>
-        <h1 class="page-title">
-          <i class="bi bi-pencil-square me-2" aria-hidden="true"></i>Registrar caso FPQRS
-        </h1>
-      </div>
-
-      <!-- Banner informativo -->
-      <div class="info-banner" role="note">
-        <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
-        <p>
-          <strong>Información importante:</strong> Completa todos los campos obligatorios (<span class="text-danger">*</span>).
-          Recibirás un número de radicado al finalizar. Para soporte: <a href="tel:018000123456" class="fw-semibold">01 8000 123 456</a>
-        </p>
-      </div>
-
-      <!-- Formulario -->
-      <form id="fpqrsForm" novalidate aria-label="Formulario de radicación FPQRS">
-
-        <!-- Sección 1: Datos personales -->
-        <div class="form-section-card">
-          <div class="form-section-header">
-            <i class="bi bi-person-fill" aria-hidden="true"></i>
-            <h2 class="form-section-title">Datos personales del solicitante</h2>
-          </div>
-          <div class="form-section-body">
-            <div class="row g-3">
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsTipoId" class="form-label fw-semibold">
-                  Tipo de identificación <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <select id="fpqrsTipoId" name="tipoId" class="form-select input-rounded" required aria-required="true">
-                  <option value="">— Selecciona —</option>
-                  <option value="CC">Cédula de ciudadanía (CC)</option>
-                  <option value="CE">Cédula de extranjería (CE)</option>
-                  <option value="PA">Pasaporte (PA)</option>
-                  <option value="NIT">NIT</option>
-                  <option value="TI">Tarjeta de identidad (TI)</option>
-                </select>
-                <div class="invalid-feedback">Selecciona el tipo de identificación.</div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsNumId" class="form-label fw-semibold">
-                  Número de identificación <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <input type="text" id="fpqrsNumId" name="numId" class="form-control input-rounded"
-                  placeholder="Ej: 1020304050"
-                  required aria-required="true"
-                  pattern="[0-9A-Za-z\-]{5,20}"
-                  aria-describedby="numIdFeedback">
-                <div id="numIdFeedback" class="invalid-feedback">Ingresa un número de identificación válido.</div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsNombre" class="form-label fw-semibold">
-                  Nombre completo <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <input type="text" id="fpqrsNombre" name="nombre" class="form-control input-rounded"
-                  placeholder="Ej: Ana María Torres"
-                  autocomplete="name"
-                  required aria-required="true"
-                  aria-describedby="nombreFeedback">
-                <div id="nombreFeedback" class="invalid-feedback">Ingresa el nombre completo.</div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsEmail" class="form-label fw-semibold">
-                  Correo electrónico <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <input type="email" id="fpqrsEmail" name="email" class="form-control input-rounded"
-                  placeholder="tucorreo@email.com"
-                  autocomplete="email"
-                  required aria-required="true"
-                  aria-describedby="emailFpqrsFeedback">
-                <div id="emailFpqrsFeedback" class="invalid-feedback">Ingresa un correo electrónico válido.</div>
-                <div class="form-text"><i class="bi bi-info-circle me-1"></i>Recibirás notificaciones en este correo.</div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsTelefono" class="form-label fw-semibold">
-                  Número de celular <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-telephone" aria-hidden="true"></i></span>
-                  <input type="tel" id="fpqrsTelefono" name="telefono" class="form-control input-rounded"
-                    placeholder="Ej: 3001234567"
-                    autocomplete="tel"
-                    required aria-required="true"
-                    aria-describedby="telefonoFeedback">
-                  <div id="telefonoFeedback" class="invalid-feedback">Ingresa un número de celular válido (7-15 dígitos).</div>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <label for="fpqrsDireccion" class="form-label fw-semibold">
-                  Dirección de residencia
-                </label>
-                <input type="text" id="fpqrsDireccion" name="direccion" class="form-control input-rounded"
-                  placeholder="Calle 45 # 12-34, Bogotá (opcional)"
-                  autocomplete="street-address">
-              </div>
-
-            </div>
+    <!-- Navbar pública -->
+    <header class="portal-navbar" role="banner">
+      <div class="portal-navbar-inner">
+        <div class="portal-brand">
+          <i class="bi bi-shield-check portal-brand-icon" aria-hidden="true"></i>
+          <div>
+            <div class="portal-brand-name">GestorFPQRS</div>
+            <div class="portal-brand-sub">CoopFinanzas — Portal de Atención al Asociado</div>
           </div>
         </div>
+        <div class="portal-status" aria-label="Estado del servicio: disponible">
+          <span class="portal-status-dot" aria-hidden="true"></span>
+          Servicio disponible
+        </div>
+      </div>
+    </header>
 
-        <!-- Sección 2: Datos del caso -->
-        <div class="form-section-card">
-          <div class="form-section-header">
-            <i class="bi bi-folder2-open" aria-hidden="true"></i>
-            <h2 class="form-section-title">Detalles del caso FPQRS</h2>
-          </div>
-          <div class="form-section-body">
-            <div class="row g-3">
+    <!-- Contenido centrado -->
+    <main class="portal-content" role="main" id="main-content">
+      <div class="portal-container">
 
-              <div class="col-12 col-md-6 col-lg-3">
-                <label for="fpqrsTipo" class="form-label fw-semibold">
-                  Tipo de caso <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <select id="fpqrsTipo" name="tipo" class="form-select input-rounded" required aria-required="true" aria-describedby="tipoFeedback">
-                  <option value="">— Selecciona un tipo —</option>
-                  <option value="Petición">Petición</option>
-                  <option value="Queja">Queja</option>
-                  <option value="Reclamo">Reclamo</option>
-                  <option value="Sugerencia">Sugerencia</option>
-                  <option value="Felicitación">Felicitación</option>
-                </select>
-                <div id="tipoFeedback" class="invalid-feedback">Selecciona el tipo de caso.</div>
-                <div class="form-text">
-                  <a href="#" data-bs-toggle="tooltip" title="Petición: solicitud de servicio. Queja: inconformidad. Reclamo: insatisfacción con respuesta previa. Sugerencia: propuesta de mejora. Felicitación: reconocimiento.">
-                    <i class="bi bi-question-circle"></i> ¿Qué tipo elegir?
-                  </a>
+        <!-- Encabezado de página -->
+        <div class="fpqrs-page-header">
+          <h1 class="fpqrs-page-title">Registrar caso FPQRS</h1>
+          <p class="fpqrs-page-subtitle">
+            Diligencia el formulario para radicar su Felicitación, Petición, Queja, Reclamo o Sugerencia.
+            Los campos marcados con <span class="text-danger">*</span> son obligatorios.
+          </p>
+        </div>
+
+        <!-- Banner informativo -->
+        <div class="info-banner mb-4" role="note">
+          <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+          <p>
+            <strong>Información importante</strong><br>
+            Al enviar este formulario, su caso será radicado y recibirá un número de seguimiento.
+            Nuestro equipo le contactará según los tiempos de respuesta establecidos por la
+            Superintendencia Financiera de Colombia.
+          </p>
+        </div>
+
+        <!-- Formulario -->
+        <form id="fpqrsForm" novalidate aria-label="Formulario de radicación FPQRS">
+
+          <!-- Sección 1: Datos personales -->
+          <div class="form-section-card">
+            <div class="fpqrs-section-header">
+              <i class="bi bi-person-circle fpqrs-section-icon" aria-hidden="true"></i>
+              <div>
+                <h2 class="fpqrs-section-title">Datos personales</h2>
+                <p class="fpqrs-section-subtitle">Información del asociado que registra el caso</p>
+              </div>
+            </div>
+            <div class="form-section-body">
+              <div class="row g-3">
+
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsTipoId" class="form-label fw-semibold">
+                    Tipo de identificación <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <select id="fpqrsTipoId" name="tipoId" class="form-select input-rounded" required
+                    aria-required="true">
+                    <option value="">Seleccionar...</option>
+                    <option value="CC">Cédula de ciudadanía (CC)</option>
+                    <option value="CE">Cédula de extranjería (CE)</option>
+                    <option value="PA">Pasaporte (PA)</option>
+                    <option value="NIT">NIT</option>
+                    <option value="TI">Tarjeta de identidad (TI)</option>
+                  </select>
+                  <div class="invalid-feedback">Selecciona el tipo de identificación.</div>
                 </div>
-              </div>
 
-              <div class="col-12 col-md-6 col-lg-3">
-                <label for="fpqrsServicio" class="form-label fw-semibold">
-                  Servicio <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <select id="fpqrsServicio" name="servicio" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="servicioFeedback">
-                  <option value="">— Primero selecciona el tipo —</option>
-                </select>
-                <div id="servicioFeedback" class="invalid-feedback">Selecciona el servicio.</div>
-              </div>
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsNumId" class="form-label fw-semibold">
+                    Número de identificación <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <input type="text" id="fpqrsNumId" name="numId" class="form-control input-rounded"
+                    placeholder="Ej. 1082456789" required aria-required="true" pattern="[0-9A-Za-z\-]{5,20}"
+                    aria-describedby="numIdFeedback">
+                  <div id="numIdFeedback" class="invalid-feedback">Ingresa un número de identificación válido.</div>
+                </div>
 
-              <div class="col-12 col-md-6 col-lg-3">
-                <label for="fpqrsCategoria" class="form-label fw-semibold">
-                  Categoría <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <select id="fpqrsCategoria" name="categoria" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="categoriaFeedback">
-                  <option value="">— Primero selecciona el servicio —</option>
-                </select>
-                <div id="categoriaFeedback" class="invalid-feedback">Selecciona la categoría.</div>
-              </div>
+                <div class="col-12">
+                  <label for="fpqrsNombre" class="form-label fw-semibold">
+                    Nombre completo <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <input type="text" id="fpqrsNombre" name="nombre" class="form-control input-rounded"
+                    placeholder="Nombres y apellidos completos" autocomplete="name" required aria-required="true"
+                    aria-describedby="nombreFeedback">
+                  <div id="nombreFeedback" class="invalid-feedback">Ingresa el nombre completo.</div>
+                </div>
 
-              <div class="col-12 col-md-6 col-lg-3">
-                <label for="fpqrsSubcategoria" class="form-label fw-semibold">
-                  Subcategoría <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <select id="fpqrsSubcategoria" name="subcategoria" class="form-select input-rounded" required aria-required="true" disabled aria-describedby="subcategoriaFeedback">
-                  <option value="">— Primero selecciona la categoría —</option>
-                </select>
-                <div id="subcategoriaFeedback" class="invalid-feedback">Selecciona la subcategoría.</div>
-              </div>
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsEmail" class="form-label fw-semibold">
+                    Correo electrónico <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">Le enviaremos confirmación y actualizaciones a este correo</div>
+                  <input type="email" id="fpqrsEmail" name="email" class="form-control input-rounded"
+                    placeholder="correo@ejemplo.com" autocomplete="email" required aria-required="true"
+                    aria-describedby="emailFpqrsFeedback">
+                  <div id="emailFpqrsFeedback" class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                </div>
 
-              <!-- Campo dinámico: urgencia (Queja / Reclamo) -->
-              <div class="col-12 col-md-6 d-none" id="campoUrgencia">
-                <label for="fpqrsUrgencia" class="form-label fw-semibold">Nivel de urgencia</label>
-                <select id="fpqrsUrgencia" name="urgencia" class="form-select input-rounded">
-                  <option value="Normal">Normal</option>
-                  <option value="Alta">Alta</option>
-                  <option value="Crítica">Crítica</option>
-                </select>
-              </div>
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsTelefono" class="form-label fw-semibold">
+                    Número de celular <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <input type="tel" id="fpqrsTelefono" name="telefono" class="form-control input-rounded"
+                    placeholder="3XXXXXXXXX" autocomplete="tel" required aria-required="true"
+                    aria-describedby="telefonoFeedback">
+                  <div id="telefonoFeedback" class="invalid-feedback">Ingresa un número de celular válido.</div>
+                </div>
 
-              <!-- Campo dinámico: área sugerida (Sugerencia) -->
-              <div class="col-12 col-md-6 d-none" id="campoSugerenciaDetalle">
-                <label for="fpqrsAreaSugerida" class="form-label fw-semibold">Área de mejora sugerida</label>
-                <input type="text" id="fpqrsAreaSugerida" name="areaSugerida" class="form-control input-rounded"
-                  placeholder="Ej: equipo de soporte digital">
-              </div>
+                <div class="col-12">
+                  <label for="fpqrsDireccion" class="form-label fw-semibold">
+                    Dirección de residencia
+                  </label>
+                  <input type="text" id="fpqrsDireccion" name="direccion" class="form-control input-rounded"
+                    placeholder="Calle, carrera, número, ciudad" autocomplete="street-address">
+                </div>
 
-              <div class="col-12">
-                <label for="fpqrsDescripcion" class="form-label fw-semibold">
-                  Descripción detallada <span class="text-danger" aria-hidden="true">*</span>
-                </label>
-                <textarea id="fpqrsDescripcion" name="descripcion" class="form-control input-rounded" rows="5"
-                  placeholder="Describe tu caso con detalle. Incluye fechas, montos, números de transacción o cualquier información relevante…"
-                  required aria-required="true" minlength="20"
-                  aria-describedby="descripcionFeedback descripcionHelp"></textarea>
-                <div class="d-flex justify-content-between">
-                  <div id="descripcionFeedback" class="invalid-feedback">La descripción debe tener al menos 20 caracteres.</div>
-                  <div id="descripcionHelp" class="form-text ms-auto">
-                    <span id="charCount">0</span> caracteres
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 2: Datos del caso -->
+          <div class="form-section-card">
+            <div class="fpqrs-section-header">
+              <i class="bi bi-briefcase fpqrs-section-icon" aria-hidden="true"></i>
+              <div>
+                <h2 class="fpqrs-section-title">Datos del caso</h2>
+                <p class="fpqrs-section-subtitle">Describa detalladamente su solicitud para una atención más ágil</p>
+              </div>
+            </div>
+            <div class="form-section-body">
+              <div class="row g-3">
+
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsTipo" class="form-label fw-semibold">
+                    Tipo de caso <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">¿Qué tipo de comunicación desea radicar?</div>
+                  <select id="fpqrsTipo" name="tipo" class="form-select input-rounded" required aria-required="true"
+                    aria-describedby="tipoFeedback">
+                    <option value="">Seleccionar tipo de caso...</option>
+                    <option value="Petición">Petición</option>
+                    <option value="Queja">Queja</option>
+                    <option value="Reclamo">Reclamo</option>
+                    <option value="Sugerencia">Sugerencia</option>
+                    <option value="Felicitación">Felicitación</option>
+                  </select>
+                  <div id="tipoFeedback" class="invalid-feedback">Selecciona el tipo de caso.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsServicio" class="form-label fw-semibold">
+                    Servicio <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">¿Sobre qué servicio de la cooperativa es su caso?</div>
+                  <select id="fpqrsServicio" name="servicio" class="form-select input-rounded" required
+                    aria-required="true" disabled aria-describedby="servicioFeedback">
+                    <option value="">Seleccionar servicio...</option>
+                  </select>
+                  <div id="servicioFeedback" class="invalid-feedback">Selecciona el servicio.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsCategoria" class="form-label fw-semibold">
+                    Categoría <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">Seleccione primero el servicio para ver las categorías disponibles</div>
+                  <select id="fpqrsCategoria" name="categoria" class="form-select input-rounded" required
+                    aria-required="true" disabled aria-describedby="categoriaFeedback">
+                    <option value="">Seleccionar categoría...</option>
+                  </select>
+                  <div id="categoriaFeedback" class="invalid-feedback">Selecciona la categoría.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="fpqrsSubcategoria" class="form-label fw-semibold">
+                    Subcategoría <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">Seleccione la subcategoría que mejor describe su caso</div>
+                  <select id="fpqrsSubcategoria" name="subcategoria" class="form-select input-rounded" required
+                    aria-required="true" disabled aria-describedby="subcategoriaFeedback">
+                    <option value="">Seleccionar subcategoría...</option>
+                  </select>
+                  <div id="subcategoriaFeedback" class="invalid-feedback">Selecciona la subcategoría.</div>
+                </div>
+
+                <!-- Campo dinámico: urgencia (Queja / Reclamo) -->
+                <div class="col-12 col-md-6 d-none" id="campoUrgencia">
+                  <label for="fpqrsUrgencia" class="form-label fw-semibold">Nivel de urgencia</label>
+                  <select id="fpqrsUrgencia" name="urgencia" class="form-select input-rounded">
+                    <option value="Normal">Normal</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Crítica">Crítica</option>
+                  </select>
+                </div>
+
+                <!-- Campo dinámico: área sugerida (Sugerencia) -->
+                <div class="col-12 col-md-6 d-none" id="campoSugerenciaDetalle">
+                  <label for="fpqrsAreaSugerida" class="form-label fw-semibold">Área de mejora sugerida</label>
+                  <input type="text" id="fpqrsAreaSugerida" name="areaSugerida" class="form-control input-rounded"
+                    placeholder="Ej: equipo de soporte digital">
+                </div>
+
+                <div class="col-12">
+                  <label for="fpqrsDescripcion" class="form-label fw-semibold">
+                    Descripción detallada del caso <span class="text-danger" aria-hidden="true">*</span>
+                  </label>
+                  <div class="fpqrs-field-hint">Incluya fechas, montos, números de transacción y cualquier detalle
+                    relevante que facilite la gestión de su caso</div>
+                  <textarea id="fpqrsDescripcion" name="descripcion" class="form-control input-rounded" rows="5"
+                    placeholder="Describa su caso con el mayor detalle posible. Ej: El día 3 de mayo realicé un pago PSE por valor de $2.350.000 con código de transacción PSE-20260503-8847. El dinero fue debitado de mi cuenta pero no fue acreditado en el banco destino..."
+                    required aria-required="true" minlength="20"
+                    aria-describedby="descripcionFeedback descripcionHelp"></textarea>
+                  <div class="d-flex justify-content-between">
+                    <div id="descripcionFeedback" class="invalid-feedback">La descripción debe tener al menos 20
+                      caracteres.</div>
+                    <div id="descripcionHelp" class="form-text ms-auto">
+                      <span id="charCount">0</span> caracteres
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            </div>
-          </div>
-        </div>
-
-        <!-- Sección 3: Adjuntos -->
-        <div class="form-section-card">
-          <div class="form-section-header">
-            <i class="bi bi-paperclip" aria-hidden="true"></i>
-            <h2 class="form-section-title">Documentos de soporte (opcional)</h2>
-          </div>
-          <div class="form-section-body">
-
-            <div class="file-drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Zona de carga de archivos. Haz clic o arrastra archivos aquí">
-              <i class="bi bi-cloud-upload d-block" aria-hidden="true"></i>
-              <p><strong>Arrastra archivos aquí</strong> o haz clic para seleccionar</p>
-              <p class="drop-hint">PDF, JPG, PNG, DOCX · Máx. 5 MB por archivo · Máx. 5 archivos</p>
-            </div>
-            <input type="file" id="archivoInput" name="archivos" multiple
-              accept=".pdf,.jpg,.jpeg,.png,.docx"
-              class="d-none" aria-label="Seleccionar archivos">
-
-            <div class="file-list" id="fileList" aria-live="polite" aria-label="Archivos seleccionados"></div>
-
-          </div>
-        </div>
-
-        <!-- Sección 4: Consentimiento y envío -->
-        <div class="form-section-card">
-          <div class="form-section-body">
-
-            <div class="form-check mb-4">
-              <input class="form-check-input" type="checkbox" id="consentimiento" name="consentimiento" required aria-required="true">
-              <label class="form-check-label" for="consentimiento">
-                Autorizo el tratamiento de mis datos personales conforme a la
-                <a href="#" class="fw-semibold">Política de Privacidad</a> de CoopFinanzas, en cumplimiento de la Ley 1581 de 2012 (Habeas Data Colombia).
-                <span class="text-danger" aria-hidden="true"> *</span>
-              </label>
-              <div class="invalid-feedback">Debes aceptar la política de privacidad para continuar.</div>
-            </div>
-
-            <div class="d-flex flex-wrap gap-3 align-items-center">
-              <button type="submit" class="btn btn-primary-brand btn-lg px-5">
-                <i class="bi bi-pencil-square me-2" aria-hidden="true"></i>Radicar caso FPQRS
-              </button>
-              <a href="bandeja-casos.html" class="btn btn-outline-secondary btn-lg">
-                <i class="bi bi-x-circle me-2" aria-hidden="true"></i>Cancelar
-              </a>
-              <div class="ms-auto text-muted" style="font-size:var(--font-size-xs);">
-                <i class="bi bi-shield-lock me-1" aria-hidden="true"></i>
-                Normativa SFC Colombia
               </div>
             </div>
-
           </div>
-        </div>
 
-      </form><!-- /fpqrsForm -->
+          <!-- Sección 3: Documentos de soporte -->
+          <div class="form-section-card">
+            <div class="form-section-body">
+              <h2 class="fpqrs-docs-title">Documentos de soporte</h2>
+              <p class="fpqrs-docs-subtitle">
+                Adjunte capturas de pantalla, comprobantes u otros documentos que respalden su caso
+                (máx. <strong>5 archivos</strong>, <strong>5 MB</strong> c/u)
+              </p>
 
+              <div class="file-drop-zone mt-3" id="dropZone" role="button" tabindex="0"
+                aria-label="Zona de carga de archivos. Haz clic o arrastra archivos aquí">
+                <i class="bi bi-upload d-block" aria-hidden="true"></i>
+                <p>Arrastre archivos aquí o <span class="fpqrs-drop-link">haga clic</span> para seleccionar</p>
+                <p class="drop-hint">PDF, JPG, PNG, DOCX — máximo 5 MB por archivo</p>
+              </div>
+              <input type="file" id="archivoInput" name="archivos" multiple accept=".pdf,.jpg,.jpeg,.png,.docx"
+                class="d-none" aria-label="Seleccionar archivos">
+
+              <div class="file-list" id="fileList" aria-live="polite" aria-label="Archivos seleccionados"></div>
+            </div>
+          </div>
+
+          <!-- Sección 4: Consentimiento -->
+          <div class="form-section-card">
+            <div class="form-section-body">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="consentimiento" name="consentimiento" required
+                  aria-required="true">
+                <label class="form-check-label" for="consentimiento" style="font-size:var(--font-size-sm);">
+                  Autorizo a <strong>CoopFinanzas</strong> para recolectar, almacenar, usar y tratar mis datos
+                  personales
+                  conforme a la <a href="#" class="fpqrs-consent-link">Política de Tratamiento de Datos Personales</a>
+                  y la Ley 1581 de 2012, con el fin de gestionar mi solicitud FPQRS y contactarme durante el proceso de
+                  atención.
+                </label>
+                <div class="invalid-feedback">Debes aceptar la política de privacidad para continuar.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección 5: Envío -->
+          <div class="form-section-card">
+            <div class="form-section-body">
+              <div class="fpqrs-submit-footer">
+                <div class="fpqrs-submit-text">
+                  <h3>¿Listo para radicar su caso?</h3>
+                  <p>Recibirá un número de radicado y confirmación por correo electrónico</p>
+                </div>
+                <button type="submit" class="btn btn-primary-brand px-4">
+                  Radicar caso FPQRS <i class="bi bi-chevron-right ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form><!-- /fpqrsForm -->
+      </div><!-- /portal-container -->
     </main>
-  </div>
-</div>
 
-<!-- Modal: Confirmación de radicado -->
-<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header" style="background: var(--color-primary); color: #fff;">
-        <h5 class="modal-title" id="modalConfirmacionLabel">
-          <i class="bi bi-check-circle-fill me-2"></i>¡Caso radicado exitosamente!
-        </h5>
+    <!-- Footer público -->
+    <footer class="portal-footer" role="contentinfo">
+      <div class="portal-navbar-inner portal-footer-inner">
+        <span>© 2026 CoopFinanzas. Sistema FPQRS — Normativa SFC Colombia</span>
+        <span>¿Necesita ayuda? Llame al 01 8000 123 456</span>
       </div>
-      <div class="modal-body text-center py-4">
-        <div class="mb-3">
-          <i class="bi bi-check-circle-fill text-success" style="font-size:3rem;" aria-hidden="true"></i>
-        </div>
-        <p class="text-muted mb-1">Tu número de radicado es:</p>
-        <h3 class="fw-bold text-primary mb-3" id="confirmRadicadoId" style="letter-spacing: 1px; font-size: 1.4rem;"></h3>
+    </footer>
 
-        <div class="text-start bg-light rounded p-3" style="font-size:var(--font-size-sm);">
-          <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-            <span class="text-muted">Tipo de caso</span>
-            <span id="confirmTipo"></span>
-          </div>
-          <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-            <span class="text-muted">Fecha de radicación</span>
-            <strong id="confirmFecha"></strong>
-          </div>
-          <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-            <span class="text-muted">Límite de respuesta</span>
-            <strong id="confirmLimite"></strong>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span class="text-muted">Notificación enviada a</span>
-            <strong id="confirmEmail"></strong>
-          </div>
-        </div>
+  </div><!-- /portal-layout -->
 
-        <p class="text-muted mt-3 mb-0" style="font-size:var(--font-size-xs);">
-          <i class="bi bi-info-circle me-1"></i>
-          Guarda tu número de radicado. Puedes consultarlo en la bandeja de casos.
-        </p>
-      </div>
-      <div class="modal-footer justify-content-center gap-3">
-        <button type="button" class="btn btn-outline-secondary" id="btnRadicarOtro">
-          <i class="bi bi-plus-circle me-1"></i>Radicar otro caso
-        </button>
-        <button type="button" class="btn btn-primary-brand" id="btnIrBandeja">
-          <i class="bi bi-inbox me-1"></i>Ir a la bandeja
-        </button>
+  <!-- Modal: Confirmación de radicado -->
+  <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel"
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background: var(--color-primary); color: #fff;">
+          <h5 class="modal-title" id="modalConfirmacionLabel">
+            <i class="bi bi-check-circle-fill me-2"></i>¡Caso radicado exitosamente!
+          </h5>
+        </div>
+        <div class="modal-body text-center py-4">
+          <div class="mb-3">
+            <i class="bi bi-check-circle-fill text-success" style="font-size:3rem;" aria-hidden="true"></i>
+          </div>
+          <p class="text-muted mb-1">Tu número de radicado es:</p>
+          <h3 class="fw-bold text-primary mb-3" id="confirmRadicadoId" style="letter-spacing: 1px; font-size: 1.4rem;">
+          </h3>
+
+          <div class="text-start bg-light rounded p-3" style="font-size:var(--font-size-sm);">
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+              <span class="text-muted">Tipo de caso</span>
+              <span id="confirmTipo"></span>
+            </div>
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+              <span class="text-muted">Fecha de radicación</span>
+              <strong id="confirmFecha"></strong>
+            </div>
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+              <span class="text-muted">Límite de respuesta</span>
+              <strong id="confirmLimite"></strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-muted">Notificación enviada a</span>
+              <strong id="confirmEmail"></strong>
+            </div>
+          </div>
+
+          <p class="text-muted mt-3 mb-0" style="font-size:var(--font-size-xs);">
+            <i class="bi bi-info-circle me-1"></i>
+            Guarda tu número de radicado. Puedes consultarlo en la bandeja de casos.
+          </p>
+        </div>
+        <div class="modal-footer justify-content-center gap-3">
+          <button type="button" class="btn btn-outline-secondary" id="btnRadicarOtro">
+            <i class="bi bi-plus-circle me-1"></i>Radicar otro caso
+          </button>
+          <button type="button" class="btn btn-primary-brand" id="btnIrBandeja">
+            <i class="bi bi-inbox me-1"></i>Ir a la bandeja
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- jQuery 3 -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/main.js"></script>
-<script src="../assets/js/formulario.js"></script>
-<script>
-  initPage('formulario', 'Registrar FPQRS');
-
-  // Contador de caracteres en descripción
-  $(document).ready(function () {
-    $('#fpqrsDescripcion').on('input', function () {
-      $('#charCount').text($(this).val().length);
+  <!-- jQuery 3 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/formulario.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#fpqrsDescripcion').on('input', function () {
+        $('#charCount').text($(this).val().length);
+      });
     });
-
-    // Tooltips Bootstrap
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-      new bootstrap.Tooltip(el);
-    });
-  });
-</script>
+  </script>
 </body>
+
 </html>

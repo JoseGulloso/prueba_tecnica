@@ -38,29 +38,38 @@ if (window.location.pathname.includes("detalle-caso")) {
        Renderizar el caso completo
        ------------------------------------------------------- */
     function renderCase(c) {
-      // Título de página
       document.title = `${c.id} — GestorFPQRS`;
 
       // Breadcrumb
       $("#breadcrumbId").text(c.id);
 
-      // Status strip
-      $("#stripId").text(c.id);
-      $("#stripAsunto").text(c.asunto);
+      // Cabecera
+      $("#caseTitle").text(c.id);
       $("#stripTipo").html(getBadgeTipo(c.tipo));
       $("#stripEstado").html(getBadgeEstado(c.estado));
-      $("#stripPrioridad").html(getBadgePrioridad(c.prioridad));
       $("#stripSemaforo").html(getSemaforo(c.semaforo, c.estado));
 
-      // Modal de cierre — ID
-      $("#cerrarCasoId").text(c.id);
+      const subheaderParts = [`Radicado el ${formatDateTime(c.fechaCreacion)}`];
+      if (c.canal) subheaderParts.push(`Canal: ${c.canal}`);
+      $("#caseSubheader").text(subheaderParts.join(" · "));
+
+      // Banner SLA
+      if (c.semaforo === "rojo") {
+        $("#slaAlert").removeClass("d-none");
+        $("#slaAlertSub").text(
+          `La fecha límite de respuesta fue ${formatDateTime(c.fechaLimite)}. Este caso requiere acción inmediata.`
+        );
+      }
+
+      // Panel derecho — estado actual
+      refreshPanelEstado(c);
 
       // Información del asociado
       const asociadoHtml = [
         field("Nombre", c.solicitante),
         field("Identificación", c.identificacion),
-        field("Correo electrónico", c.email),
-        field("Teléfono celular", c.telefono),
+        field("Correo", c.email),
+        field("Celular", c.telefono),
         field("Dirección", c.direccion || "—"),
       ].join("");
       $("#asociadoFields").html(asociadoHtml);
@@ -71,23 +80,30 @@ if (window.location.pathname.includes("detalle-caso")) {
         field("Categoría", c.categoria),
         field("Subcategoría", c.subcategoria),
         field("Responsable", c.responsable),
-        field("Fecha creación", formatDateTime(c.fechaCreacion)),
-        field("Límite SLA", formatDate(c.fechaLimite)),
-        field("SLA aplicado", `Tiempo de respuesta estándar`),
+        field("Fecha límite SLA", formatDateTime(c.fechaLimite)),
+        field("Prioridad", c.prioridad),
+        field("SLA aplicado", c.slaAplicado || "Estándar"),
+        field("Tipo de causa", c.tipoCausa || "—"),
       ].join("");
       $("#detalleFields").html(detalleHtml);
 
       // Descripción
       $("#caseDescripcion").text(c.descripcion);
 
-      // Comentarios
+      // Tabs
       renderComentarios(c.comentarios || []);
-
-      // Adjuntos
       renderAdjuntos(c.adjuntos || []);
-
-      // Historial
       renderHistorial(c.historial || []);
+    }
+
+    function refreshPanelEstado(c) {
+      $("#panelEstado").html(getBadgeEstado(c.estado));
+      $("#panelPrioridad").html(getBadgePrioridad(c.prioridad));
+      $("#panelResponsable").text(c.responsable || "—");
+      $("#panelSlaValor").text(formatDate(c.fechaLimite));
+      $("#panelPrioridadActualBadge").html(
+        `<small class="text-muted me-1">Prioridad actual:</small>${getBadgePrioridad(c.prioridad)}`
+      );
     }
 
     function field(label, value) {
@@ -184,7 +200,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#badgeHistorial").text(historial.length);
       if (!historial.length) {
         $("#listaHistorial").html(
-          '<p class="text-muted text-center">Sin historial.</p>',
+          '<p class="text-muted text-center">Sin historial.</p>'
         );
         return;
       }
@@ -196,7 +212,7 @@ if (window.location.pathname.includes("detalle-caso")) {
           <div class="timeline-date">${formatDateTime(h.fecha)}</div>
           <div class="timeline-action">${h.accion}</div>
           <div class="timeline-user">Por: ${h.usuario}</div>
-        </div>`,
+        </div>`
         )
         .join("");
       $("#listaHistorial").html(html);
@@ -240,48 +256,42 @@ if (window.location.pathname.includes("detalle-caso")) {
     });
 
     /* -------------------------------------------------------
-       Acciones modales
+       Panel derecho — Cambiar estado
        ------------------------------------------------------- */
-
-    // Cambiar estado
-    $("#btnConfirmarEstado").on("click", function () {
-      const nuevoEstado = $("#nuevoEstado").val();
+    $("#btnAplicarEstado").on("click", function () {
+      const nuevoEstado = $("#panelNuevoEstado").val();
       if (!nuevoEstado) {
-        $("#nuevoEstado").addClass("is-invalid");
+        $("#panelNuevoEstado").addClass("is-invalid");
         return;
       }
+      $("#panelNuevoEstado").removeClass("is-invalid");
 
-      const obs = $("#estadoObservacion").val().trim();
       const user = getSessionUser();
       currentCaso.estado = nuevoEstado;
-
-      const histEntry = {
+      currentCaso.historial.push({
         fecha: new Date().toISOString(),
-        accion: `Estado cambiado a ${nuevoEstado}${obs ? ": " + obs : ""}`,
+        accion: `Estado cambiado a ${nuevoEstado}`,
         usuario: user ? user.nombre : "Usuario",
-      };
-      currentCaso.historial.push(histEntry);
+      });
       saveCasoOverride(currentCaso);
 
-      bootstrap.Modal.getInstance($("#modalCambiarEstado")[0]).hide();
-      $("#nuevoEstado").val("").removeClass("is-invalid");
-      $("#estadoObservacion").val("");
-
+      $("#panelNuevoEstado").val("");
+      refreshPanelEstado(currentCaso);
       $("#stripEstado").html(getBadgeEstado(nuevoEstado));
       renderHistorial(currentCaso.historial);
-      showToast(
-        `Estado actualizado a <strong>${nuevoEstado}</strong>.`,
-        "success",
-      );
+      showToast(`Estado actualizado a <strong>${nuevoEstado}</strong>.`, "success");
     });
 
-    // Cambiar prioridad
-    $("#btnConfirmarPrioridad").on("click", function () {
-      const nuevaPrioridad = $("#nuevaPrioridad").val();
-      if (!nuevaPrioridad) {
-        $("#nuevaPrioridad").addClass("is-invalid");
-        return;
-      }
+    $("#panelNuevoEstado").on("change", function () {
+      $(this).removeClass("is-invalid");
+    });
+
+    /* -------------------------------------------------------
+       Panel derecho — Cambiar prioridad
+       ------------------------------------------------------- */
+    $("#panelNuevaPrioridad").on("change", function () {
+      const nuevaPrioridad = $(this).val();
+      if (!nuevaPrioridad) return;
 
       const user = getSessionUser();
       currentCaso.prioridad = nuevaPrioridad;
@@ -292,24 +302,22 @@ if (window.location.pathname.includes("detalle-caso")) {
       });
       saveCasoOverride(currentCaso);
 
-      bootstrap.Modal.getInstance($("#modalCambiarPrioridad")[0]).hide();
-      $("#nuevaPrioridad").val("").removeClass("is-invalid");
-
-      $("#stripPrioridad").html(getBadgePrioridad(nuevaPrioridad));
+      $(this).val("");
+      refreshPanelEstado(currentCaso);
       renderHistorial(currentCaso.historial);
-      showToast(
-        `Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`,
-        "success",
-      );
+      showToast(`Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`, "success");
     });
 
-    // Reasignar
-    $("#btnConfirmarReasignar").on("click", function () {
-      const nuevoResp = $("#nuevoResponsable").val();
+    /* -------------------------------------------------------
+       Panel derecho — Reasignar
+       ------------------------------------------------------- */
+    $("#btnAplicarReasignar").on("click", function () {
+      const nuevoResp = $("#panelNuevoResponsable").val();
       if (!nuevoResp) {
-        $("#nuevoResponsable").addClass("is-invalid");
+        $("#panelNuevoResponsable").addClass("is-invalid");
         return;
       }
+      $("#panelNuevoResponsable").removeClass("is-invalid");
 
       const user = getSessionUser();
       const anteriorResp = currentCaso.responsable;
@@ -321,24 +329,31 @@ if (window.location.pathname.includes("detalle-caso")) {
       });
       saveCasoOverride(currentCaso);
 
-      bootstrap.Modal.getInstance($("#modalReasignar")[0]).hide();
-      $("#nuevoResponsable").val("").removeClass("is-invalid");
+      $("#panelNuevoResponsable").val("").removeClass("is-invalid");
+      refreshPanelEstado(currentCaso);
 
-      // Actualizar campo en el panel de detalles
+      // Actualizar campo responsable en detalles
       $("#detalleFields .field-group").each(function () {
         if ($(this).find("label").text() === "Responsable") {
           $(this).find(".field-value").text(nuevoResp);
         }
       });
+
       renderHistorial(currentCaso.historial);
       showToast(`Caso reasignado a <strong>${nuevoResp}</strong>.`, "success");
     });
 
-    // Observación
-    $("#btnConfirmarObservacion").on("click", function () {
-      const texto = $("#textoObservacion").val().trim();
+    $("#panelNuevoResponsable").on("change", function () {
+      $(this).removeClass("is-invalid");
+    });
+
+    /* -------------------------------------------------------
+       Panel derecho — Registrar observación
+       ------------------------------------------------------- */
+    $("#btnAplicarObservacion").on("click", function () {
+      const texto = $("#panelObservacion").val().trim();
       if (!texto) {
-        $("#textoObservacion").addClass("is-invalid");
+        $("#panelObservacion").addClass("is-invalid");
         return;
       }
       const user = getSessionUser();
@@ -356,61 +371,81 @@ if (window.location.pathname.includes("detalle-caso")) {
       });
       saveCasoOverride(currentCaso);
 
-      bootstrap.Modal.getInstance($("#modalObservacion")[0]).hide();
-      $("#textoObservacion").val("").removeClass("is-invalid");
-      $("#notificarAsociado").prop("checked", false);
+      $("#panelObservacion").val("").removeClass("is-invalid");
+      $("#panelNotificarAsociado").prop("checked", false);
 
       renderComentarios(currentCaso.comentarios);
       renderHistorial(currentCaso.historial);
       showToast("Observación registrada correctamente.", "success");
     });
 
-    $("#textoObservacion").on("input", function () {
+    $("#panelObservacion").on("input", function () {
       $(this).removeClass("is-invalid");
     });
 
-    // Cerrar caso
-    $("#btnConfirmarCierre").on("click", function () {
-      const obs = $("#cierreObservacion").val().trim();
-      if (!obs) {
-        $("#cierreObservacion").addClass("is-invalid");
+    /* -------------------------------------------------------
+       Panel derecho — Cerrar caso
+       ------------------------------------------------------- */
+    $("#btnCerrarCaso").on("click", function () {
+      const obs = prompt(
+        `¿Confirmas el cierre del caso ${currentCaso.id}?\n\nEscribe la observación de cierre (requerida):`
+      );
+      if (obs === null) return; // canceló
+      if (!obs.trim()) {
+        showToast("La observación de cierre es requerida.", "warning");
         return;
       }
       const user = getSessionUser();
       currentCaso.estado = "Cerrado";
       currentCaso.historial.push({
         fecha: new Date().toISOString(),
-        accion: `Caso cerrado: ${obs}`,
+        accion: `Caso cerrado: ${obs.trim()}`,
         usuario: user ? user.nombre : "Usuario",
       });
       saveCasoOverride(currentCaso);
 
-      bootstrap.Modal.getInstance($("#modalCerrar")[0]).hide();
-      $("#cierreObservacion").val("").removeClass("is-invalid");
-
+      refreshPanelEstado(currentCaso);
       $("#stripEstado").html(getBadgeEstado("Cerrado"));
       renderHistorial(currentCaso.historial);
       showToast("Caso cerrado exitosamente.", "success");
     });
 
-    $("#cierreObservacion").on("input", function () {
-      $(this).removeClass("is-invalid");
-    });
+    /* -------------------------------------------------------
+       Panel derecho — Anular caso
+       ------------------------------------------------------- */
+    $("#btnAnularCaso").on("click", function () {
+      const obs = prompt(
+        `¿Confirmas la anulación del caso ${currentCaso.id}?\n\nEscribe el motivo de anulación (requerido):`
+      );
+      if (obs === null) return;
+      if (!obs.trim()) {
+        showToast("El motivo de anulación es requerido.", "warning");
+        return;
+      }
+      const user = getSessionUser();
+      currentCaso.estado = "Anulado";
+      currentCaso.historial.push({
+        fecha: new Date().toISOString(),
+        accion: `Caso anulado: ${obs.trim()}`,
+        usuario: user ? user.nombre : "Usuario",
+      });
+      saveCasoOverride(currentCaso);
 
-    // Limpiar validaciones al abrir modales
-    $(".modal").on("show.bs.modal", function () {
-      $(this).find(".is-invalid").removeClass("is-invalid");
+      refreshPanelEstado(currentCaso);
+      $("#stripEstado").html(getBadgeEstado("Anulado"));
+      renderHistorial(currentCaso.historial);
+      showToast("Caso anulado.", "warning");
     });
 
     /* -------------------------------------------------------
-       Botón de descarga (simulado)
+       Descarga simulada
        ------------------------------------------------------- */
     $(document).on(
       "click",
       '.btn-outline-secondary[title="Descargar (simulado)"]',
       function () {
         showToast("Descarga simulada. No hay archivo real disponible.", "info");
-      },
+      }
     );
 
     /* -------------------------------------------------------

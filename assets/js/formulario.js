@@ -3,40 +3,13 @@
 $(document).ready(function () {
 
   /* =====================================================
-     Datos de cascada: Tipo → Servicio → Categoría → Sub
+     Catálogo cargado desde JSON externo
      ===================================================== */
-  const cascadaData = {
-    'Petición': {
-      'Créditos':          { 'Solicitudes': ['Nuevo crédito','Refinanciación','Certificados','Paz y salvo'], 'Documentos': ['Copia de contrato','Extracto'] },
-      'Seguros':           { 'Pólizas': ['Consulta de vigencia','Copia de póliza','Beneficiarios'], 'Cobros': ['Verificación de cargo','Cancelación'] },
-      'Canales Digitales': { 'App Móvil': ['Acceso','Funcionalidades','Notificaciones'], 'Banca en Línea': ['Registro','Transacciones','Contraseñas'] },
-      'Atención al Cliente': { 'Actualización de datos': ['Datos personales','Datos de contacto','Dirección'], 'Certificados': ['Historial crediticio','Saldo','Extracto'] },
-      'Tarjetas':          { 'Tarjeta de Crédito': ['Ampliación de cupo','Estado de cuenta','Bloqueo/Desbloqueo'], 'Tarjeta Débito': ['Activación','Reposición','Límites'] },
-    },
-    'Queja': {
-      'Créditos':          { 'Desembolso': ['Error en monto','Error en tasa','Demora'], 'Cobros': ['Cargos no autorizados','Doble cobro'] },
-      'Seguros':           { 'Seguros de Vida': ['Cobro no autorizado','Incumplimiento'], 'Pólizas': ['Error en póliza'] },
-      'Canales Digitales': { 'App Móvil': ['Autenticación biométrica','Fallas técnicas','Lentitud'], 'Banca en Línea': ['Fallas en transacciones','Seguridad'] },
-      'Atención al Cliente': { 'Call Center': ['Tiempos de espera','Mala atención','Información incorrecta'], 'Servicio Presencial': ['Espera prolongada','Mala atención'] },
-      'Tarjetas':          { 'Tarjeta Débito': ['Bloqueo de tarjeta','Cobro indebido'], 'Tarjeta de Crédito': ['Fraude','Cargo no reconocido'] },
-      'Inversiones':       { 'CDT': ['Liquidación','Renovación automática'], 'Fondos': ['Rentabilidad','Retiro'] },
-    },
-    'Reclamo': {
-      'Créditos':          { 'Desembolso': ['Error en tasa de interés','Monto incorrecto'], 'Cuotas': ['Cobro duplicado','Reliquidación'] },
-      'Seguros':           { 'Seguros de Vida': ['Cobro no autorizado','Cancelación sin aviso'], 'Siniestros': ['Demora en pago','Negación injustificada'] },
-      'Canales Digitales': { 'Banca en Línea': ['Transferencia no procesada','Doble débito'], 'App Móvil': ['Transacción fallida'] },
-      'Inversiones':       { 'CDT': ['Error en liquidación','Tasa incorrecta'] },
-    },
-    'Sugerencia': {
-      'Canales Digitales': { 'App Móvil': ['Nueva funcionalidad','Notificaciones','Usabilidad'], 'Banca en Línea': ['Mejora de interfaz','Nueva función'] },
-      'Atención al Cliente': { 'Call Center': ['Tiempos de espera','Horarios de atención'], 'Servicio Presencial': ['Infraestructura','Procesos'] },
-      'Créditos':          { 'Proceso de aprobación': ['Digitalización','Tiempos','Comunicación'] },
-    },
-    'Felicitación': {
-      'Atención al Cliente': { 'Servicio Presencial': ['Calidad de atención','Agilidad'], 'Call Center': ['Resolución eficaz','Amabilidad'] },
-      'Créditos':          { 'Crédito Hipotecario': ['Proceso de aprobación','Acompañamiento'], 'Crédito de Consumo': ['Rapidez','Asesoría'] },
-    }
-  };
+  let catalogo = null;
+
+  loadJSON('../data/catalogo-fpqrs.json').done(function (data) {
+    catalogo = data;
+  });
 
   /* =====================================================
      Dropdowns en cascada
@@ -58,33 +31,39 @@ $(document).ready(function () {
     resetSelect($('#fpqrsCategoria'), 'Selecciona una categoría');
     resetSelect($('#fpqrsSubcategoria'), 'Selecciona una subcategoría');
 
-    if (tipo && cascadaData[tipo]) {
-      populateSelect($('#fpqrsServicio'), Object.keys(cascadaData[tipo]), 'Selecciona un servicio');
+    if (tipo && catalogo) {
+      populateSelect($('#fpqrsServicio'), catalogo.servicios.map(s => s.nombre), 'Selecciona un servicio');
     }
 
-    // Mostrar/ocultar campos adicionales según tipo
     updateDynamicFields(tipo);
   });
 
   $('#fpqrsServicio').on('change', function () {
-    const tipo     = $('#fpqrsTipo').val();
     const servicio = $(this).val();
     resetSelect($('#fpqrsCategoria'), 'Selecciona una categoría');
     resetSelect($('#fpqrsSubcategoria'), 'Selecciona una subcategoría');
 
-    if (tipo && servicio && cascadaData[tipo]?.[servicio]) {
-      populateSelect($('#fpqrsCategoria'), Object.keys(cascadaData[tipo][servicio]), 'Selecciona una categoría');
+    if (servicio && catalogo) {
+      const entry = catalogo.servicios.find(s => s.nombre === servicio);
+      if (entry) {
+        populateSelect($('#fpqrsCategoria'), entry.categorias.map(c => c.nombre), 'Selecciona una categoría');
+      }
     }
   });
 
   $('#fpqrsCategoria').on('change', function () {
-    const tipo      = $('#fpqrsTipo').val();
     const servicio  = $('#fpqrsServicio').val();
     const categoria = $(this).val();
     resetSelect($('#fpqrsSubcategoria'), 'Selecciona una subcategoría');
 
-    if (tipo && servicio && categoria && cascadaData[tipo]?.[servicio]?.[categoria]) {
-      populateSelect($('#fpqrsSubcategoria'), cascadaData[tipo][servicio][categoria], 'Selecciona una subcategoría');
+    if (servicio && categoria && catalogo) {
+      const entry = catalogo.servicios.find(s => s.nombre === servicio);
+      if (entry) {
+        const cat = entry.categorias.find(c => c.nombre === categoria);
+        if (cat) {
+          populateSelect($('#fpqrsSubcategoria'), cat.subcategorias, 'Selecciona una subcategoría');
+        }
+      }
     }
   });
 
@@ -207,7 +186,7 @@ $(document).ready(function () {
       $field.addClass('is-invalid').removeClass('is-valid');
       return false;
     }
-    $field.addClass('is-valid').removeClass('is-invalid');
+    $field.removeClass('is-invalid');
     return true;
   }
 

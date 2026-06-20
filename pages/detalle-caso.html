@@ -7,7 +7,6 @@
   <title>Detalle del Caso — GestorFPQRS</title>
 
   <link rel="icon" type="image/webp" href="../assets/img/logo.webp">
-  <!-- Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
@@ -17,20 +16,6 @@
   <link rel="stylesheet" href="../assets/css/components.css">
 
   <style>
-    .action-bar {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4) var(--space-5);
-      margin-bottom: var(--space-5);
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      align-items: center;
-      box-shadow: var(--shadow-sm);
-    }
-    .action-bar .btn { font-size: var(--font-size-sm); }
-
     .tab-content-panel {
       background: var(--color-surface);
       border: 1px solid var(--color-border-light);
@@ -98,323 +83,274 @@
       <!-- Contenido del caso -->
       <div id="caseContent" class="d-none">
 
-        <!-- Encabezado -->
-        <div class="page-header">
-          <nav class="page-breadcrumb" aria-label="Miga de pan">
-            <a href="../index.html"><i class="bi bi-house"></i> Inicio</a>
-            <span class="mx-1 text-muted">/</span>
-            <a href="bandeja-casos.html">Bandeja de Casos</a>
+        <!-- Cabecera del caso -->
+        <div class="page-header mb-3">
+          <nav class="page-breadcrumb mb-2" aria-label="Miga de pan">
+            <a href="bandeja-casos.html"><i class="bi bi-inbox me-1"></i>Bandeja de Casos</a>
             <span class="mx-1 text-muted">/</span>
             <span id="breadcrumbId">—</span>
           </nav>
+          <div class="case-header-row">
+            <div class="case-header-left">
+              <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                <h1 class="case-main-title mb-0" id="caseTitle">—</h1>
+                <span id="stripTipo"></span>
+                <span id="stripEstado"></span>
+                <span id="stripSemaforo"></span>
+              </div>
+              <div class="case-subheader" id="caseSubheader">—</div>
+            </div>
+            <button class="btn btn-outline-secondary btn-sm case-header-btn" onclick="history.back()" aria-label="Volver a la bandeja">
+              <i class="bi bi-arrow-left me-1"></i>Volver
+            </button>
+          </div>
         </div>
 
-        <!-- Status strip -->
-        <div class="status-strip detail-card mb-4" id="statusStrip" role="region" aria-label="Resumen del caso">
+        <!-- Banner SLA vencido -->
+        <div class="sla-alert d-none mb-4" id="slaAlert" role="alert">
+          <i class="bi bi-exclamation-triangle-fill sla-alert-icon" aria-hidden="true"></i>
           <div>
-            <div class="case-id" id="stripId">—</div>
-            <div class="case-subject text-white-50" id="stripAsunto">—</div>
-          </div>
-          <div class="d-flex flex-wrap gap-2 align-items-center ms-auto">
-            <span id="stripTipo"></span>
-            <span id="stripEstado"></span>
-            <span id="stripPrioridad"></span>
-            <span id="stripSemaforo"></span>
+            <strong>SLA vencido — Atención urgente requerida</strong>
+            <div class="sla-alert-sub" id="slaAlertSub"></div>
           </div>
         </div>
 
-        <!-- Barra de acciones -->
-        <div class="action-bar" role="toolbar" aria-label="Acciones del caso">
-          <button class="btn btn-outline-secondary btn-sm" onclick="history.back()" aria-label="Volver a la bandeja">
-            <i class="bi bi-arrow-left me-1"></i>Volver
-          </button>
-          <div class="vr mx-1 d-none d-sm-block" aria-hidden="true"></div>
-          <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCambiarEstado">
-            <i class="bi bi-arrow-repeat me-1"></i>Cambiar estado
-          </button>
-          <button class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalCambiarPrioridad">
-            <i class="bi bi-flag me-1"></i>Cambiar prioridad
-          </button>
-          <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalReasignar">
-            <i class="bi bi-person-check me-1"></i>Reasignar
-          </button>
-          <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalObservacion">
-            <i class="bi bi-chat-text me-1"></i>Observación
-          </button>
-          <div class="ms-auto d-flex gap-2">
-            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCerrar">
-              <i class="bi bi-check2-circle me-1"></i>Cerrar caso
-            </button>
-            <button class="btn btn-sm btn-outline-secondary" onclick="window.print()" aria-label="Imprimir caso">
-              <i class="bi bi-printer"></i>
-            </button>
-          </div>
-        </div>
+        <!-- Layout principal: izquierda + panel derecho -->
+        <div class="row g-4">
 
-        <!-- Paneles de información -->
-        <div class="row g-4 mb-4">
+          <!-- Columna izquierda: datos + tabs -->
+          <div class="col-lg-8">
 
-          <!-- Información del asociado -->
-          <div class="col-12 col-lg-6">
-            <div class="detail-card h-100">
+            <!-- Datos del Asociado -->
+            <div class="detail-card mb-4">
               <div class="detail-card-header">
                 <h2 class="detail-card-title">
-                  <i class="bi bi-person-circle"></i>Información del Asociado
+                  <i class="bi bi-person-circle"></i>Datos del Asociado
                 </h2>
               </div>
               <div class="detail-card-body">
                 <div class="field-row" id="asociadoFields"></div>
               </div>
             </div>
-          </div>
 
-          <!-- Detalles del caso -->
-          <div class="col-12 col-lg-6">
-            <div class="detail-card h-100">
+            <!-- Datos del Caso -->
+            <div class="detail-card mb-4">
               <div class="detail-card-header">
                 <h2 class="detail-card-title">
-                  <i class="bi bi-info-circle"></i>Detalles del Caso
+                  <i class="bi bi-folder2-open"></i>Datos del Caso
                 </h2>
               </div>
               <div class="detail-card-body">
                 <div class="field-row" id="detalleFields"></div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Tabs -->
-        <div class="mb-4">
-          <ul class="nav nav-tabs" id="caseTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="tab-desc" data-bs-toggle="tab" data-bs-target="#tabDesc" type="button" role="tab" aria-controls="tabDesc" aria-selected="true">
-                <i class="bi bi-file-text me-1"></i>Descripción
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="tab-comentarios" data-bs-toggle="tab" data-bs-target="#tabComentarios" type="button" role="tab" aria-controls="tabComentarios" aria-selected="false">
-                <i class="bi bi-chat-dots me-1"></i>Comentarios
-                <span class="badge bg-secondary ms-1" id="badgeComentarios">0</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="tab-adjuntos" data-bs-toggle="tab" data-bs-target="#tabAdjuntos" type="button" role="tab" aria-controls="tabAdjuntos" aria-selected="false">
-                <i class="bi bi-paperclip me-1"></i>Adjuntos
-                <span class="badge bg-secondary ms-1" id="badgeAdjuntos">0</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="tab-historial" data-bs-toggle="tab" data-bs-target="#tabHistorial" type="button" role="tab" aria-controls="tabHistorial" aria-selected="false">
-                <i class="bi bi-clock-history me-1"></i>Historial
-                <span class="badge bg-secondary ms-1" id="badgeHistorial">0</span>
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="tab-respuestas" data-bs-toggle="tab" data-bs-target="#tabRespuestas" type="button" role="tab" aria-controls="tabRespuestas" aria-selected="false">
-                <i class="bi bi-reply-all me-1"></i>Respuestas
-              </button>
-            </li>
-          </ul>
+            <!-- Tabs -->
+            <div>
+              <ul class="nav nav-tabs" id="caseTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="tab-desc" data-bs-toggle="tab" data-bs-target="#tabDesc" type="button" role="tab" aria-controls="tabDesc" aria-selected="true">
+                    <i class="bi bi-file-text me-1"></i>Descripción
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="tab-comentarios" data-bs-toggle="tab" data-bs-target="#tabComentarios" type="button" role="tab" aria-controls="tabComentarios" aria-selected="false">
+                    <i class="bi bi-chat-dots me-1"></i>Comentarios
+                    <span class="badge bg-secondary ms-1" id="badgeComentarios">0</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="tab-adjuntos" data-bs-toggle="tab" data-bs-target="#tabAdjuntos" type="button" role="tab" aria-controls="tabAdjuntos" aria-selected="false">
+                    <i class="bi bi-paperclip me-1"></i>Adjuntos
+                    <span class="badge bg-secondary ms-1" id="badgeAdjuntos">0</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="tab-historial" data-bs-toggle="tab" data-bs-target="#tabHistorial" type="button" role="tab" aria-controls="tabHistorial" aria-selected="false">
+                    <i class="bi bi-clock-history me-1"></i>Historial
+                    <span class="badge bg-secondary ms-1" id="badgeHistorial">0</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="tab-respuestas" data-bs-toggle="tab" data-bs-target="#tabRespuestas" type="button" role="tab" aria-controls="tabRespuestas" aria-selected="false">
+                    <i class="bi bi-reply-all me-1"></i>Respuestas
+                  </button>
+                </li>
+              </ul>
 
-          <div class="tab-content">
-            <!-- Descripción -->
-            <div class="tab-content-panel tab-pane fade show active" id="tabDesc" role="tabpanel" aria-labelledby="tab-desc" tabindex="0">
-              <p id="caseDescripcion" class="mb-0" style="font-size:var(--font-size-sm); line-height:1.8;"></p>
-            </div>
-
-            <!-- Comentarios -->
-            <div class="tab-content-panel tab-pane fade" id="tabComentarios" role="tabpanel" aria-labelledby="tab-comentarios" tabindex="0">
-              <div id="listaComentarios"></div>
-              <div class="mt-4 pt-3 border-top">
-                <h3 class="h6 mb-3">Agregar comentario</h3>
-                <div class="mb-2">
-                  <textarea id="nuevoComentario" class="form-control input-rounded" rows="3" placeholder="Escribe tu comentario aquí…" aria-label="Nuevo comentario" style="font-size:var(--font-size-sm);"></textarea>
+              <div class="tab-content">
+                <!-- Descripción -->
+                <div class="tab-content-panel tab-pane fade show active" id="tabDesc" role="tabpanel" aria-labelledby="tab-desc" tabindex="0">
+                  <p class="tab-desc-label mb-2">DESCRIPCIÓN DEL CASO</p>
+                  <p id="caseDescripcion" class="mb-0" style="font-size:var(--font-size-sm); line-height:1.8;"></p>
                 </div>
-                <button class="btn btn-primary-brand btn-sm" id="btnAgregarComentario">
-                  <i class="bi bi-send me-1"></i>Enviar comentario
+
+                <!-- Comentarios -->
+                <div class="tab-content-panel tab-pane fade" id="tabComentarios" role="tabpanel" aria-labelledby="tab-comentarios" tabindex="0">
+                  <div id="listaComentarios"></div>
+                  <div class="mt-4 pt-3 border-top">
+                    <h3 class="h6 mb-3">Agregar comentario</h3>
+                    <div class="mb-2">
+                      <textarea id="nuevoComentario" class="form-control input-rounded" rows="3" placeholder="Escribe tu comentario aquí…" aria-label="Nuevo comentario" style="font-size:var(--font-size-sm);"></textarea>
+                    </div>
+                    <button class="btn btn-primary-brand btn-sm" id="btnAgregarComentario">
+                      <i class="bi bi-send me-1"></i>Enviar comentario
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Adjuntos -->
+                <div class="tab-content-panel tab-pane fade" id="tabAdjuntos" role="tabpanel" aria-labelledby="tab-adjuntos" tabindex="0">
+                  <div id="listaAdjuntos"></div>
+                  <div class="mt-3 pt-3 border-top">
+                    <p class="text-muted mb-2" style="font-size:var(--font-size-sm);">
+                      <i class="bi bi-info-circle me-1"></i>Los adjuntos son simulados. No se almacenan archivos reales.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Historial -->
+                <div class="tab-content-panel tab-pane fade" id="tabHistorial" role="tabpanel" aria-labelledby="tab-historial" tabindex="0">
+                  <div class="timeline" id="listaHistorial" aria-label="Historial de acciones"></div>
+                </div>
+
+                <!-- Respuestas -->
+                <div class="tab-content-panel tab-pane fade" id="tabRespuestas" role="tabpanel" aria-labelledby="tab-respuestas" tabindex="0">
+                  <div id="listaRespuestas">
+                    <div class="empty-state">
+                      <i class="bi bi-reply-all d-block mb-3" style="font-size:2.5rem; opacity:0.3;"></i>
+                      <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">No hay respuestas formales registradas para este caso.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /tabs -->
+
+          </div><!-- /col-lg-8 -->
+
+          <!-- Columna derecha: panel de acciones -->
+          <div class="col-lg-4">
+            <div class="action-panel">
+
+              <!-- Estado actual -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-shield-check" aria-hidden="true"></i>Estado actual
+                </h3>
+                <div class="current-state-row">
+                  <span class="current-state-label">Estado</span>
+                  <span id="panelEstado"></span>
+                </div>
+                <div class="current-state-row">
+                  <span class="current-state-label">Prioridad</span>
+                  <span id="panelPrioridad"></span>
+                </div>
+                <div class="current-state-row">
+                  <span class="current-state-label">Responsable</span>
+                  <span class="current-state-value" id="panelResponsable">—</span>
+                </div>
+                <div class="current-state-row">
+                  <span class="current-state-label">SLA</span>
+                  <span class="current-state-value" id="panelSla">
+                    <i class="bi bi-clock me-1" aria-hidden="true"></i><span id="panelSlaValor">—</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Cambiar estado -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-arrow-repeat" aria-hidden="true"></i>Cambiar estado
+                </h3>
+                <p class="action-panel-hint">Solo se muestran los estados permitidos para esta categoría. El SLA se recalculará automáticamente.</p>
+                <select id="panelNuevoEstado" class="form-select form-select-sm input-rounded mb-2" aria-label="Seleccionar nuevo estado">
+                  <option value="">— Selecciona un estado —</option>
+                  <option>Radicado</option>
+                  <option>En Gestión</option>
+                  <option>Pendiente de Información</option>
+                  <option>Cerrado</option>
+                  <option>Anulado</option>
+                </select>
+                <button class="btn btn-primary-brand btn-sm w-100" id="btnAplicarEstado">
+                  Aplicar cambio de estado
                 </button>
               </div>
-            </div>
 
-            <!-- Adjuntos -->
-            <div class="tab-content-panel tab-pane fade" id="tabAdjuntos" role="tabpanel" aria-labelledby="tab-adjuntos" tabindex="0">
-              <div id="listaAdjuntos"></div>
-              <div class="mt-3 pt-3 border-top">
-                <p class="text-muted mb-2" style="font-size:var(--font-size-sm);">
-                  <i class="bi bi-info-circle me-1"></i>Los adjuntos son simulados. No se almacenan archivos reales.
-                </p>
+              <!-- Cambiar prioridad -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-flag" aria-hidden="true"></i>Cambiar prioridad
+                </h3>
+                <p class="action-panel-hint">Solo se muestran las prioridades permitidas para esta categoría. Si SLA se recalculará automáticamente.</p>
+                <div class="mb-2" id="panelPrioridadActualBadge"></div>
+                <select id="panelNuevaPrioridad" class="form-select form-select-sm input-rounded" aria-label="Seleccionar nueva prioridad">
+                  <option value="">— Selecciona —</option>
+                  <option>Baja</option>
+                  <option>Normal</option>
+                  <option>Alta</option>
+                  <option>Crítica</option>
+                </select>
               </div>
-            </div>
 
-            <!-- Historial -->
-            <div class="tab-content-panel tab-pane fade" id="tabHistorial" role="tabpanel" aria-labelledby="tab-historial" tabindex="0">
-              <div class="timeline" id="listaHistorial" aria-label="Historial de acciones"></div>
-            </div>
-
-            <!-- Respuestas -->
-            <div class="tab-content-panel tab-pane fade" id="tabRespuestas" role="tabpanel" aria-labelledby="tab-respuestas" tabindex="0">
-              <div id="listaRespuestas">
-                <div class="empty-state">
-                  <i class="bi bi-reply-all d-block mb-3" style="font-size:2.5rem; opacity:0.3;"></i>
-                  <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">No hay respuestas formales registradas para este caso.</p>
+              <!-- Reasignar caso -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-person-check" aria-hidden="true"></i>Reasignar caso
+                </h3>
+                <p class="action-panel-hint">Transfiere este caso a otro operador. El cambio quedará registrado en la trazabilidad.</p>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-text" style="font-size:0.75rem;">Responsable:</span>
+                  <select id="panelNuevoResponsable" class="form-select" aria-label="Seleccionar responsable">
+                    <option value="">— Selecciona —</option>
+                    <option>Sofía Martínez</option>
+                    <option>Carlos Herrera</option>
+                    <option>Laura Gómez</option>
+                    <option>Rodrigo Esteban Muñoz</option>
+                  </select>
+                  <button class="btn btn-outline-secondary" id="btnAplicarReasignar" title="Confirmar reasignación" aria-label="Confirmar reasignación">
+                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+
+              <!-- Registrar observación -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-chat-text" aria-hidden="true"></i>Registrar observación
+                </h3>
+                <textarea id="panelObservacion" class="form-control form-control-sm input-rounded mb-2" rows="3"
+                  placeholder="Escriba su observación interna o respuesta al asociado…" aria-label="Observación"></textarea>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="panelNotificarAsociado">
+                  <label class="form-check-label text-muted" for="panelNotificarAsociado" style="font-size:0.8rem;">
+                    Notificar esta respuesta al asociado
+                  </label>
+                </div>
+                <button class="btn btn-primary-brand btn-sm w-100" id="btnAplicarObservacion">
+                  <i class="bi bi-send me-1"></i>Registrar observación
+                </button>
+              </div>
+
+              <!-- Acciones finales -->
+              <div class="action-panel-section">
+                <h3 class="action-panel-title">
+                  <i class="bi bi-check-circle" aria-hidden="true"></i>Acciones finales
+                </h3>
+                <button class="btn btn-success btn-sm w-100 mb-2" id="btnCerrarCaso">
+                  <i class="bi bi-check2-circle me-1"></i>Cerrar caso
+                </button>
+                <button class="btn btn-outline-danger btn-sm w-100" id="btnAnularCaso">
+                  <i class="bi bi-x-circle me-1"></i>Anular caso
+                </button>
+              </div>
+
+            </div><!-- /action-panel -->
+          </div><!-- /col-lg-4 -->
+
+        </div><!-- /row -->
 
       </div><!-- /caseContent -->
 
-    </div>
-  </div>
-</div>
-
-<!-- Modal: Cambiar estado -->
-<div class="modal fade" id="modalCambiarEstado" tabindex="-1" aria-labelledby="modalCambiarEstadoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCambiarEstadoLabel">
-          <i class="bi bi-arrow-repeat me-2"></i>Cambiar estado del caso
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="nuevoEstado" class="form-label fw-semibold">Nuevo estado</label>
-          <select id="nuevoEstado" class="form-select input-rounded" aria-label="Seleccionar nuevo estado">
-            <option value="">— Selecciona un estado —</option>
-            <option>Radicado</option>
-            <option>En Gestión</option>
-            <option>Pendiente de Información</option>
-            <option>Cerrado</option>
-            <option>Anulado</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="estadoObservacion" class="form-label fw-semibold">Observación (opcional)</label>
-          <textarea id="estadoObservacion" class="form-control input-rounded" rows="2" placeholder="Motivo del cambio…"></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary-brand" id="btnConfirmarEstado">
-          <i class="bi bi-check2 me-1"></i>Confirmar cambio
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal: Cambiar prioridad -->
-<div class="modal fade" id="modalCambiarPrioridad" tabindex="-1" aria-labelledby="modalCambiarPrioridadLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCambiarPrioridadLabel">
-          <i class="bi bi-flag me-2"></i>Cambiar prioridad
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <label for="nuevaPrioridad" class="form-label fw-semibold">Nueva prioridad</label>
-        <select id="nuevaPrioridad" class="form-select input-rounded" aria-label="Seleccionar prioridad">
-          <option value="">— Selecciona —</option>
-          <option>Baja</option>
-          <option>Normal</option>
-          <option>Alta</option>
-          <option>Crítica</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary-brand" id="btnConfirmarPrioridad">Confirmar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal: Reasignar -->
-<div class="modal fade" id="modalReasignar" tabindex="-1" aria-labelledby="modalReasignarLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalReasignarLabel">
-          <i class="bi bi-person-check me-2"></i>Reasignar caso
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <label for="nuevoResponsable" class="form-label fw-semibold">Responsable</label>
-        <select id="nuevoResponsable" class="form-select input-rounded" aria-label="Seleccionar responsable">
-          <option value="">— Selecciona —</option>
-          <option>Sofía Martínez</option>
-          <option>Carlos Herrera</option>
-          <option>Laura Gómez</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary-brand" id="btnConfirmarReasignar">Reasignar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal: Observación -->
-<div class="modal fade" id="modalObservacion" tabindex="-1" aria-labelledby="modalObservacionLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalObservacionLabel">
-          <i class="bi bi-chat-text me-2"></i>Registrar observación
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <label for="textoObservacion" class="form-label fw-semibold">Observación <span class="text-danger">*</span></label>
-        <textarea id="textoObservacion" class="form-control input-rounded" rows="4" placeholder="Escribe la observación…" required aria-required="true"></textarea>
-        <div class="invalid-feedback">La observación no puede estar vacía.</div>
-        <div class="form-check mt-3">
-          <input class="form-check-input" type="checkbox" id="notificarAsociado">
-          <label class="form-check-label text-muted" for="notificarAsociado" style="font-size:0.85rem;">
-            Notificar al asociado por email
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary-brand" id="btnConfirmarObservacion">
-          <i class="bi bi-send me-1"></i>Registrar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal: Cerrar caso -->
-<div class="modal fade" id="modalCerrar" tabindex="-1" aria-labelledby="modalCerrarLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalCerrarLabel">
-          <i class="bi bi-check2-circle me-2"></i>Cerrar caso
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <p>¿Confirmas el cierre del caso <strong id="cerrarCasoId"></strong>? Esta acción registrará el cierre en el historial.</p>
-        <div class="mb-3">
-          <label for="cierreObservacion" class="form-label fw-semibold">Observación de cierre <span class="text-danger">*</span></label>
-          <textarea id="cierreObservacion" class="form-control input-rounded" rows="3" placeholder="Describe la resolución del caso…" required></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="btnConfirmarCierre">
-          <i class="bi bi-check2-circle me-1"></i>Cerrar caso
-        </button>
-      </div>
     </div>
   </div>
 </div>
