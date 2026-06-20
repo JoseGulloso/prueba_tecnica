@@ -1,8 +1,3 @@
-/**
- * auth.js — Login / Registro
- * GestorFPQRS · Estrategia Segura S.A.S
- */
-
 'use strict';
 
 $(document).ready(function () {

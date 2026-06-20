@@ -31,13 +31,13 @@
     <aside class="app-sidebar" id="sidebar-placeholder" role="navigation" aria-label="Menú principal"></aside>
 
     <!-- Main -->
-    <div class="app-main">
+    <div class="app-main d-flex flex-column flex-grow-1 min-vh-100">
 
       <!-- Navbar -->
       <header class="app-navbar" id="navbar-placeholder" role="banner"></header>
 
       <!-- Contenido principal -->
-      <main class="app-content" role="main" id="main-content">
+      <div class="mx-auto p-4" role="main" id="main-content">
 
         <!-- Encabezado de página -->
         <div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-3">
@@ -58,38 +58,49 @@
         </div>
 
         <!-- Cards de métricas -->
-        <div class="row g-2 mb-4 justify-content-center justify-content-lg-start" role="region" aria-label="Resumen de métricas">
-          <div class="col-5 col-lg-3">
-            <div class="metric-card">
-              <div class="metric-icon" aria-hidden="true"><i class="bi bi-folder2-open"></i></div>
-              <div class="metric-value" id="metricActivos">—</div>
-              <div class="metric-label">Casos activos</div>
-              <div class="metric-sublabel">En proceso de gestión</div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3" role="region" aria-label="Resumen de métricas">
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="metric-icon" aria-hidden="true"><i class="bi bi-folder2-open"></i></div>
+                <div class="metric-value" id="metricActivos">—</div>
+                <div class="metric-label">Casos activos</div>
+                <div class="metric-sublabel">En proceso de gestión</div>
+              </div>
             </div>
           </div>
-          <div class="col-5 col-lg-3">
-            <div class="metric-card metric-card-danger">
-              <span class="metric-dot"></span>
-              <div class="metric-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle"></i></div>
-              <div class="metric-value" id="metricEscalados">—</div>
-              <div class="metric-label">SLA vencido</div>
-              <div class="metric-sublabel">Requieren atención urgente</div>
+
+          <div class="col">
+            <div class="card h-100 metric-card-danger">
+              <div class="card-body">
+                <span class="metric-dot"></span>
+                <div class="metric-icon" aria-hidden="true"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="metric-value" id="metricEscalados">—</div>
+                <div class="metric-label">SLA vencido</div>
+                <div class="metric-sublabel">Requieren atención urgente</div>
+              </div>
             </div>
           </div>
-          <div class="col-5 col-lg-3">
-            <div class="metric-card metric-card-warning">
-              <div class="metric-icon" aria-hidden="true"><i class="bi bi-clock"></i></div>
-              <div class="metric-value" id="metricProxVencer">—</div>
-              <div class="metric-label">Próximos a vencer</div>
-              <div class="metric-sublabel">Vencen en las próximas 24 horas</div>
+
+          <div class="col">
+            <div class="card h-100 metric-card-warning">
+              <div class="card-body">
+                <div class="metric-icon" aria-hidden="true"><i class="bi bi-clock"></i></div>
+                <div class="metric-value" id="metricProxVencer">—</div>
+                <div class="metric-label">Próximos a vencer</div>
+                <div class="metric-sublabel">Vencen en las próximas 24 horas</div>
+              </div>
             </div>
           </div>
-          <div class="col-5 col-lg-3">
-            <div class="metric-card metric-card-success">
-              <div class="metric-icon" aria-hidden="true"><i class="bi bi-check-circle"></i></div>
-              <div class="metric-value" id="metricCerradosHoy">—</div>
-              <div class="metric-label">Cerrados hoy</div>
-              <div class="metric-sublabel">Resueltos en el día</div>
+
+          <div class="col">
+            <div class="card h-100 metric-card-success">
+              <div class="card-body">
+                <div class="metric-icon" aria-hidden="true"><i class="bi bi-check-circle"></i></div>
+                <div class="metric-value" id="metricCerradosHoy">—</div>
+                <div class="metric-label">Cerrados hoy</div>
+                <div class="metric-sublabel">Resueltos en el día</div>
+              </div>
             </div>
           </div>
         </div>
@@ -246,8 +257,7 @@
                 <span class="table-footer-info" id="tableInfo" aria-live="polite">Cargando…</span>
                 <div class="rows-per-page">
                   <label for="rowsPerPage">Filas:</label>
-                  <select id="rowsPerPage" class="input-rounded"
-                    aria-label="Filas por página">
+                  <select id="rowsPerPage" class="input-rounded" aria-label="Filas por página">
                     <option value="10" selected>10 por página</option>
                     <option value="25">25 por página</option>
                     <option value="50">50 por página</option>
@@ -261,7 +271,7 @@
           </div>
         </section>
 
-      </main>
+      </div>
     </div>
   </div>
 

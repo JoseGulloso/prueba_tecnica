@@ -1,8 +1,3 @@
-/**
- * formulario.js — Formulario de radicación FPQRS
- * GestorFPQRS · Estrategia Segura S.A.S
- */
-
 'use strict';
 
 $(document).ready(function () {

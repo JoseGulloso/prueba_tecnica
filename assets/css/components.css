@@ -299,38 +299,17 @@ a.sidebar-item.sidebar-item-logout:hover {
 /* ----------------------------------------------------------
    3. Cards de métricas
    ---------------------------------------------------------- */
-.metric-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-border-light);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-1);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
-  position: relative;
+.metric-card-danger {
+  border-color: var(--color-danger);
 }
 
-.metric-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+.metric-card-warning {
+  border-color: var(--color-warning);
 }
 
-.metric-card-danger  { border-color: var(--color-danger); }
-.metric-card-warning { border-color: var(--color-warning); }
-.metric-card-success { border-color: var(--color-success); }
-
-@media (max-width: 991.98px) {
-  .metric-card {
-    padding: var(--space-4);
-  }
-  .metric-value {
-    font-size: 1.6rem;
-  }
+.metric-card-success {
+  border-color: var(--color-success);
 }
-
 
 .metric-dot {
   width: 8px;
@@ -348,9 +327,17 @@ a.sidebar-item.sidebar-item-logout:hover {
   color: var(--color-primary);
 }
 
-.metric-card-danger  .metric-icon { color: var(--color-danger); }
-.metric-card-warning .metric-icon { color: var(--color-warning); }
-.metric-card-success .metric-icon { color: var(--color-success); }
+.metric-card-danger .metric-icon {
+  color: var(--color-danger);
+}
+
+.metric-card-warning .metric-icon {
+  color: var(--color-warning);
+}
+
+.metric-card-success .metric-icon {
+  color: var(--color-success);
+}
 
 .metric-value {
   font-size: 2.2rem;
@@ -360,9 +347,17 @@ a.sidebar-item.sidebar-item-logout:hover {
   color: var(--color-primary);
 }
 
-.metric-card-danger  .metric-value { color: var(--color-danger); }
-.metric-card-warning .metric-value { color: var(--color-warning); }
-.metric-card-success .metric-value { color: var(--color-success); }
+.metric-card-danger .metric-value {
+  color: var(--color-danger);
+}
+
+.metric-card-warning .metric-value {
+  color: var(--color-warning);
+}
+
+.metric-card-success .metric-value {
+  color: var(--color-success);
+}
 
 .metric-label {
   font-size: var(--font-size-sm);
@@ -802,41 +797,7 @@ a.sidebar-item.sidebar-item-logout:hover {
 /* ----------------------------------------------------------
    8. Panel / tarjeta de detalle
    ---------------------------------------------------------- */
-.detail-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-border-light);
-  margin-bottom: var(--space-5);
-}
 
-.detail-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--color-border-light);
-  background: #f8fafc;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-.detail-card-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.detail-card-title i {
-  color: var(--color-primary);
-}
-
-.detail-card-body {
-  padding: var(--space-5);
-}
 
 .field-row {
   display: grid;
@@ -1140,10 +1101,6 @@ a.sidebar-item.sidebar-item-logout:hover {
    14. Responsive ajustes
    ---------------------------------------------------------- */
 @media (max-width: 767.98px) {
-  .metric-card {
-    padding: var(--space-4);
-  }
-
   .metric-value {
     font-size: 1.4rem;
   }

@@ -1,8 +1,3 @@
-/**
- * casos.js — Bandeja de casos y detalle
- * GestorFPQRS · Estrategia Segura S.A.S
- */
-
 'use strict';
 
 /* ============================================================

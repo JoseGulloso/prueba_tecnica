@@ -1,8 +1,3 @@
-/**
- * main.js — Utilidades compartidas
- * GestorFPQRS · Estrategia Segura S.A.S
- */
-
 "use strict";
 
 /* ============================================================
