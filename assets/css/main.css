@@ -158,28 +158,6 @@ a:hover {
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
-.sidebar-desktop-toggle {
-  position: absolute;
-  top: 18px;
-  right: -12px;
-  z-index: 2;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-full);
-  border: 1px solid #d7dde6;
-  background: #fff;
-  color: #6b7280;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-}
-
-.sidebar-desktop-toggle:hover {
-  background: #f8fafc;
-  color: var(--color-primary);
-}
 
 .app-sidebar::-webkit-scrollbar {
   width: 4px;
@@ -299,10 +277,6 @@ a:hover {
 
   .app-main {
     margin-left: 0;
-  }
-
-  .sidebar-desktop-toggle {
-    display: none !important;
   }
 }
 
@@ -707,15 +681,6 @@ a:hover {
   color: var(--color-primary);
 }
 
-.text-muted-sm {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-}
-
-.fw-semibold {
-  font-weight: var(--font-weight-semibold);
-}
-
 /* ----------------------------------------------------------
    6. Botones personalizados
    ---------------------------------------------------------- */
@@ -748,13 +713,5 @@ a:hover {
 }
 
 /* ----------------------------------------------------------
-   8. Utilidades de scroll
+   8. Utilidades de scroll — usar .overflow-x-auto y .table-responsive de Bootstrap
    ---------------------------------------------------------- */
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}

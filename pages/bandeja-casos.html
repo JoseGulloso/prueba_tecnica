@@ -33,9 +33,6 @@
     <!-- Main -->
     <div class="app-main d-flex flex-column flex-grow-1 min-vh-100">
 
-      <!-- Navbar -->
-      <header class="app-navbar" id="navbar-placeholder" role="banner"></header>
-
       <!-- Contenido principal -->
       <div class="mx-auto p-4" role="main" id="main-content">
 
@@ -109,10 +106,10 @@
         <section class="cases-table-wrapper" aria-label="Lista de casos FPQRS" id="casosTable">
 
           <!-- Toolbar superior -->
-          <div class="cases-toolbar">
-            <div class="cases-toolbar-actions">
+          <div class="cases-toolbar d-flex align-items-center justify-content-between flex-wrap">
+            <div class="cases-toolbar-actions d-flex align-items-center">
               <!-- Búsqueda -->
-              <div class="search-input-wrap">
+              <div class="search-input-wrap position-relative">
                 <i class="bi bi-search" aria-hidden="true"></i>
                 <input type="search" id="searchInput" class="form-control form-control-md input-rounded"
                   placeholder="Buscar por radicado, solicitante…" aria-label="Buscar casos">
@@ -216,7 +213,7 @@
           </div>
 
           <!-- Tabla responsive -->
-          <div class="table-container" role="region" aria-label="Tabla de casos" tabindex="0">
+          <div class="table-responsive" role="region" aria-label="Tabla de casos" tabindex="0">
             <table class="table table-cases mb-0" id="tablaCasos">
               <thead>
                 <tr>
@@ -252,7 +249,7 @@
               </tbody>
             </table>
             <!-- Footer: info + paginación -->
-            <div class="table-footer">
+            <div class="table-footer d-flex align-items-center justify-content-between flex-wrap">
               <div class="d-flex align-items-center gap-3 flex-wrap">
                 <span class="table-footer-info" id="tableInfo" aria-live="polite">Cargando…</span>
                 <div class="rows-per-page">

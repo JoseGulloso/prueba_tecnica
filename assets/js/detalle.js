@@ -136,9 +136,9 @@ if (window.location.pathname.includes("detalle-caso")) {
             .join("")
             .toUpperCase();
           return `
-          <div class="comment-item">
+          <div class="d-flex gap-3 mb-3">
             <div class="comment-avatar">${initials}</div>
-            <div class="comment-bubble">
+            <div class="comment-bubble flex-grow-1">
               <div class="comment-meta">
                 <strong>${com.usuario}</strong> · ${formatDateTime(com.fecha)}
               </div>

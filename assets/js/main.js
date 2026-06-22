@@ -245,7 +245,7 @@ function renderNavbar(pageTitle) {
       <span class="navbar-brand-title">GestorFPQRS</span>
       ${pageTitle ? `<span class="navbar-page-title">${pageTitle}</span>` : ""}
     </div>
-    <div class="navbar-actions">
+    <div class="d-flex align-items-center gap-2 ms-auto">
       <button class="navbar-icon-btn" aria-label="Notificaciones">
         <i class="bi bi-bell"></i>
         <span class="notification-dot"></span>
@@ -387,7 +387,7 @@ function renderSidebar(activePage) {
         <i class="bi bi-bell"></i>
         <span>Notificaciones</span>
       </a>
-      <div class="sidebar-user-info">
+      <div class="sidebar-user-info d-flex align-items-center">
         <div class="sidebar-avatar"><i class="bi bi-person-fill"></i></div>
         <div>
           <div class="sidebar-user-name">${user.nombre}</div>
