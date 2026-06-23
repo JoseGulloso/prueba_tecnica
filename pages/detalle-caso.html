@@ -63,9 +63,11 @@
                 </div>
                 <div class="case-subheader" id="caseSubheader">—</div>
               </div>
-              <button class="btn btn-outline-secondary btn-md mb-3" onclick="history.back()"
-                aria-label="Volver a la bandeja">
-                <i class="bi bi-person-check-fill"></i>Reasignar
+              <button class="btn btn-outline-secondary btn-md mb-3" data-bs-toggle="modal"
+                data-bs-target="#reasignarModal">
+
+                <i class="bi bi-person-check-fill me-1"></i>
+                Reasignar
               </button>
             </div>
           </div>
@@ -410,20 +412,10 @@
                   </h3>
                   <p class="action-panel-hint">Transfiere este caso a otro operador. El cambio quedará registrado en la
                     trazabilidad.</p>
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-text" style="font-size:0.75rem;">Responsable:</span>
-                    <select id="panelNuevoResponsable" class="form-select" aria-label="Seleccionar responsable">
-                      <option value="">— Selecciona —</option>
-                      <option>Sofía Martínez</option>
-                      <option>Carlos Herrera</option>
-                      <option>Laura Gómez</option>
-                      <option>Rodrigo Esteban Muñoz</option>
-                    </select>
-                    <button class="btn btn-outline-secondary" id="btnAplicarReasignar" title="Confirmar reasignación"
-                      aria-label="Confirmar reasignación">
-                      <i class="bi bi-person-check" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  <button class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#reasignarModal">
+
+                    <i class="bi bi-person-check"></i>
+                  </button>
                 </div>
 
                 <!-- Registrar observación -->
@@ -464,6 +456,125 @@
           </div><!-- /row -->
 
         </div><!-- /caseContent -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Reasignar Caso -->
+  <div class="modal fade" id="reasignarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content reasignar-modal">
+
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title">Reasignar Caso</h5>
+            <small class="text-muted">
+              Transfiera la responsabilidad del caso
+              <strong id="modalCaseId">FPQRS-2026-04779</strong>
+              a otro operador activo
+            </small>
+          </div>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal">
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- Responsable actual -->
+          <div class="mb-4">
+            <label class="form-label text-uppercase small fw-semibold text-muted">
+              Responsable actual
+            </label>
+
+            <div class="d-flex align-items-start gap-3">
+              <i class="bi bi-person"></i>
+
+              <div>
+                <div class="fw-semibold" id="responsableActual">
+                  Rodrigo Esteban Muñoz
+                </div>
+
+                <small class="text-muted">
+                  Analista de Pagos Electrónicos · Operaciones Financieras
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nuevo responsable -->
+          <div class="mb-4">
+            <label class="form-label">
+              Nuevo operador responsable
+              <span class="text-danger">*</span>
+            </label>
+
+            <input type="text" class="form-control" placeholder="Buscar por nombre, área o cargo..."
+              id="buscarOperador">
+          </div>
+
+          <!-- Lista -->
+          <div class="list-group mb-4" style="max-height:300px;overflow:auto;">
+
+            <label class="list-group-item d-flex gap-3">
+              <input class="form-check-input mt-1" type="radio" name="operador" value="Valentina Ospina Ríos">
+
+              <div>
+                <div class="fw-semibold">
+                  Valentina Ospina Ríos
+                </div>
+
+                <small class="text-muted">
+                  Coordinadora de Atención al Asociado
+                </small>
+              </div>
+            </label>
+
+            <label class="list-group-item d-flex gap-3">
+              <input class="form-check-input mt-1" type="radio" name="operador" value="Carlos Andrés Moreno">
+
+              <div>
+                <div class="fw-semibold">
+                  Carlos Andrés Moreno
+                </div>
+
+                <small class="text-muted">
+                  Analista de Crédito Senior
+                </small>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Comentario -->
+          <div class="mb-4">
+            <label class="form-label">
+              Comentario de reasignación
+              <small class="text-muted">(opcional)</small>
+            </label>
+
+            <textarea class="form-control" rows="4" placeholder="Explique el motivo de la reasignación..."></textarea>
+          </div>
+
+          <!-- Notificación -->
+          <div class="alert alert-primary mb-0">
+            <i class="bi bi-envelope me-2"></i>
+            Se enviará una notificación automática al nuevo responsable.
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+
+          <button type="button" class="btn btn-primary" id="confirmarReasignacion">
+            <i class="bi bi-person-check me-2"></i>
+            Confirmar reasignación
+          </button>
+        </div>
 
       </div>
     </div>

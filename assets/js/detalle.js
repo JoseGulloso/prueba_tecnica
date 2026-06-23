@@ -61,7 +61,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       if (c.semaforo === "rojo") {
         $("#slaAlert").removeClass("d-none");
         $("#slaAlertSub").text(
-          `La fecha límite de respuesta fue ${formatDateTime(c.fechaLimite)}. Este caso requiere acción inmediata.`
+          `La fecha límite de respuesta fue ${formatDateTime(c.fechaLimite)}. Este caso requiere acción inmediata.`,
         );
       }
 
@@ -84,14 +84,17 @@ if (window.location.pathname.includes("detalle-caso")) {
         ? 'style="color:var(--color-danger); font-weight:var(--font-weight-semibold);"'
         : "";
       const detalleHtml = [
-        field("Servicio",          c.servicio),
-        field("Categoría",         c.categoria),
-        field("Subcategoría",      c.subcategoria),
-        field("Responsable",       c.responsable),
-        fieldHtml("Prioridad",     getBadgePrioridad(c.prioridad)),
-        field("SLA aplicado",      c.slaAplicado || "Estándar"),
-        fieldHtml("Fecha límite SLA", `<span ${slaStyle}>${formatDateTime(c.fechaLimite)}</span>`),
-        field("Tipo de causa",     c.tipoCausa || "—"),
+        field("Servicio", c.servicio),
+        field("Categoría", c.categoria),
+        field("Subcategoría", c.subcategoria),
+        field("Responsable", c.responsable),
+        fieldHtml("Prioridad", getBadgePrioridad(c.prioridad)),
+        field("SLA aplicado", c.slaAplicado || "Estándar"),
+        fieldHtml(
+          "Fecha límite SLA",
+          `<span ${slaStyle}>${formatDateTime(c.fechaLimite)}</span>`,
+        ),
+        field("Tipo de causa", c.tipoCausa || "—"),
       ].join("");
       $("#detalleFields").html(detalleHtml);
 
@@ -110,7 +113,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#panelResponsable").text(c.responsable || "—");
       $("#panelSlaValor").text(formatDate(c.fechaLimite));
       $("#panelPrioridadActualBadge").html(
-        `<small class="text-muted me-1">Prioridad actual:</small>${getBadgePrioridad(c.prioridad)}`
+        `<small class="text-muted me-1">Prioridad actual:</small>${getBadgePrioridad(c.prioridad)}`,
       );
     }
 
@@ -147,8 +150,8 @@ if (window.location.pathname.includes("detalle-caso")) {
           _currentFilter === "interno"
             ? "Sin comentarios internos aún."
             : _currentFilter === "visible"
-            ? "Sin comentarios visibles al asociado aún."
-            : "Sin comentarios aún.";
+              ? "Sin comentarios visibles al asociado aún."
+              : "Sin comentarios aún.";
         $("#listaComentarios").html(`
           <div class="empty-state">
             <i class="bi bi-chat-dots d-block mb-2" style="font-size:2rem; opacity:0.3;"></i>
@@ -209,10 +212,15 @@ if (window.location.pathname.includes("detalle-caso")) {
       const filtered =
         _currentAdjuntoFilter === "todos"
           ? adjuntos
-          : adjuntos.filter((a) => (a.categoria || "") === _currentAdjuntoFilter);
+          : adjuntos.filter(
+              (a) => (a.categoria || "") === _currentAdjuntoFilter,
+            );
 
       if (!filtered.length) {
-        const msg = _currentAdjuntoFilter === "todos" ? "Sin adjuntos." : `Sin adjuntos de tipo "${_currentAdjuntoFilter}".`;
+        const msg =
+          _currentAdjuntoFilter === "todos"
+            ? "Sin adjuntos."
+            : `Sin adjuntos de tipo "${_currentAdjuntoFilter}".`;
         $("#listaAdjuntos").html(`
           <div class="empty-state">
             <i class="bi bi-paperclip d-block mb-2" style="font-size:2rem; opacity:0.3;"></i>
@@ -238,9 +246,10 @@ if (window.location.pathname.includes("detalle-caso")) {
           const ext = a.nombre.split(".").pop().toUpperCase();
           const categoria = a.categoria || "Sin categoría";
           const visibilidad = a.visibilidad || "interno";
-          const visibBadge = visibilidad === "visible"
-            ? `<span class="attachment-badge-visible"><i class="bi bi-eye-fill"></i>Visible al asociado</span>`
-            : `<span class="attachment-badge-interno"><i class="bi bi-eye-slash-fill"></i>Interno</span>`;
+          const visibBadge =
+            visibilidad === "visible"
+              ? `<span class="attachment-badge-visible"><i class="bi bi-eye-fill"></i>Visible al asociado</span>`
+              : `<span class="attachment-badge-interno"><i class="bi bi-eye-slash-fill"></i>Interno</span>`;
           const collapseId = `attachBody-${i}`;
 
           return `
@@ -303,7 +312,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#badgeHistorial").text(historial.length);
       if (!historial.length) {
         $("#listaHistorial").html(
-          '<p class="text-muted text-center">Sin historial.</p>'
+          '<p class="text-muted text-center">Sin historial.</p>',
         );
         return;
       }
@@ -315,7 +324,7 @@ if (window.location.pathname.includes("detalle-caso")) {
           <div class="timeline-date">${formatDateTime(h.fecha)}</div>
           <div class="timeline-action">${h.accion}</div>
           <div class="timeline-user">Por: ${h.usuario}</div>
-        </div>`
+        </div>`,
         )
         .join("");
       $("#listaHistorial").html(html);
@@ -337,7 +346,9 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#nuevoComentario").val("").removeClass("is-invalid");
       $("#charCounter").text("0 caracteres");
       $("input[name='tipoComentario'][value='interno']").prop("checked", true);
-      $("#tipoComentarioHint").text("Solo visible para operadores internos del sistema.");
+      $("#tipoComentarioHint").text(
+        "Solo visible para operadores internos del sistema.",
+      );
     });
 
     /* Contador de caracteres */
@@ -390,7 +401,9 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#nuevoComentario").val("");
       $("#charCounter").text("0 caracteres");
       $("input[name='tipoComentario'][value='interno']").prop("checked", true);
-      $("#tipoComentarioHint").text("Solo visible para operadores internos del sistema.");
+      $("#tipoComentarioHint").text(
+        "Solo visible para operadores internos del sistema.",
+      );
       showToast("Comentario registrado exitosamente.", "success");
     });
 
@@ -405,10 +418,16 @@ if (window.location.pathname.includes("detalle-caso")) {
     /* Collapse toggle — rotar chevron */
     $(document)
       .on("hide.bs.collapse", ".comment-card .collapse", function () {
-        $(this).closest(".comment-card").find(".comment-card-toggle").addClass("collapsed");
+        $(this)
+          .closest(".comment-card")
+          .find(".comment-card-toggle")
+          .addClass("collapsed");
       })
       .on("show.bs.collapse", ".comment-card .collapse", function () {
-        $(this).closest(".comment-card").find(".comment-card-toggle").removeClass("collapsed");
+        $(this)
+          .closest(".comment-card")
+          .find(".comment-card-toggle")
+          .removeClass("collapsed");
       });
 
     /* -------------------------------------------------------
@@ -435,7 +454,10 @@ if (window.location.pathname.includes("detalle-caso")) {
       refreshPanelEstado(currentCaso);
       $("#stripEstado").html(getBadgeEstado(nuevoEstado));
       renderHistorial(currentCaso.historial);
-      showToast(`Estado actualizado a <strong>${nuevoEstado}</strong>.`, "success");
+      showToast(
+        `Estado actualizado a <strong>${nuevoEstado}</strong>.`,
+        "success",
+      );
     });
 
     $("#panelNuevoEstado").on("change", function () {
@@ -461,7 +483,10 @@ if (window.location.pathname.includes("detalle-caso")) {
       $(this).val("");
       refreshPanelEstado(currentCaso);
       renderHistorial(currentCaso.historial);
-      showToast(`Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`, "success");
+      showToast(
+        `Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`,
+        "success",
+      );
     });
 
     /* -------------------------------------------------------
@@ -544,7 +569,7 @@ if (window.location.pathname.includes("detalle-caso")) {
        ------------------------------------------------------- */
     $("#btnCerrarCaso").on("click", function () {
       const obs = prompt(
-        `¿Confirmas el cierre del caso ${currentCaso.id}?\n\nEscribe la observación de cierre (requerida):`
+        `¿Confirmas el cierre del caso ${currentCaso.id}?\n\nEscribe la observación de cierre (requerida):`,
       );
       if (obs === null) return; // canceló
       if (!obs.trim()) {
@@ -571,7 +596,7 @@ if (window.location.pathname.includes("detalle-caso")) {
        ------------------------------------------------------- */
     $("#btnAnularCaso").on("click", function () {
       const obs = prompt(
-        `¿Confirmas la anulación del caso ${currentCaso.id}?\n\nEscribe el motivo de anulación (requerido):`
+        `¿Confirmas la anulación del caso ${currentCaso.id}?\n\nEscribe el motivo de anulación (requerido):`,
       );
       if (obs === null) return;
       if (!obs.trim()) {
@@ -605,7 +630,10 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#adjuntoFileInput").val("");
       $("#adjuntoFileSelected").addClass("d-none");
       $("#adjuntoFileName").text("");
-      $("input[name='adjuntoVisibilidad'][value='interno']").prop("checked", true);
+      $("input[name='adjuntoVisibilidad'][value='interno']").prop(
+        "checked",
+        true,
+      );
     });
 
     /* Drop zone — abrir file picker */
@@ -616,17 +644,19 @@ if (window.location.pathname.includes("detalle-caso")) {
     });
 
     /* Drag over / drop */
-    $("#adjuntoDropZone").on("dragover", function (e) {
-      e.preventDefault();
-      $(this).addClass("drag-over");
-    }).on("dragleave drop", function (e) {
-      e.preventDefault();
-      $(this).removeClass("drag-over");
-      if (e.type === "drop") {
-        const file = e.originalEvent.dataTransfer.files[0];
-        if (file) mostrarArchivoSeleccionado(file.name);
-      }
-    });
+    $("#adjuntoDropZone")
+      .on("dragover", function (e) {
+        e.preventDefault();
+        $(this).addClass("drag-over");
+      })
+      .on("dragleave drop", function (e) {
+        e.preventDefault();
+        $(this).removeClass("drag-over");
+        if (e.type === "drop") {
+          const file = e.originalEvent.dataTransfer.files[0];
+          if (file) mostrarArchivoSeleccionado(file.name);
+        }
+      });
 
     /* File input change */
     $("#adjuntoFileInput").on("change", function () {
@@ -654,19 +684,41 @@ if (window.location.pathname.includes("detalle-caso")) {
         return;
       }
       const categoria = $("#adjuntoCategoriaSelect").val();
-      const visibilidad = $("input[name='adjuntoVisibilidad']:checked").val() || "interno";
-      const mimeMap = { pdf: "application/pdf", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", xls: "application/vnd.ms-excel", xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" };
+      const visibilidad =
+        $("input[name='adjuntoVisibilidad']:checked").val() || "interno";
+      const mimeMap = {
+        pdf: "application/pdf",
+        png: "image/png",
+        jpg: "image/jpeg",
+        jpeg: "image/jpeg",
+        doc: "application/msword",
+        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        xls: "application/vnd.ms-excel",
+        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      };
       const ext = nombre.split(".").pop().toLowerCase();
       const tipo = mimeMap[ext] || "application/octet-stream";
       const now = new Date();
-      const fecha = `${String(now.getDate()).padStart(2,"0")}/${String(now.getMonth()+1).padStart(2,"0")}/${now.getFullYear()} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+      const fecha = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
       const user = getSessionUser();
       const userName = user ? user.nombre : "Usuario";
-      const nuevoAdjunto = { nombre, tipo, tamano: "—", fecha, categoria, visibilidad, cargadoPor: userName };
+      const nuevoAdjunto = {
+        nombre,
+        tipo,
+        tamano: "—",
+        fecha,
+        categoria,
+        visibilidad,
+        cargadoPor: userName,
+      };
       currentCaso.adjuntos = currentCaso.adjuntos || [];
       currentCaso.adjuntos.push(nuevoAdjunto);
-      currentCaso.historial.push({ fecha: new Date().toISOString(), accion: `Adjunto cargado: ${nombre}`, usuario: userName });
+      currentCaso.historial.push({
+        fecha: new Date().toISOString(),
+        accion: `Adjunto cargado: ${nombre}`,
+        usuario: userName,
+      });
 
       saveCasoOverride(currentCaso);
       renderAdjuntos(currentCaso.adjuntos);
@@ -676,7 +728,10 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#adjuntoFileInput").val("");
       $("#adjuntoFileSelected").addClass("d-none");
       $("#adjuntoFileName").text("");
-      $("input[name='adjuntoVisibilidad'][value='interno']").prop("checked", true);
+      $("input[name='adjuntoVisibilidad'][value='interno']").prop(
+        "checked",
+        true,
+      );
       showToast(`Adjunto "${nombre}" cargado exitosamente.`, "success");
     });
 
@@ -689,12 +744,17 @@ if (window.location.pathname.includes("detalle-caso")) {
     /* Collapse toggle — rotar chevron */
     $(document)
       .on("hide.bs.collapse", ".attachment-card .collapse", function () {
-        $(this).closest(".attachment-card").find(".attachment-card-toggle").addClass("collapsed");
+        $(this)
+          .closest(".attachment-card")
+          .find(".attachment-card-toggle")
+          .addClass("collapsed");
       })
       .on("show.bs.collapse", ".attachment-card .collapse", function () {
-        $(this).closest(".attachment-card").find(".attachment-card-toggle").removeClass("collapsed");
+        $(this)
+          .closest(".attachment-card")
+          .find(".attachment-card-toggle")
+          .removeClass("collapsed");
       });
-
 
     /* -------------------------------------------------------
        Error state
@@ -704,4 +764,24 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#errorState").removeClass("d-none");
     }
   }); // end document.ready
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const modalReasignar = new bootstrap.Modal(
+      document.getElementById("reasignarModal"),
+    );
+
+    // Botón cabecera
+    document
+      .getElementById("btnAbrirReasignacion")
+      ?.addEventListener("click", () => {
+        modalReasignar.show();
+      });
+
+    // Botón panel lateral
+    document
+      .getElementById("btnAplicarReasignar")
+      ?.addEventListener("click", () => {
+        modalReasignar.show();
+      });
+  });
 }
