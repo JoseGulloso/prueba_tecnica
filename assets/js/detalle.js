@@ -2,6 +2,10 @@
 
 if (window.location.pathname.includes("detalle-caso")) {
   let currentCaso = null;
+  let _allComentarios = [];
+  let _currentFilter = "todos";
+  let _allAdjuntos = [];
+  let _currentAdjuntoFilter = "todos";
 
   $(document).ready(function () {
     /* -------------------------------------------------------
@@ -75,15 +79,19 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#asociadoFields").html(asociadoHtml);
 
       // Detalles del caso
+      const slaVencido = c.semaforo === "vencido" || c.semaforo === "rojo";
+      const slaStyle = slaVencido
+        ? 'style="color:var(--color-danger); font-weight:var(--font-weight-semibold);"'
+        : "";
       const detalleHtml = [
-        field("Servicio", c.servicio),
-        field("Categoría", c.categoria),
-        field("Subcategoría", c.subcategoria),
-        field("Responsable", c.responsable),
-        field("Fecha límite SLA", formatDateTime(c.fechaLimite)),
-        field("Prioridad", c.prioridad),
-        field("SLA aplicado", c.slaAplicado || "Estándar"),
-        field("Tipo de causa", c.tipoCausa || "—"),
+        field("Servicio",          c.servicio),
+        field("Categoría",         c.categoria),
+        field("Subcategoría",      c.subcategoria),
+        field("Responsable",       c.responsable),
+        fieldHtml("Prioridad",     getBadgePrioridad(c.prioridad)),
+        field("SLA aplicado",      c.slaAplicado || "Estándar"),
+        fieldHtml("Fecha límite SLA", `<span ${slaStyle}>${formatDateTime(c.fechaLimite)}</span>`),
+        field("Tipo de causa",     c.tipoCausa || "—"),
       ].join("");
       $("#detalleFields").html(detalleHtml);
 
@@ -114,39 +122,80 @@ if (window.location.pathname.includes("detalle-caso")) {
         </div>`;
     }
 
+    function fieldHtml(label, htmlValue) {
+      return `
+        <div class="field-group">
+          <label>${label}</label>
+          <div class="field-value">${htmlValue || "—"}</div>
+        </div>`;
+    }
+
     /* -------------------------------------------------------
        Renderizar comentarios
        ------------------------------------------------------- */
     function renderComentarios(comentarios) {
-      $("#badgeComentarios").text(comentarios.length);
-      if (!comentarios.length) {
+      _allComentarios = comentarios;
+      $("#badgeComentarios, #badgeComentariosHeader").text(comentarios.length);
+
+      const filtered =
+        _currentFilter === "todos"
+          ? comentarios
+          : comentarios.filter((c) => (c.tipo || "interno") === _currentFilter);
+
+      if (!filtered.length) {
+        const msg =
+          _currentFilter === "interno"
+            ? "Sin comentarios internos aún."
+            : _currentFilter === "visible"
+            ? "Sin comentarios visibles al asociado aún."
+            : "Sin comentarios aún.";
         $("#listaComentarios").html(`
           <div class="empty-state">
             <i class="bi bi-chat-dots d-block mb-2" style="font-size:2rem; opacity:0.3;"></i>
-            <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">Sin comentarios aún.</p>
+            <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">${msg}</p>
           </div>`);
         return;
       }
-      const html = comentarios
-        .map((com) => {
+
+      const html = filtered
+        .map((com, i) => {
           const initials = com.usuario
             .split(" ")
             .slice(0, 2)
             .map((w) => w[0])
             .join("")
             .toUpperCase();
+          const tipo = com.tipo || "interno";
+          const tipoClass = tipo === "visible" ? "comment-card--visible" : "";
+          const tipoBadge =
+            tipo === "visible"
+              ? `<span class="comment-badge-visible"><i class="bi bi-eye-fill"></i>Visible al asociado</span>`
+              : `<span class="comment-badge-interno"><i class="bi bi-lock-fill"></i>Interno</span>`;
+          const ip = com.ip || "190.24.135.78";
+          const collapseId = `commentBody-${i}`;
+
           return `
-          <div class="d-flex gap-3 mb-3">
-            <div class="comment-avatar">${initials}</div>
-            <div class="comment-bubble flex-grow-1">
-              <div class="comment-meta">
-                <strong>${com.usuario}</strong> · ${formatDateTime(com.fecha)}
+          <div class="comment-card ${tipoClass}">
+            <div class="comment-card-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="true">
+              <div class="comment-avatar">${initials}</div>
+              <div class="comment-card-meta">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <span class="comment-card-author">${com.usuario}</span>
+                  ${tipoBadge}
+                </div>
+                <div class="comment-card-date">
+                  <i class="bi bi-clock me-1"></i>${formatDateTime(com.fecha)} · IP: ${ip}
+                </div>
               </div>
-              <p class="comment-text">${com.texto}</p>
+              <i class="bi bi-chevron-up comment-card-toggle"></i>
+            </div>
+            <div class="collapse show" id="${collapseId}">
+              <div class="comment-card-body">${com.texto}</div>
             </div>
           </div>`;
         })
         .join("");
+
       $("#listaComentarios").html(html);
     }
 
@@ -154,42 +203,96 @@ if (window.location.pathname.includes("detalle-caso")) {
        Renderizar adjuntos
        ------------------------------------------------------- */
     function renderAdjuntos(adjuntos) {
-      $("#badgeAdjuntos").text(adjuntos.length);
-      if (!adjuntos.length) {
+      _allAdjuntos = adjuntos;
+      $("#badgeAdjuntos, #badgeAdjuntosHeader").text(adjuntos.length);
+
+      const filtered =
+        _currentAdjuntoFilter === "todos"
+          ? adjuntos
+          : adjuntos.filter((a) => (a.categoria || "") === _currentAdjuntoFilter);
+
+      if (!filtered.length) {
+        const msg = _currentAdjuntoFilter === "todos" ? "Sin adjuntos." : `Sin adjuntos de tipo "${_currentAdjuntoFilter}".`;
         $("#listaAdjuntos").html(`
           <div class="empty-state">
             <i class="bi bi-paperclip d-block mb-2" style="font-size:2rem; opacity:0.3;"></i>
-            <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">Sin adjuntos.</p>
+            <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">${msg}</p>
           </div>`);
         return;
       }
-      const html = adjuntos
-        .map((a) => {
+
+      const html = filtered
+        .map((a, i) => {
           let iconClass = "bi-file-earmark";
-          let colorClass = "";
+          let iconWrapClass = "generic";
           if (a.tipo === "application/pdf") {
             iconClass = "bi-file-earmark-pdf";
-            colorClass = "pdf";
+            iconWrapClass = "pdf";
           } else if (a.tipo?.startsWith("image")) {
             iconClass = "bi-file-earmark-image";
-            colorClass = "img";
+            iconWrapClass = "img";
           } else if (a.tipo?.includes("word")) {
             iconClass = "bi-file-earmark-word";
-            colorClass = "docx";
+            iconWrapClass = "docx";
           }
+          const ext = a.nombre.split(".").pop().toUpperCase();
+          const categoria = a.categoria || "Sin categoría";
+          const visibilidad = a.visibilidad || "interno";
+          const visibBadge = visibilidad === "visible"
+            ? `<span class="attachment-badge-visible"><i class="bi bi-eye-fill"></i>Visible al asociado</span>`
+            : `<span class="attachment-badge-interno"><i class="bi bi-eye-slash-fill"></i>Interno</span>`;
+          const collapseId = `attachBody-${i}`;
+
           return `
-          <div class="attachment-item">
-            <i class="bi ${iconClass} attachment-icon ${colorClass}" aria-hidden="true"></i>
-            <div class="attachment-info">
-              <div class="attachment-name">${a.nombre}</div>
-              <div class="attachment-size">${a.tamano}</div>
+          <div class="attachment-card">
+            <div class="attachment-card-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false">
+              <div class="attachment-icon-wrap ${iconWrapClass}">
+                <i class="bi ${iconClass}"></i>
+              </div>
+              <div class="attachment-card-meta">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <span class="attachment-card-name">${a.nombre}</span>
+                  <span class="attachment-badge-categoria">${categoria}</span>
+                  ${visibBadge}
+                </div>
+                <div class="attachment-card-sub">${a.tamano} · ${ext} · ${a.fecha || ""}</div>
+              </div>
+              <i class="bi bi-chevron-up attachment-card-toggle collapsed"></i>
             </div>
-            <button class="btn btn-sm btn-outline-secondary" title="Descargar (simulado)" aria-label="Descargar ${a.nombre}">
-              <i class="bi bi-download" aria-hidden="true"></i>
-            </button>
+            <div class="collapse" id="${collapseId}">
+              <div class="attachment-card-body">
+                <div class="field-row">
+                  <div class="field-group">
+                    <label>CARGADO POR</label>
+                    <div class="field-value"><i class="bi bi-person me-1"></i>${a.cargadoPor || "—"}</div>
+                  </div>
+                  <div class="field-group">
+                    <label>FECHA DE CARGA</label>
+                    <div class="field-value"><i class="bi bi-clock me-1"></i>${a.fecha || "—"}</div>
+                  </div>
+                  <div class="field-group">
+                    <label>IP DE CARGA</label>
+                    <div class="field-value">${a.ip || "190.24.135.78"}</div>
+                  </div>
+                  <div class="field-group">
+                    <label>TIPO MIME</label>
+                    <div class="field-value">${a.tipo || "—"}</div>
+                  </div>
+                  <div class="field-group">
+                    <label>TAMAÑO</label>
+                    <div class="field-value">${a.tamano || "—"}</div>
+                  </div>
+                  <div class="field-group">
+                    <label>TIPO ADJUNTO</label>
+                    <div class="field-value">${a.categoria || "—"}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>`;
         })
         .join("");
+
       $("#listaAdjuntos").html(html);
     }
 
@@ -219,9 +322,42 @@ if (window.location.pathname.includes("detalle-caso")) {
     }
 
     /* -------------------------------------------------------
-       Agregar comentario inline
+       Comentarios — mostrar/ocultar formulario
        ------------------------------------------------------- */
     $("#btnAgregarComentario").on("click", function () {
+      const $form = $("#formNuevoComentario");
+      $form.toggleClass("d-none");
+      if (!$form.hasClass("d-none")) {
+        $("#nuevoComentario").focus();
+      }
+    });
+
+    $("#btnCancelarComentario").on("click", function () {
+      $("#formNuevoComentario").addClass("d-none");
+      $("#nuevoComentario").val("").removeClass("is-invalid");
+      $("#charCounter").text("0 caracteres");
+      $("input[name='tipoComentario'][value='interno']").prop("checked", true);
+      $("#tipoComentarioHint").text("Solo visible para operadores internos del sistema.");
+    });
+
+    /* Contador de caracteres */
+    $("#nuevoComentario").on("input", function () {
+      const len = $(this).val().length;
+      $("#charCounter").text(`${len} caracter${len === 1 ? "" : "es"}`);
+      $(this).removeClass("is-invalid");
+    });
+
+    /* Hint de tipo */
+    $("input[name='tipoComentario']").on("change", function () {
+      const hint =
+        $(this).val() === "visible"
+          ? "Será visible para el asociado en su portal."
+          : "Solo visible para operadores internos del sistema.";
+      $("#tipoComentarioHint").text(hint);
+    });
+
+    /* Guardar comentario */
+    $("#btnGuardarComentario").on("click", function () {
       const texto = $("#nuevoComentario").val().trim();
       if (!texto) {
         $("#nuevoComentario").addClass("is-invalid");
@@ -229,31 +365,51 @@ if (window.location.pathname.includes("detalle-caso")) {
       }
       $("#nuevoComentario").removeClass("is-invalid");
 
+      const tipo = $("input[name='tipoComentario']:checked").val() || "interno";
       const user = getSessionUser();
       const nuevoComentario = {
         fecha: new Date().toISOString(),
         texto: texto,
         usuario: user ? user.nombre : "Usuario",
+        tipo: tipo,
       };
 
       currentCaso.comentarios = currentCaso.comentarios || [];
       currentCaso.comentarios.push(nuevoComentario);
       currentCaso.historial.push({
         fecha: nuevoComentario.fecha,
-        accion: "Comentario registrado",
+        accion: `Comentario ${tipo === "visible" ? "visible" : "interno"} registrado`,
         usuario: nuevoComentario.usuario,
       });
 
       saveCasoOverride(currentCaso);
       renderComentarios(currentCaso.comentarios);
       renderHistorial(currentCaso.historial);
+
+      $("#formNuevoComentario").addClass("d-none");
       $("#nuevoComentario").val("");
+      $("#charCounter").text("0 caracteres");
+      $("input[name='tipoComentario'][value='interno']").prop("checked", true);
+      $("#tipoComentarioHint").text("Solo visible para operadores internos del sistema.");
       showToast("Comentario registrado exitosamente.", "success");
     });
 
-    $("#nuevoComentario").on("input", function () {
-      $(this).removeClass("is-invalid");
+    /* Filtros */
+    $("#commentFilters").on("click", ".comment-filter-btn", function () {
+      $("#commentFilters .comment-filter-btn").removeClass("active");
+      $(this).addClass("active");
+      _currentFilter = $(this).data("filter");
+      renderComentarios(_allComentarios);
     });
+
+    /* Collapse toggle — rotar chevron */
+    $(document)
+      .on("hide.bs.collapse", ".comment-card .collapse", function () {
+        $(this).closest(".comment-card").find(".comment-card-toggle").addClass("collapsed");
+      })
+      .on("show.bs.collapse", ".comment-card .collapse", function () {
+        $(this).closest(".comment-card").find(".comment-card-toggle").removeClass("collapsed");
+      });
 
     /* -------------------------------------------------------
        Panel derecho — Cambiar estado
@@ -438,15 +594,107 @@ if (window.location.pathname.includes("detalle-caso")) {
     });
 
     /* -------------------------------------------------------
-       Descarga simulada
+       Adjuntos — mostrar/ocultar formulario
        ------------------------------------------------------- */
-    $(document).on(
-      "click",
-      '.btn-outline-secondary[title="Descargar (simulado)"]',
-      function () {
-        showToast("Descarga simulada. No hay archivo real disponible.", "info");
+    $("#btnCargarAdjunto").on("click", function () {
+      $("#formNuevoAdjunto").toggleClass("d-none");
+    });
+
+    $("#btnCancelarAdjunto").on("click", function () {
+      $("#formNuevoAdjunto").addClass("d-none");
+      $("#adjuntoFileInput").val("");
+      $("#adjuntoFileSelected").addClass("d-none");
+      $("#adjuntoFileName").text("");
+      $("input[name='adjuntoVisibilidad'][value='interno']").prop("checked", true);
+    });
+
+    /* Drop zone — abrir file picker */
+    $("#adjuntoDropZone").on("click", function (e) {
+      if (!$(e.target).is("#adjuntoFileInput")) {
+        $("#adjuntoFileInput").trigger("click");
       }
-    );
+    });
+
+    /* Drag over / drop */
+    $("#adjuntoDropZone").on("dragover", function (e) {
+      e.preventDefault();
+      $(this).addClass("drag-over");
+    }).on("dragleave drop", function (e) {
+      e.preventDefault();
+      $(this).removeClass("drag-over");
+      if (e.type === "drop") {
+        const file = e.originalEvent.dataTransfer.files[0];
+        if (file) mostrarArchivoSeleccionado(file.name);
+      }
+    });
+
+    /* File input change */
+    $("#adjuntoFileInput").on("change", function () {
+      const file = this.files[0];
+      if (file) mostrarArchivoSeleccionado(file.name);
+    });
+
+    function mostrarArchivoSeleccionado(nombre) {
+      $("#adjuntoFileName").text(nombre);
+      $("#adjuntoFileSelected").removeClass("d-none");
+    }
+
+    /* Quitar archivo */
+    $("#btnRemoveFile").on("click", function () {
+      $("#adjuntoFileInput").val("");
+      $("#adjuntoFileSelected").addClass("d-none");
+      $("#adjuntoFileName").text("");
+    });
+
+    /* Subir archivo (simulado) */
+    $("#btnSubirAdjunto").on("click", function () {
+      const nombre = $("#adjuntoFileName").text().trim();
+      if (!nombre) {
+        showToast("Selecciona un archivo antes de cargar.", "warning");
+        return;
+      }
+      const categoria = $("#adjuntoCategoriaSelect").val();
+      const visibilidad = $("input[name='adjuntoVisibilidad']:checked").val() || "interno";
+      const mimeMap = { pdf: "application/pdf", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", xls: "application/vnd.ms-excel", xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" };
+      const ext = nombre.split(".").pop().toLowerCase();
+      const tipo = mimeMap[ext] || "application/octet-stream";
+      const now = new Date();
+      const fecha = `${String(now.getDate()).padStart(2,"0")}/${String(now.getMonth()+1).padStart(2,"0")}/${now.getFullYear()} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+
+      const user = getSessionUser();
+      const userName = user ? user.nombre : "Usuario";
+      const nuevoAdjunto = { nombre, tipo, tamano: "—", fecha, categoria, visibilidad, cargadoPor: userName };
+      currentCaso.adjuntos = currentCaso.adjuntos || [];
+      currentCaso.adjuntos.push(nuevoAdjunto);
+      currentCaso.historial.push({ fecha: new Date().toISOString(), accion: `Adjunto cargado: ${nombre}`, usuario: userName });
+
+      saveCasoOverride(currentCaso);
+      renderAdjuntos(currentCaso.adjuntos);
+      renderHistorial(currentCaso.historial);
+
+      $("#formNuevoAdjunto").addClass("d-none");
+      $("#adjuntoFileInput").val("");
+      $("#adjuntoFileSelected").addClass("d-none");
+      $("#adjuntoFileName").text("");
+      $("input[name='adjuntoVisibilidad'][value='interno']").prop("checked", true);
+      showToast(`Adjunto "${nombre}" cargado exitosamente.`, "success");
+    });
+
+    /* Filtro por tipo */
+    $("#adjuntoTipoFilter").on("change", function () {
+      _currentAdjuntoFilter = $(this).val();
+      renderAdjuntos(_allAdjuntos);
+    });
+
+    /* Collapse toggle — rotar chevron */
+    $(document)
+      .on("hide.bs.collapse", ".attachment-card .collapse", function () {
+        $(this).closest(".attachment-card").find(".attachment-card-toggle").addClass("collapsed");
+      })
+      .on("show.bs.collapse", ".attachment-card .collapse", function () {
+        $(this).closest(".attachment-card").find(".attachment-card-toggle").removeClass("collapsed");
+      });
+
 
     /* -------------------------------------------------------
        Error state

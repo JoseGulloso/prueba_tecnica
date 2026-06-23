@@ -19,8 +19,8 @@
     "responsable": "Carlos Herrera",
     "descripcion": "El ciudadano solicita copia de su póliza vigente número POL-2024-789 y el detalle de coberturas incluidas en el contrato actual.",
     "comentarios": [
-      { "fecha": "2024-06-02T11:00:00", "texto": "Se contactó al solicitante vía email para confirmar recepción.", "usuario": "Carlos Herrera" },
-      { "fecha": "2024-06-03T09:30:00", "texto": "Documento solicitado al área de pólizas.", "usuario": "Carlos Herrera" }
+      { "fecha": "2024-06-02T11:00:00", "texto": "Se contactó al solicitante vía email para confirmar recepción.", "usuario": "Carlos Herrera", "tipo": "interno" },
+      { "fecha": "2024-06-03T09:30:00", "texto": "Documento solicitado al área de pólizas.", "usuario": "Carlos Herrera", "tipo": "interno" }
     ],
     "adjuntos": [],
     "historial": [
@@ -48,13 +48,13 @@
     "responsable": "Laura Gómez",
     "descripcion": "Se realizó un cobro de $45.000 por concepto de cuota de manejo no acordada. El cliente solicita reversa inmediata y explicación detallada del cargo.",
     "comentarios": [
-      { "fecha": "2024-05-21T10:00:00", "texto": "Se verificó el cobro con el área contable. Se confirma el error.", "usuario": "Laura Gómez" },
-      { "fecha": "2024-05-22T14:00:00", "texto": "Solicitud de reversa enviada al área financiera.", "usuario": "Laura Gómez" },
-      { "fecha": "2024-05-25T09:00:00", "texto": "Reversa aprobada, pendiente aplicación en sistema.", "usuario": "Sofía Martínez" }
+      { "fecha": "2024-05-21T10:00:00", "texto": "Se verificó el cobro con el área contable. Se confirma el error.", "usuario": "Laura Gómez", "tipo": "interno" },
+      { "fecha": "2024-05-22T14:00:00", "texto": "Solicitud de reversa enviada al área financiera.", "usuario": "Laura Gómez", "tipo": "interno" },
+      { "fecha": "2024-05-25T09:00:00", "texto": "Reversa aprobada, pendiente aplicación en sistema. Le informaremos en las próximas horas.", "usuario": "Sofía Martínez", "tipo": "visible" }
     ],
     "adjuntos": [
-      { "nombre": "extracto_mayo.pdf", "tipo": "application/pdf", "tamano": "234 KB" },
-      { "nombre": "pantallazocobro.png", "tipo": "image/png", "tamano": "87 KB" }
+      { "nombre": "extracto_mayo.pdf", "tipo": "application/pdf", "tamano": "234 KB", "fecha": "20/05/2024 08:15", "categoria": "Registro inicial", "visibilidad": "interno", "cargadoPor": "Laura Gómez" },
+      { "nombre": "pantallazocobro.png", "tipo": "image/png", "tamano": "87 KB", "fecha": "20/05/2024 08:20", "categoria": "Registro inicial", "visibilidad": "visible", "cargadoPor": "María López" }
     ],
     "historial": [
       { "fecha": "2024-05-20T08:15:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -83,10 +83,10 @@
     "responsable": "Sofía Martínez",
     "descripcion": "El crédito 2024-CR-4567 fue desembolsado con una TEA del 28% cuando el contrato firmado estipulaba el 22%. Se solicita corrección inmediata y reliquidación del crédito.",
     "comentarios": [
-      { "fecha": "2024-05-11T09:00:00", "texto": "Se solicitó al cliente enviar copia del contrato firmado.", "usuario": "Sofía Martínez" }
+      { "fecha": "2024-05-11T09:00:00", "texto": "Se solicitó al cliente enviar copia del contrato firmado.", "usuario": "Sofía Martínez", "tipo": "interno" }
     ],
     "adjuntos": [
-      { "nombre": "contrato_credito.pdf", "tipo": "application/pdf", "tamano": "1.2 MB" }
+      { "nombre": "contrato_credito.pdf", "tipo": "application/pdf", "tamano": "1.2 MB", "fecha": "10/05/2024 10:30", "categoria": "Registro inicial", "visibilidad": "interno", "cargadoPor": "Pedro Ramírez" }
     ],
     "historial": [
       { "fecha": "2024-05-10T10:30:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -139,7 +139,7 @@
     "responsable": "Laura Gómez",
     "descripcion": "El asociado felicita la gestión del asesor Marcos Díaz en la sucursal Norte, quien le brindó atención excepcional durante su trámite de renovación de crédito.",
     "comentarios": [
-      { "fecha": "2024-06-04T09:00:00", "texto": "Felicitación trasladada al asesor Marcos Díaz y a su jefe inmediato.", "usuario": "Laura Gómez" }
+      { "fecha": "2024-06-04T09:00:00", "texto": "Felicitación trasladada al asesor Marcos Díaz y a su jefe inmediato.", "usuario": "Laura Gómez", "tipo": "interno" }
     ],
     "adjuntos": [],
     "historial": [
@@ -168,10 +168,10 @@
     "responsable": "Carlos Herrera",
     "descripcion": "La tarjeta débito con terminación 4521 fue bloqueada sin previo aviso, ocasionando inconvenientes en compras del día. El sistema marcó una transacción legítima como fraudulenta.",
     "comentarios": [
-      { "fecha": "2024-06-08T10:00:00", "texto": "Caso escalado al área de seguridad bancaria.", "usuario": "Carlos Herrera" }
+      { "fecha": "2024-06-08T10:00:00", "texto": "Caso escalado al área de seguridad bancaria.", "usuario": "Carlos Herrera", "tipo": "interno" }
     ],
     "adjuntos": [
-      { "nombre": "comprobante_compra.jpg", "tipo": "image/jpeg", "tamano": "156 KB" }
+      { "nombre": "comprobante_compra.jpg", "tipo": "image/jpeg", "tamano": "156 KB", "fecha": "08/06/2024 07:45", "categoria": "Registro inicial", "visibilidad": "interno", "cargadoPor": "Claudia Moreno" }
     ],
     "historial": [
       { "fecha": "2024-06-08T07:45:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -199,10 +199,10 @@
     "responsable": "Carlos Herrera",
     "descripcion": "El asociado solicita certificado de paz y salvo de su crédito hipotecario número 2021-HP-1234, cancelado en mayo de 2024, para trámite notarial.",
     "comentarios": [
-      { "fecha": "2024-05-29T10:00:00", "texto": "Certificado generado y enviado al correo del solicitante.", "usuario": "Carlos Herrera" }
+      { "fecha": "2024-05-29T10:00:00", "texto": "Certificado generado y enviado al correo del solicitante.", "usuario": "Carlos Herrera", "tipo": "visible" }
     ],
     "adjuntos": [
-      { "nombre": "paz_salvo_credito.pdf", "tipo": "application/pdf", "tamano": "89 KB" }
+      { "nombre": "paz_salvo_credito.pdf", "tipo": "application/pdf", "tamano": "89 KB", "fecha": "29/05/2024 10:00", "categoria": "Respuesta formal", "visibilidad": "visible", "cargadoPor": "Carlos Herrera" }
     ],
     "historial": [
       { "fecha": "2024-05-28T13:30:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -230,11 +230,11 @@
     "responsable": "Sofía Martínez",
     "descripcion": "El 10 de junio a las 5:45 AM se realizó una transferencia de $1.200.000 que fue debitada de la cuenta origen pero no acreditada en el destino. El saldo fue descontado y la transacción no aparece en el extracto.",
     "comentarios": [
-      { "fecha": "2024-06-10T09:00:00", "texto": "Se verificó en los logs del sistema la transacción fallida. Caso urgente.", "usuario": "Sofía Martínez" },
-      { "fecha": "2024-06-10T11:00:00", "texto": "Reversión iniciada por el área técnica.", "usuario": "Sofía Martínez" }
+      { "fecha": "2024-06-10T09:00:00", "texto": "Se verificó en los logs del sistema la transacción fallida. Caso urgente.", "usuario": "Sofía Martínez", "tipo": "interno" },
+      { "fecha": "2024-06-10T11:00:00", "texto": "Reversión iniciada por el área técnica. Estimado asociado, el proceso puede tomar hasta 24 horas hábiles.", "usuario": "Sofía Martínez", "tipo": "visible" }
     ],
     "adjuntos": [
-      { "nombre": "comprobante_transaccion.pdf", "tipo": "application/pdf", "tamano": "45 KB" }
+      { "nombre": "comprobante_transaccion.pdf", "tipo": "application/pdf", "tamano": "45 KB", "fecha": "10/06/2024 06:00", "categoria": "Registro inicial", "visibilidad": "interno", "cargadoPor": "Sofía Martínez" }
     ],
     "historial": [
       { "fecha": "2024-06-10T06:00:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -287,7 +287,7 @@
     "responsable": "Sofía Martínez",
     "descripcion": "El CDT número 2022-CDT-8901 venció el 5 de junio. La liquidación aplicada fue $2.340.000 cuando según el certificado debería ser $2.410.000. Hay una diferencia de $70.000 sin explicar.",
     "comentarios": [
-      { "fecha": "2024-06-08T10:00:00", "texto": "Se solicitó al cliente el certificado original del CDT.", "usuario": "Sofía Martínez" }
+      { "fecha": "2024-06-08T10:00:00", "texto": "Se solicitó al cliente el certificado original del CDT.", "usuario": "Sofía Martínez", "tipo": "interno" }
     ],
     "adjuntos": [],
     "historial": [
@@ -316,7 +316,7 @@
     "responsable": "Carlos Herrera",
     "descripcion": "Solicitud de actualización de número de celular (3145556677) y dirección de residencia en los sistemas de la cooperativa.",
     "comentarios": [
-      { "fecha": "2024-06-03T11:00:00", "texto": "Datos actualizados en el sistema CRM.", "usuario": "Carlos Herrera" }
+      { "fecha": "2024-06-03T11:00:00", "texto": "Datos actualizados en el sistema CRM.", "usuario": "Carlos Herrera", "tipo": "interno" }
     ],
     "adjuntos": [],
     "historial": [
@@ -345,11 +345,11 @@
     "responsable": "Laura Gómez",
     "descripcion": "Se realizó un débito de $89.000 por concepto de seguro de vida sin que el asociado haya firmado ningún documento de autorización. El cobro se hizo directamente a la cuenta de ahorros.",
     "comentarios": [
-      { "fecha": "2024-06-09T10:00:00", "texto": "Verificada la ausencia de formulario de autorización.", "usuario": "Laura Gómez" },
-      { "fecha": "2024-06-10T08:00:00", "texto": "Iniciado proceso de reversa del cobro.", "usuario": "Laura Gómez" }
+      { "fecha": "2024-06-09T10:00:00", "texto": "Verificada la ausencia de formulario de autorización.", "usuario": "Laura Gómez", "tipo": "interno" },
+      { "fecha": "2024-06-10T08:00:00", "texto": "Iniciado proceso de reversa del cobro. Le notificaremos al asociado una vez sea efectiva.", "usuario": "Laura Gómez", "tipo": "visible" }
     ],
     "adjuntos": [
-      { "nombre": "extracto_cuenta.pdf", "tipo": "application/pdf", "tamano": "198 KB" }
+      { "nombre": "extracto_cuenta.pdf", "tipo": "application/pdf", "tamano": "198 KB", "fecha": "09/06/2024 08:30", "categoria": "Gestión interna", "visibilidad": "interno", "cargadoPor": "Laura Gómez" }
     ],
     "historial": [
       { "fecha": "2024-06-09T08:30:00", "accion": "Caso creado", "usuario": "Sistema" },
@@ -429,7 +429,7 @@
     "responsable": "Laura Gómez",
     "descripcion": "Solicitud de ampliación del cupo de la tarjeta de crédito MasterCard terminación 7823 de $3.000.000 a $6.000.000. El cliente tiene historial crediticio positivo de 4 años.",
     "comentarios": [
-      { "fecha": "2024-06-07T10:00:00", "texto": "Se validó el score crediticio del asociado: 820 puntos. Apto para ampliación.", "usuario": "Laura Gómez" }
+      { "fecha": "2024-06-07T10:00:00", "texto": "Se validó el score crediticio del asociado: 820 puntos. Apto para ampliación.", "usuario": "Laura Gómez", "tipo": "interno" }
     ],
     "adjuntos": [],
     "historial": [
