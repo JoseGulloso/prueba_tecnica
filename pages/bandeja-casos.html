@@ -21,9 +21,6 @@
 
 <body>
 
-  <!-- Overlay móvil -->
-  <div class="sidebar-overlay" aria-hidden="true"></div>
-
   <!-- App shell -->
   <div class="app-shell">
 
@@ -34,10 +31,10 @@
     <div class="app-main d-flex flex-column flex-grow-1 min-vh-100">
 
       <!-- Contenido principal -->
-      <div class="mx-auto p-4" role="main" id="main-content">
+      <div class="w-100 p-4" role="main" id="main-content">
 
         <!-- Encabezado de página -->
-        <div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-3">
+        <div class="page-header d-flex flex-column flex-md-row align-items-start justify-content-md-between gap-3">
           <div>
             <h1 class="page-title">Bandeja de Casos</h1>
             <div class="page-breadcrumb">
@@ -55,7 +52,7 @@
         </div>
 
         <!-- Cards de métricas -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3" role="region" aria-label="Resumen de métricas">
+        <div class="metrics-grid row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2 g-lg-3" role="region" aria-label="Resumen de métricas">
           <div class="col">
             <div class="card h-100">
               <div class="card-body">

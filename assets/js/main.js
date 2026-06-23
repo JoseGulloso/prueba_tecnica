@@ -1,22 +1,16 @@
 "use strict";
 
-/* ============================================================
-   Rutas relativas según ubicación de la página
-   ============================================================ */
+//Rutas relativas según ubicación de la página
 const isInPages = window.location.pathname.includes("/pages/");
 const BASE_PATH = isInPages ? "../" : "./";
 const PAGES_PATH = isInPages ? "./" : "./pages/";
 
-/* ============================================================
-   Carga de archivos JSON locales
-   ============================================================ */
+//Carga de archivos JSON locales
 function loadJSON(path) {
   return $.getJSON(BASE_PATH + path);
 }
 
-/* ============================================================
-   Gestión de sesión (sessionStorage)
-   ============================================================ */
+//Gestión de sesión (sessionStorage)
 const SESSION_KEY = "gestor_fpqrs_session";
 
 function getSessionUser() {
@@ -42,9 +36,7 @@ function redirectIfNotAuth() {
   }
 }
 
-/* ============================================================
-   localStorage para casos (sobreescrituras / nuevos)
-   ============================================================ */
+//localStorage para casos (sobreescrituras / nuevos)
 const LS_CASOS_KEY = "gestor_fpqrs_casos_override";
 
 function getCasosOverride() {
@@ -75,9 +67,7 @@ function saveCasoNuevo(caso) {
   localStorage.setItem("gestor_fpqrs_casos_nuevos", JSON.stringify(nuevos));
 }
 
-/* ============================================================
-   Merge casos JSON + overrides localStorage
-   ============================================================ */
+//Merge casos JSON + overrides localStorage
 function mergeCasos(casosBase) {
   const overrides = getCasosOverride();
   const nuevos = getCasosNuevos();
@@ -85,9 +75,7 @@ function mergeCasos(casosBase) {
   return [...nuevos, ...merged];
 }
 
-/* ============================================================
-   Helpers de badges
-   ============================================================ */
+//Helpers de badges
 function getBadgeEstado(estado) {
   const map = {
     Radicado: "radicado",
@@ -167,9 +155,7 @@ function getSemaforoLabel(valor, estado) {
   );
 }
 
-/* ============================================================
-   Formateo de fechas
-   ============================================================ */
+//Formateo de fechas
 function formatDate(isoStr) {
   if (!isoStr) return "—";
   const d = new Date(isoStr);
@@ -192,9 +178,7 @@ function formatDateTime(isoStr) {
   });
 }
 
-/* ============================================================
-   Toast notifications
-   ============================================================ */
+//Toast notifications
 function showToast(message, type = "success", duration = 4000) {
   const icons = {
     success: "bi-check-circle-fill",
@@ -227,9 +211,7 @@ function showToast(message, type = "success", duration = 4000) {
   $toast[0].addEventListener("hidden.bs.toast", () => $toast.remove());
 }
 
-/* ============================================================
-   Inyección de navbar y sidebar compartidos
-   ============================================================ */
+//Inyección de navbar y sidebar compartidos
 function renderNavbar(pageTitle) {
   const user = getSessionUser();
   if (!user) return;
@@ -405,7 +387,7 @@ function renderSidebar(activePage) {
 
   if (!$("#sidebarDesktopToggle").length) {
     $("body").append(`
-      <button id="sidebarDesktopToggle" class="sidebar-desktop-toggle d-none d-lg-flex" aria-label="Contraer menú" aria-expanded="true" type="button">
+      <button id="sidebarDesktopToggle" class="sidebar-desktop-toggle" aria-label="Contraer menú" aria-expanded="true" type="button">
         <i class="bi bi-chevron-left"></i>
       </button>`);
   }
@@ -422,47 +404,26 @@ function renderSidebar(activePage) {
     const sidebarWidth = collapsed ? 64 : 260;
     $shell.toggleClass("sidebar-collapsed", collapsed);
     $desktopToggle.attr("aria-expanded", String(!collapsed));
-    $desktopToggle.find("i").attr("class", collapsed ? "bi bi-chevron-right" : "bi bi-chevron-left");
-    $desktopToggle.css("left", (sidebarWidth - 14) + "px");
+    $desktopToggle
+      .find("i")
+      .attr("class", collapsed ? "bi bi-chevron-right" : "bi bi-chevron-left");
+    $desktopToggle.css("left", sidebarWidth - 14 + "px");
   }
 
   const savedCollapsed =
     localStorage.getItem("gestor_fpqrs_sidebar_collapsed") === "true";
-  if ($(window).width() >= 992) {
-    setSidebarState(savedCollapsed);
-  }
-
-  if (!$("#mobileSidebarToggle").length) {
-    $("body").append(`
-      <button id="mobileSidebarToggle" class="mobile-sidebar-toggle d-lg-none" aria-label="Abrir menú">
-        <i class="bi bi-list"></i>
-      </button>`);
-  }
-  $("#mobileSidebarToggle")
-    .off("click")
-    .on("click", function () {
-      $(".app-sidebar").toggleClass("show");
-      $(".sidebar-overlay").toggleClass("show");
-    });
-  $(".sidebar-overlay")
-    .off("click")
-    .on("click", function () {
-      $(".app-sidebar, .sidebar-overlay").removeClass("show");
-    });
+  setSidebarState(savedCollapsed);
 
   $("#sidebarDesktopToggle")
     .off("click")
     .on("click", function () {
-      if ($(window).width() < 992) return;
       const collapsed = !$(".app-shell").hasClass("sidebar-collapsed");
       setSidebarState(collapsed);
       localStorage.setItem("gestor_fpqrs_sidebar_collapsed", String(collapsed));
     });
 }
 
-/* ============================================================
-   Inicialización común de páginas internas
-   ============================================================ */
+// Arranca cada página interna: verifica sesión y pinta el sidebar
 function initPage(activePage, pageTitle) {
   redirectIfNotAuth();
   $(document).ready(function () {
@@ -470,9 +431,7 @@ function initPage(activePage, pageTitle) {
   });
 }
 
-/* ============================================================
-   Generador de ID de radicado
-   ============================================================ */
+// Genera el ID único del radicado
 function generateRadicadoId() {
   const year = new Date().getFullYear();
   const num = String(Math.floor(10000 + Math.random() * 90000));

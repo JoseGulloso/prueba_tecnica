@@ -20,8 +20,6 @@
 
 <body>
 
-  <div class="sidebar-overlay" aria-hidden="true"></div>
-
   <div class="app-shell">
     <aside class="app-sidebar" id="sidebar-placeholder" role="navigation" aria-label="Menú principal"></aside>
 
@@ -319,19 +317,63 @@
                 <!-- Historial -->
                 <div class="tab-content-panel tab-pane fade" id="tabHistorial" role="tabpanel"
                   aria-labelledby="tab-historial" tabindex="0">
-                  <div class="timeline" id="listaHistorial" aria-label="Historial de acciones"></div>
+
+                  <!-- Header -->
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <i class="bi bi-clock-history"></i>
+                    <span class="fw-semibold">Línea de tiempo del caso</span>
+                    <span class="badge bg-secondary" id="badgeHistorialHeader">0</span>
+                  </div>
+                  <p class="text-muted mb-3" style="font-size:var(--font-size-xs);">Solo lectura</p>
+
+                  <!-- Chips de resumen por tipo -->
+                  <div id="historialSummaryChips" class="d-flex flex-wrap gap-2 mb-3"></div>
+
+                  <!-- Barra de filtros scrollable -->
+                  <div id="historialFilters" class="historial-filter-bar mb-4"></div>
+
+                  <!-- Lista de eventos -->
+                  <div id="listaHistorial" class="historial-timeline" aria-label="Historial de acciones"></div>
+
                 </div>
 
                 <!-- Respuestas -->
                 <div class="tab-content-panel tab-pane fade" id="tabRespuestas" role="tabpanel"
                   aria-labelledby="tab-respuestas" tabindex="0">
-                  <div id="listaRespuestas">
-                    <div class="empty-state">
-                      <i class="bi bi-reply-all d-block mb-3" style="font-size:2.5rem; opacity:0.3;"></i>
-                      <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">No hay respuestas formales
-                        registradas para este caso.</p>
+
+                  <!-- Formulario fijo de redacción -->
+                  <div id="formNuevaRespuesta" class="respuesta-form-panel">
+                    <div class="respuesta-form-title">REDACTAR RESPUESTA AL ASOCIADO</div>
+                    <div class="respuesta-form-field">
+                      <span class="respuesta-form-label">PARA</span>
+                      <span class="respuesta-form-value" id="respuestaPara">—</span>
+                    </div>
+                    <div class="mb-3">
+                      <label class="respuesta-form-label" for="respuestaAsunto">ASUNTO</label>
+                      <input type="text" class="form-control input-rounded" id="respuestaAsunto" value="">
+                    </div>
+                    <div class="mb-3">
+                      <label class="respuesta-form-label" for="respuestaCuerpo">MENSAJE <span class="text-danger">*</span></label>
+                      <textarea class="form-control input-rounded" id="respuestaCuerpo" rows="5"
+                        placeholder="Escriba aquí la respuesta para el asociado..."></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                      <button class="btn btn-primary-brand btn-sm" id="btnEnviarRespuesta">
+                        <i class="bi bi-send me-1"></i>Enviar respuesta
+                      </button>
                     </div>
                   </div>
+
+                  <!-- Lista de respuestas enviadas -->
+                  <div class="respuestas-section-header mt-4">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-clock-history"></i>
+                      <span class="fw-semibold">Respuestas enviadas</span>
+                      <span class="badge bg-secondary" id="badgeRespuestas">0</span>
+                    </div>
+                  </div>
+                  <div id="listaRespuestas"></div>
+
                 </div>
               </div><!-- /tab-content -->
 
@@ -407,13 +449,15 @@
 
                 <!-- Reasignar caso -->
                 <div class="action-panel-section">
-                  <h3 class="action-panel-title d-flex align-items-center">
-                    <i class="bi bi-person-check" aria-hidden="true"></i>Reasignar caso
+                  <h3 class="action-panel-title d-flex align-items-center justify-content-between">
+                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                    <span>Reasignar caso</span>
                   </h3>
                   <p class="action-panel-hint">Transfiere este caso a otro operador. El cambio quedará registrado en la
                     trazabilidad.</p>
-                  <button class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#reasignarModal">
-
+                  <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-between"
+                    data-bs-toggle="modal" data-bs-target="#reasignarModal">
+                    <span>Responsable: Rodolfo Salazar</span>
                     <i class="bi bi-person-check"></i>
                   </button>
                 </div>

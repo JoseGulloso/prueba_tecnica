@@ -1,11 +1,6 @@
-/* ============================================================
-   main.css — Variables globales, reset y layout base
-   GestorFPQRS · Estrategia Segura S.A.S
-   ============================================================ */
+/* main.css — Variables, reset y layout base */
 
-/* ----------------------------------------------------------
-   1. Variables CSS globales
-   ---------------------------------------------------------- */
+/* Variables globales del sistema */
 :root {
   /* Colores principales */
   --color-primary: #1a3a5c;
@@ -89,9 +84,7 @@
   border-color: var(--color-border-light) !important;
 }
 
-/* ----------------------------------------------------------
-   2. Reset mínimo
-   ---------------------------------------------------------- */
+/* Reset básico */
 *,
 *::before,
 *::after {
@@ -128,9 +121,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ----------------------------------------------------------
-   3. Layout base — app shell (sidebar + main)
-   ---------------------------------------------------------- */
+/* Layout principal: sidebar y contenido */
 .app-shell {
   display: flex;
   min-height: 100vh;
@@ -172,6 +163,7 @@ a:hover {
 .app-main {
   margin-left: var(--sidebar-width);
   transition: margin-left var(--transition-base);
+  min-width: 0;
 }
 
 .app-shell.sidebar-collapsed .app-main {
@@ -246,56 +238,8 @@ a:hover {
   display: none;
 }
 
-.mobile-sidebar-toggle {
-  position: fixed;
-  top: 12px;
-  left: 12px;
-  z-index: 1050;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-/* Sidebar colapsado en móvil */
-@media (max-width: 991.98px) {
-  .app-sidebar {
-    transform: translateX(-100%);
-    width: var(--sidebar-width);
-  }
-
-  .app-sidebar.show {
-    transform: translateX(0);
-  }
-
-  .app-main {
-    margin-left: 0;
-  }
-}
-
-/* Overlay móvil */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1039;
-}
-
-.sidebar-overlay.show {
-  display: block;
-}
-
-/* ----------------------------------------------------------
-   4. Página de login — layout split
-   ---------------------------------------------------------- */
+/* Pantalla de inicio de sesión */
 
 /* Contenedor principal: split full-height */
 .login-split {
@@ -674,16 +618,12 @@ a:hover {
   }
 }
 
-/* ----------------------------------------------------------
-   5. Tipografía utilitaria
-   ---------------------------------------------------------- */
+/* Utilidades de tipografía */
 .text-primary-brand {
   color: var(--color-primary);
 }
 
-/* ----------------------------------------------------------
-   6. Botones personalizados
-   ---------------------------------------------------------- */
+/* Botones de la marca */
 .btn-primary-brand {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
@@ -697,9 +637,7 @@ a:hover {
   color: #fff;
 }
 
-/* ----------------------------------------------------------
-   7. Página de error / estado vacío
-   ---------------------------------------------------------- */
+/* Estados de error y vacío */
 .empty-state {
   text-align: center;
   padding: var(--space-12) var(--space-8);
@@ -711,7 +649,3 @@ a:hover {
   margin-bottom: var(--space-4);
   opacity: 0.4;
 }
-
-/* ----------------------------------------------------------
-   8. Utilidades de scroll — usar .overflow-x-auto y .table-responsive de Bootstrap
-   ---------------------------------------------------------- */

@@ -57,10 +57,20 @@
       { "nombre": "pantallazocobro.png", "tipo": "image/png", "tamano": "87 KB", "fecha": "20/05/2024 08:20", "categoria": "Registro inicial", "visibilidad": "visible", "cargadoPor": "María López" }
     ],
     "historial": [
-      { "fecha": "2024-05-20T08:15:00", "accion": "Caso creado", "usuario": "Sistema" },
-      { "fecha": "2024-05-21T08:00:00", "accion": "Asignado a revisión", "usuario": "Sofía Martínez" },
-      { "fecha": "2024-05-22T14:00:00", "accion": "Estado cambiado a En Gestión", "usuario": "Laura Gómez" },
-      { "fecha": "2024-05-25T09:00:00", "accion": "Escalado a administración", "usuario": "Laura Gómez" }
+      { "fecha": "2024-05-20T08:15:00", "tipo": "creacion",   "accion": "Caso creado",                      "usuario": "Sistema",        "rol": "Sistema",    "descripcion": "Caso radicado automáticamente al recibir la queja sobre cobro indebido en cuenta de ahorros." },
+      { "fecha": "2024-05-21T08:00:00", "tipo": "asignacion", "accion": "Asignado a revisión",               "usuario": "Sofía Martínez", "rol": "Operador",   "descripcion": "Caso asignado para revisión inicial del cargo indebido.", "hasta": "Sofía Martínez" },
+      { "fecha": "2024-05-22T14:00:00", "tipo": "estado",     "accion": "Estado cambiado a En Gestión",      "usuario": "Laura Gómez",    "rol": "Operador",   "descripcion": "Se inició gestión tras confirmar el error de cobro con el área contable.", "desde": "Radicado", "hasta": "En Gestión" },
+      { "fecha": "2024-05-25T09:00:00", "tipo": "prioridad",  "accion": "Escalado a administración",         "usuario": "Laura Gómez",    "rol": "Supervisor", "descripcion": "Escalado por complejidad del reclamo financiero y monto involucrado." }
+    ],
+    "respuestas": [
+      {
+        "fecha": "2024-05-23T11:00:00",
+        "para": "maria.lopez@email.com",
+        "asunto": "Re: Caso FPQRS-2024-002 — Cobro indebido en cuenta de ahorros",
+        "cuerpo": "Estimada señora López,\n\nHemos revisado su solicitud y confirmado el cobro indebido de $45.000 por concepto de cuota de manejo no acordada. Hemos iniciado el proceso de reversa con el área financiera.\n\nEn las próximas 24 a 48 horas verá reflejado el crédito en su cuenta. Le pedimos disculpas por los inconvenientes ocasionados.\n\nQuedamos atentos a cualquier consulta adicional.",
+        "usuario": "Laura Gómez",
+        "rol": "Operador"
+      }
     ]
   },
   {
@@ -237,9 +247,9 @@
       { "nombre": "comprobante_transaccion.pdf", "tipo": "application/pdf", "tamano": "45 KB", "fecha": "10/06/2024 06:00", "categoria": "Registro inicial", "visibilidad": "interno", "cargadoPor": "Sofía Martínez" }
     ],
     "historial": [
-      { "fecha": "2024-06-10T06:00:00", "accion": "Caso creado", "usuario": "Sistema" },
-      { "fecha": "2024-06-10T08:00:00", "accion": "Escalado a alta prioridad", "usuario": "Admin" },
-      { "fecha": "2024-06-10T09:00:00", "accion": "En investigación técnica", "usuario": "Sofía Martínez" }
+      { "fecha": "2024-06-10T06:00:00", "tipo": "creacion",  "accion": "Caso creado",              "usuario": "Sistema",        "rol": "Sistema",    "descripcion": "Transferencia de $1.200.000 debitada sin acreditar en cuenta destino." },
+      { "fecha": "2024-06-10T08:00:00", "tipo": "prioridad", "accion": "Escalado a alta prioridad","usuario": "Admin",          "rol": "Supervisor", "descripcion": "Escalado por riesgo financiero inmediato.", "desde": "Normal", "hasta": "Alta" },
+      { "fecha": "2024-06-10T09:00:00", "tipo": "estado",    "accion": "En investigación técnica", "usuario": "Sofía Martínez", "rol": "Operador",   "descripcion": "Se revisaron los logs del sistema. Transacción fallida identificada.", "desde": "Radicado", "hasta": "En Gestión" }
     ]
   },
   {

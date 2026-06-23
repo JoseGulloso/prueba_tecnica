@@ -1,11 +1,6 @@
-/* ============================================================
-   components.css — Componentes reutilizables
-   GestorFPQRS · Estrategia Segura S.A.S
-   ============================================================ */
+/* components.css — Componentes reutilizables */
 
-/* ----------------------------------------------------------
-  0. Inputs redondeados
-  ---------------------------------------------------------- */
+/* Campos de texto redondeados */
 .input-rounded {
   border-radius: var(--radius-lg);
   width: 100%;
@@ -26,9 +21,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* ----------------------------------------------------------
-   1. Sidebar
-   ---------------------------------------------------------- */
+/* Barra lateral de navegación */
 .sidebar-brand {
   display: flex;
   align-items: center;
@@ -159,9 +152,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   background: var(--sidebar-item-hover);
 }
 
-/* ----------------------------------------------------------
-   2. Navbar
-   ---------------------------------------------------------- */
+/* Barra superior */
 .navbar-brand-title {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
@@ -259,7 +250,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   z-index: 1041;
   transition: left var(--transition-base);
   cursor: pointer;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -273,21 +264,9 @@ a.sidebar-item.sidebar-item-logout:hover {
   .sidebar-toggle-btn {
     display: flex;
   }
-
-  .sidebar-desktop-toggle {
-    display: none;
-  }
 }
 
-@media (min-width: 992px) {
-  .sidebar-desktop-toggle {
-    display: flex;
-  }
-}
-
-/* ----------------------------------------------------------
-   3. Cards de métricas
-   ---------------------------------------------------------- */
+/* Tarjetas de métricas */
 .metric-card-danger {
   border-color: var(--color-danger);
 }
@@ -359,9 +338,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   color: var(--color-text-secondary);
 }
 
-/* ----------------------------------------------------------
-   4. Tabla de casos
-   ---------------------------------------------------------- */
+/* Tabla principal de casos */
 .cases-table-wrapper {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -492,9 +469,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   text-decoration: underline;
 }
 
-/* ----------------------------------------------------------
-   5. Badges de estado, tipo y prioridad
-   ---------------------------------------------------------- */
+/* Etiquetas de estado, tipo y prioridad */
 .badge-estado {
   display: inline-flex;
   align-items: center;
@@ -666,9 +641,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   background: #dc2626;
 }
 
-/* ----------------------------------------------------------
-   6. Paginación
-   ---------------------------------------------------------- */
+/* Paginación */
 .table-footer {
   padding: var(--space-3) var(--space-5);
   border-top: 1px solid var(--color-border-light);
@@ -744,9 +717,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   color: var(--color-text-primary);
 }
 
-/* ----------------------------------------------------------
-   7. Breadcrumb
-   ---------------------------------------------------------- */
+/* Migas de pan */
 .page-header {
   margin-bottom: var(--space-5);
 }
@@ -772,9 +743,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   margin: 0;
 }
 
-/* ----------------------------------------------------------
-   8. Panel / tarjeta de detalle
-   ---------------------------------------------------------- */
+/* Panel de detalle del caso */
 
 .detail-card {
   background: var(--color-surface);
@@ -854,62 +823,49 @@ a.sidebar-item.sidebar-item-logout:hover {
   flex: 1;
 }
 
-/* ----------------------------------------------------------
-   9. Timeline / Historial
-   ---------------------------------------------------------- */
-.timeline {
-  position: relative;
-  padding-left: var(--space-8);
-}
+/* Historial de actividad */
+.historial-filter-bar { display:flex; gap:var(--space-2); overflow-x:auto; padding-bottom:var(--space-1); scrollbar-width:none; }
+.historial-filter-bar::-webkit-scrollbar { display:none; }
+.historial-filter-btn { white-space:nowrap; background:none; border:1px solid var(--color-border-light); border-radius:20px; font-size:var(--font-size-xs); font-weight:var(--font-weight-medium); color:var(--color-text-secondary); padding:3px 12px; cursor:pointer; transition:all .15s; }
+.historial-filter-btn.active { background:var(--color-primary); border-color:var(--color-primary); color:#fff; }
+.historial-chip { display:inline-flex; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; border-radius:20px; padding:2px 10px; }
+.historial-timeline { position:relative; padding-left:52px; }
+.historial-timeline::before { content:''; position:absolute; left:19px; top:0; bottom:0; width:2px; background:var(--color-border-light); }
+.historial-event { position:relative; margin-bottom:var(--space-3); }
+.historial-event-dot { position:absolute; left:-52px; top:10px; width:38px; height:38px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:1; }
+.historial-event-card { border:1px solid var(--color-border-light); border-radius:var(--radius-lg); overflow:hidden; }
+.historial-event-header { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); cursor:pointer; }
+.historial-event-badge { display:inline-flex; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; border-radius:20px; padding:2px 10px; }
+.historial-event-date { margin-left:auto; font-size:var(--font-size-xs); color:var(--color-text-muted); white-space:nowrap; }
+.historial-event-toggle { font-size:0.75rem; color:var(--color-text-muted); transition:transform .2s; margin-left:var(--space-2); }
+.historial-event-toggle.collapsed { transform:rotate(180deg); }
+.historial-event-body { padding:var(--space-3) var(--space-4); border-top:1px solid var(--color-border-light); font-size:var(--font-size-sm); color:var(--color-text-primary); }
+.historial-event-desc { line-height:1.6; margin-bottom:var(--space-2); }
+.historial-event-user { font-size:var(--font-size-xs); color:var(--color-text-secondary); }
+.historial-transition { display:flex; align-items:center; gap:var(--space-2); margin-bottom:var(--space-2); flex-wrap:wrap; }
+.historial-transition-pill { display:inline-flex; align-items:center; font-size:0.75rem; font-weight:600; border-radius:20px; padding:2px 10px; background:var(--color-bg); border:1px solid var(--color-border-light); }
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 14px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--color-border);
-}
+/* Respuestas formales */
+.respuestas-section-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-3); }
+.respuesta-form-panel { border:1px solid var(--color-border-light); border-radius:var(--radius-lg); padding:var(--space-4); margin-bottom:var(--space-3); background:var(--color-surface); }
+.respuesta-form-title { font-size:var(--font-size-xs); font-weight:var(--font-weight-bold); color:var(--color-text-secondary); letter-spacing:.05em; margin-bottom:var(--space-3); }
+.respuesta-form-label { font-size:var(--font-size-xs); font-weight:var(--font-weight-bold); color:var(--color-text-secondary); letter-spacing:.05em; display:block; margin-bottom:var(--space-2); }
+.respuesta-form-field { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-2) 0; border-bottom:1px solid var(--color-border-light); margin-bottom:var(--space-3); }
+.respuesta-form-value { font-size:var(--font-size-sm); color:var(--color-text-primary); }
+.respuesta-card { border:1px solid var(--color-border-light); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:var(--space-3); }
+.respuesta-card-header { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); cursor:pointer; }
+.respuesta-card-meta { flex:1; min-width:0; }
+.respuesta-card-author { font-size:var(--font-size-sm); font-weight:var(--font-weight-semibold); color:var(--color-text-primary); }
+.respuesta-card-sub { font-size:var(--font-size-xs); color:var(--color-text-muted); margin-top:1px; }
+.respuesta-card-date { font-size:var(--font-size-xs); color:var(--color-text-muted); white-space:nowrap; }
+.respuesta-card-toggle { font-size:0.75rem; color:var(--color-text-muted); transition:transform .2s; margin-left:var(--space-2); }
+.respuesta-card-toggle.collapsed { transform:rotate(180deg); }
+.respuesta-card-body { padding:var(--space-3) var(--space-4); border-top:1px solid var(--color-border-light); font-size:var(--font-size-sm); }
+.respuesta-card-asunto { font-weight:var(--font-weight-semibold); color:var(--color-text-primary); margin-bottom:var(--space-2); }
+.respuesta-card-cuerpo { color:var(--color-text-secondary); line-height:1.7; white-space:pre-wrap; }
+.respuesta-badge { display:inline-flex; align-items:center; gap:4px; font-size:0.7rem; font-weight:600; background:#dbeafe; color:#1e40af; border-radius:20px; padding:2px 10px; }
 
-.timeline-item {
-  position: relative;
-  margin-bottom: var(--space-4);
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: calc(-1 * var(--space-8) + 6px);
-  top: 4px;
-  width: 12px;
-  height: 12px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  border: 2px solid var(--color-accent);
-  z-index: 1;
-}
-
-.timeline-date {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-bottom: 2px;
-}
-
-.timeline-action {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-medium);
-}
-
-.timeline-user {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-}
-
-/* ----------------------------------------------------------
-   10. Adjuntos / Upload
-   ---------------------------------------------------------- */
+/* Adjuntos y carga de archivos */
 .file-drop-zone {
   border: 2px dashed var(--color-border);
   border-radius: var(--radius-lg);
@@ -1139,9 +1095,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   font-size: var(--font-size-sm);
 }
 
-/* ----------------------------------------------------------
-   11. Formulario FPQRS
-   ---------------------------------------------------------- */
+/* Formulario de casos */
 .form-section-card {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -1202,9 +1156,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   color: var(--color-text-primary);
 }
 
-/* ----------------------------------------------------------
-   12. Toast personalizado
-   ---------------------------------------------------------- */
+/* Notificaciones emergentes */
 .toast-container-custom {
   position: fixed;
   top: calc(var(--navbar-height) + 16px);
@@ -1212,9 +1164,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   z-index: 9999;
 }
 
-/* ----------------------------------------------------------
-   13. Comentarios
-   ---------------------------------------------------------- */
+/* Sección de comentarios internos */
 
 /* Header de sección */
 .comments-section-header {
@@ -1387,13 +1337,17 @@ a.sidebar-item.sidebar-item-logout:hover {
   border-color: #b7dfca;
 }
 
-/* ----------------------------------------------------------
-   14. Responsive ajustes
-   ---------------------------------------------------------- */
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 767.98px) {
-  .metric-value {
-    font-size: 1.4rem;
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
 
   .detail-card-body {
     padding: var(--space-4);
@@ -1426,9 +1380,26 @@ a.sidebar-item.sidebar-item-logout:hover {
   }
 }
 
-/* ----------------------------------------------------------
-   15. Detalle de Caso — rediseño con panel lateral
-   ---------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .metrics-grid .card-body {
+    padding: 0.65rem 0.75rem;
+  }
+  .metrics-grid .metric-icon {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  .metrics-grid .metric-value {
+    font-size: 1.25rem;
+  }
+  .metrics-grid .metric-label {
+    font-size: 0.72rem;
+  }
+  .metrics-grid .metric-sublabel {
+    font-size: 0.65rem;
+  }
+}
+
+/* Vista de detalle con panel lateral */
 
 /* Cabecera del caso */
 .case-header-row {
@@ -1589,9 +1560,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   }
 }
 
-/* ----------------------------------------------------------
-   16. Formulario FPQRS — rediseño de secciones
-   ---------------------------------------------------------- */
+/* Secciones rediseñadas del formulario */
 
 /* Encabezado de página */
 .fpqrs-page-header {
@@ -1716,9 +1685,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   }
 }
 
-/* ----------------------------------------------------------
-   17. Portal público — layout sin sidebar
-   ---------------------------------------------------------- */
+/* Portal público sin barra lateral */
 
 .portal-layout {
   display: flex;
@@ -1794,7 +1761,7 @@ a.sidebar-item.sidebar-item-logout:hover {
 }
 
 .portal-container {
-  max-width: 780px;
+  max-width: 900px;
   margin: 0 auto;
   width: 100%;
 }
@@ -1832,9 +1799,7 @@ a.sidebar-item.sidebar-item-logout:hover {
   }
 }
 
-/* ==========================================
-   Modal Reasignar Caso
-   ========================================== */
+/* Modal para reasignar el caso */
 
 .reassign-modal .modal-content {
   border: 1px solid var(--color-border-light);

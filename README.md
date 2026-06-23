@@ -1,15 +1,30 @@
-# Prueba Técnica — Maquetador Web · Estrategia Segura S.A.S
+# GestorFPQRS — Prueba Técnica Maquetador Web · Estrategia Segura S.A.S
 
-## Tecnologías utilizadas
+Sistema web de gestión de FPQRS (Felicitaciones, Peticiones, Quejas, Reclamos y Sugerencias) para una cooperativa financiera ficticia llamada **CoopFinanzas**. Desarrollado como prueba técnica con HTML, CSS y JavaScript puros — sin frameworks de JS, sin build step, sin dependencias que instalar.
 
-| Tecnología | Versión | Rol |
+---
+
+## Demo en vivo
+
+| Entorno | URL |
+|---|---|
+| Vercel (producción) | https://prueba-tecnica-five-psi.vercel.app |
+| Repositorio GitHub | https://github.com/JoseGulloso/prueba_tecnica |
+
+---
+
+## Stack tecnológico
+
+| Tecnología | Versión | Para qué se usa |
 |---|---|---|
 | HTML5 semántico | — | Estructura de todas las vistas |
 | CSS3 (variables, flexbox, grid) | — | Estilos propios modulares |
-| Bootstrap 5 | 5.3.3 (CDN) | Grid, componentes, utilidades responsive |
+| Bootstrap 5 | 5.3.3 (CDN) | Grid, componentes y utilidades responsive |
 | Bootstrap Icons | 1.11.3 (CDN) | Iconografía |
-| jQuery | 3.7.1 (CDN) | DOM, eventos, AJAX, validaciones |
+| jQuery | 3.7.1 (CDN) | DOM, eventos, AJAX y validaciones |
 | JavaScript ES6+ | — | Lógica de negocio modular |
+
+Todo llega por CDN, así que no hay `npm install` ni nada por estilo.
 
 ---
 
@@ -33,147 +48,147 @@ Prueba_tecnica/
 │   │   ├── detalle.js            ← Renderizado de caso, acciones con modales, localStorage
 │   │   └── formulario.js         ← Dropdowns en cascada, drag-and-drop, radicación
 │   └── img/
-│       ├── logo.svg              ← Logo CoopFinanzas (SVG inline)
-│       └── favicon.svg           ← Favicon SVG
+│       └── logo.webp             ← Logo CoopFinanzas
 ├── data/
 │   ├── casos.json                ← 15 casos de muestra (todos los tipos y estados)
-│   └── usuarios.json             ← 3 usuarios demo (Admin, Operador, Supervisor)
+│   ├── catalogo-fpqrs.json       ← Catálogo de servicios, categorías y subcategorías
+│   └── usuarios.json             ← 3 usuarios demo (Administrador, Operador, Supervisor)
 └── README.md
 ```
 
 ---
 
-## Instrucciones para ejecutar la solución
+## ¿Cómo ejecutarlo localmente?
 
-> **Requisito:** El proyecto debe servirse desde un servidor local porque jQuery `$.getJSON()` requiere el protocolo HTTP. No funciona si abres los HTML directamente desde el sistema de archivos (`file://`).
+> **Importante:** El proyecto usa `$.getJSON()` de jQuery para cargar los archivos de datos, por lo que necesita servirse desde HTTP. Abrirlo directamente como `file://` no funciona.
 
-### Opción A — VS Code Live Server (recomendado)
+### Opción recomendada — VS Code Live Server
+
 1. Instala la extensión **Live Server** en VS Code
 2. Abre la carpeta `Prueba_tecnica/` en VS Code
-3. Clic derecho en `index.html` → **"Open with Live Server"**
+3. Clic derecho sobre `index.html` → **"Open with Live Server"**
 4. Se abre automáticamente en `http://127.0.0.1:5500/`
-
-### Opción B — Python (sin dependencias)
-```bash
-# Python 3
-cd Prueba_tecnica
-python -m http.server 8080
-# Abrir: http://localhost:8080
-```
-
-### Opción C — Node.js (npx)
-```bash
-cd Prueba_tecnica
-npx serve .
-# Abrir la URL que indique la consola
-```
 
 ---
 
 ## Vistas implementadas
 
 ### 1. `index.html` — Login / Registro
-- **Login:** email + contraseña, checkbox "Recordar sesión", enlace "¿Olvidó contraseña?"
-- **Registro:** nombre, email, contraseña, confirmación, consentimiento de datos
-- Toggle animado entre ambos formularios sin recargar
-- Validación en tiempo real campo por campo con Bootstrap Validation + jQuery
-- Carga credenciales desde `data/usuarios.json` vía `$.getJSON()`
-- 3 botones de acceso demo (Admin, Operador, Supervisor)
-- Al autenticarse → redirige a `pages/bandeja-casos.html` (sesión en `sessionStorage`)
-- Si ya hay sesión activa → redirige automáticamente a la bandeja
+
+La pantalla de entrada al sistema. Tiene diseño de dos paneles: el izquierdo muestra el branding de la plataforma y el derecho alterna entre el formulario de login y el de registro sin recargar la página.
+
+- Login con email + contraseña, checkbox "Recordar sesión" y enlace "¿Olvidó contraseña?"
+- Registro con nombre, email, contraseña, confirmación y consentimiento de datos
+- Validación en tiempo real campo por campo (Bootstrap Validation + jQuery)
+- Credenciales cargadas desde `data/usuarios.json` vía `$.getJSON()`
+- 3 botones de acceso rápido que auto-rellenan las credenciales demo (Admin, Operador, Supervisor)
+- Si ya hay sesión activa → redirige directamente a la bandeja
+
+---
 
 ### 2. `pages/bandeja-casos.html` — Bandeja de casos
-- **Cards métricas:** casos activos, SLA vencido, próximos a vencer, cerrados hoy (calculados dinámicamente)
-- **Tabla responsive:** 13 columnas con badges de estado, tipo, prioridad y semáforo visual
-- **Búsqueda en tiempo real** con debounce 300ms
-- **Filtros** por estado, tipo y prioridad con limpieza en un clic
-- **Ordenamiento** por columna (ascendente/descendente) con indicador visual
-- **Paginación** con 10/25/50 filas, navegación por páginas con ellipsis
-- **Exportar CSV** con los casos filtrados activos
-- Click en fila → navega a `detalle-caso.html?id=FPQRS-XXXX`
+
+El corazón del sistema. Muestra todos los casos con métricas en tiempo real, filtros avanzados y la tabla principal.
+
+- **4 tarjetas métricas** calculadas dinámicamente: casos activos, SLA vencido, próximos a vencer, cerrados hoy
+- **Tabla responsive** con 13 columnas, badges de estado/tipo/prioridad y semáforo visual de SLA
+- **Búsqueda en tiempo real** con debounce de 300 ms
+- **Panel de filtros** por estado, tipo, servicio, responsable, prioridad y estado de SLA
+- **Ordenamiento por columna** (ascendente/descendente) con indicador visual
+- **Paginación** con 10/25/50 filas por página y navegación con ellipsis
+- **Exportar CSV** con los casos que estén filtrados en ese momento
+- Clic en una fila → navega a `detalle-caso.html?id=FPQRS-XXXX`
+
+---
 
 ### 3. `pages/detalle-caso.html` — Detalle del caso
-- Lee `?id=` de la URL, busca en JSON + overrides de `localStorage`
-- **Status strip** con ID, asunto y todos los badges
-- **Paneles:** Información del Asociado + Detalles del Caso (grid responsivo)
-- **Tabs Bootstrap:** Descripción, Comentarios, Adjuntos, Historial, Respuestas
-- **Acciones** con modales:
-  - Cambiar estado → actualiza badge en pantalla + historial
-  - Cambiar prioridad → actualiza badge en pantalla + historial
-  - Reasignar → actualiza panel de detalles + historial
-  - Registrar observación → aparece en pestaña Comentarios + historial
-  - Cerrar caso → requiere observación obligatoria
-- Todos los cambios se persisten en `localStorage` y se reflejan en la bandeja
-- Botón de impresión del caso
+
+Vista completa de un caso individual. Lee el parámetro `?id=` de la URL, combina el JSON base con los cambios guardados en `localStorage` y renderiza todo el caso.
+
+- **Status strip** con ID, asunto y todos los badges del caso
+- **Banner de alerta** cuando el SLA está vencido
+- **Dos columnas:** información del asociado + detalles del caso a la izquierda; panel de acciones a la derecha
+- **5 pestañas Bootstrap:** Descripción, Comentarios, Adjuntos, Historial, Respuestas
+- **Acciones con modales:** cambiar estado, cambiar prioridad, reasignar responsable, registrar observación, cerrar caso (con observación obligatoria)
+- Todos los cambios se persisten en `localStorage` y se reflejan de vuelta en la bandeja
+- Botón para imprimir el caso
+
+---
 
 ### 4. `pages/formulario-fpqrs.html` — Formulario FPQRS
-- **Sección datos personales:** tipo ID, número, nombre, email, teléfono, dirección
-- **Sección datos del caso:** tipo, servicio, categoría, subcategoría (en cascada), descripción
-- **Dropdowns en cascada** completamente poblados (5 tipos × múltiples servicios/categorías)
-- **Campos dinámicos** según tipo: campo "urgencia" para Queja/Reclamo, "área sugerida" para Sugerencia
-- **Contador de caracteres** en descripción
-- **Drag-and-drop simulado:** validación de tipo y tamaño, lista visual de archivos, eliminación individual
-- **Consentimiento de datos** obligatorio (Ley 1581/2012)
-- Al radicar: genera ID aleatorio, guarda en `localStorage`, muestra modal con número de radicado
-- El nuevo caso aparece en la bandeja al volver
+
+Formulario de cara al público para radicar un nuevo caso. Diseñado para que cualquier asociado pueda usarlo sin necesidad de tener cuenta en el sistema.
+
+- **Datos personales:** tipo de ID, número, nombre, email, teléfono, dirección
+- **Datos del caso:** tipo, servicio, categoría y subcategoría en **cascada dinámica** (poblada desde `catalogo-fpqrs.json`)
+- **Campos condicionales:** campo de urgencia aparece solo para Queja/Reclamo; área sugerida solo para Sugerencia
+- **Contador de caracteres** en el campo de descripción
+- **Zona de archivos drag-and-drop:** hasta 5 archivos de máximo 5 MB, con lista visual y eliminación individual
+- **Consentimiento** obligatorio según Ley 1581/2012
+- Al radicar: genera un ID aleatorio, guarda en `localStorage` y muestra modal con el número de radicado
+- El caso nuevo aparece en la bandeja al volver
 
 ---
 
 ## Decisiones técnicas relevantes
 
 ### Inyección de navbar y sidebar
-Los componentes compartidos (navbar y sidebar) se renderizan via template literals en `main.js` (`renderNavbar()` / `renderSidebar()`). Esto evita duplicación de HTML y permite resaltar el ítem activo del menú según `window.location.pathname`.
+Los componentes compartidos se renderizan via template literals en `main.js` (`renderNavbar()` / `renderSidebar()`). Evita duplicar HTML entre páginas y permite resaltar el ítem activo del menú según `window.location.pathname`.
 
 ### Persistencia sin backend
-- `sessionStorage`: sesión del usuario autenticado
-- `localStorage["gestor_fpqrs_casos_override"]`: modificaciones a casos existentes (estado, prioridad, comentarios)
-- `localStorage["gestor_fpqrs_casos_nuevos"]`: casos radicados desde el formulario
-- Función `mergeCasos()` combina datos del JSON con los overrides en cada carga
+- `sessionStorage` → sesión del usuario autenticado
+- `localStorage["gestor_fpqrs_casos_override"]` → modificaciones a casos existentes (estado, prioridad, comentarios, historial)
+- `localStorage["gestor_fpqrs_casos_nuevos"]` → casos radicados desde el formulario
+- `mergeCasos()` combina el JSON base con los overrides en cada carga de página
 
-### Rutas relativas
-`main.js` detecta si la página está en `/pages/` y ajusta `BASE_PATH` y `PAGES_PATH` automáticamente, lo que permite que los mismos scripts funcionen desde `index.html` y desde las páginas internas sin cambios.
+### Rutas relativas portables
+`main.js` detecta si la página corre desde `/pages/` y ajusta `BASE_PATH` y `PAGES_PATH` automáticamente. Los mismos scripts funcionan tanto desde `index.html` como desde las páginas internas sin ningún cambio.
+
+### Catálogo en JSON externo
+La cascada Tipo → Servicio → Categoría → Subcategoría se pobla desde `data/catalogo-fpqrs.json`, que cubre 12 servicios con sus respectivas categorías y subcategorías. Esto hace que el formulario sea fácilmente extensible sin tocar el JS.
 
 ### Nomenclatura CSS
-Se usa una metodología de clases por componente (`.sidebar-item`, `.metric-card`, `.badge-estado`) sin BEM estricto, lo que mantiene el CSS legible y específico sin sobreespecificación.
-
-### Cascada de dropdowns
-Los datos de la cascada Tipo → Servicio → Categoría → Subcategoría están embebidos directamente en `formulario.js` como un objeto JS, evitando una petición adicional al servidor.
+Clases por componente (`.sidebar-item`, `.metric-card`, `.badge-estado`) sin BEM estricto. Mantiene el CSS legible y específico sin sobreespecificación ni capas de abstracción innecesarias.
 
 ---
 
-## Consideraciones de accesibilidad
+## Accesibilidad
 
-- Atributos `aria-label`, `aria-required`, `aria-expanded`, `aria-live` en todos los controles interactivos
+- `aria-label`, `aria-required`, `aria-expanded`, `aria-live` en todos los controles interactivos
 - Roles semánticos: `role="main"`, `role="navigation"`, `role="banner"`, `role="tabpanel"`, `role="toolbar"`
-- Navegación por teclado en la tabla (tecla Enter en filas) y en la zona de carga de archivos
+- Navegación por teclado en la tabla (Enter en filas) y en la zona de carga de archivos
 - Contraste de colores ≥ 4.5:1 en texto principal sobre fondos
-- Mensajes de error asociados a inputs con `aria-describedby`
-- Paginación con `aria-label` en cada botón
-- Modales con foco gestionado por Bootstrap 5
+- Mensajes de error vinculados a sus inputs con `aria-describedby`
 - `aria-current="page"` en el ítem activo del sidebar
+- Foco gestionado por Bootstrap 5 en todos los modales
 
 ---
 
 ## Datos de prueba
 
-### Usuarios (`data/usuarios.json`)
+### Usuarios — `data/usuarios.json`
 
-| Email | Contraseña | Rol |
-|---|---|---|
-| admin@coopfinanzas.com | Admin2024* | Administrador |
-| operador@coopfinanzas.com | Oper2024* | Operador |
-| supervisor@coopfinanzas.com | Super2024* | Supervisor |
+| Nombre | Email | Contraseña | Rol |
+|---|---|---|---|
+| Sofía Martínez | admin@coopfinanzas.com.co | Admin@2026! | Administrador |
+| Carlos Herrera | operador@coopfinanzas.com.co | Oper@2026! | Operador |
+| Laura Gómez | supervisor@coopfinanzas.com.co | Super@2026! | Supervisor |
 
-### Casos (`data/casos.json`)
+### Casos — `data/casos.json`
 
-15 casos de muestra que cubren:
-- **Tipos:** Petición, Queja, Reclamo, Sugerencia, Felicitación
+15 casos de muestra (FPQRS-2024-001 al FPQRS-2024-015) que cubren:
+
+- **Tipos:** Felicitación, Petición, Queja, Reclamo, Sugerencia
 - **Estados:** Radicado, En Gestión, Pendiente de Información, Cerrado
 - **Prioridades:** Baja, Normal, Alta, Crítica
-- **Semáforos:** verde (en tiempo), amarillo (próximo a vencer), rojo (SLA vencido)
-- **Servicios:** Créditos, Seguros, Canales Digitales, Tarjetas, Atención al Cliente, Inversiones
+- **Semáforos SLA:** verde (en tiempo), amarillo (próximo a vencer), rojo (vencido)
+- **Servicios:** Crédito, Seguros, Canales Digitales, Tarjetas, Atención al Cliente, Inversiones, entre otros
 
-Cada caso incluye historial de 2-4 entradas y algunos tienen comentarios y adjuntos simulados.
+Cada caso incluye historial de 2–4 entradas y varios tienen comentarios y adjuntos simulados.
+
+### Catálogo — `data/catalogo-fpqrs.json`
+
+Catálogo jerárquico con 12 servicios, cada uno con sus categorías y subcategorías. Alimenta los dropdowns en cascada del formulario de radicación.
 
 ---
 
@@ -181,9 +196,9 @@ Cada caso incluye historial de 2-4 entradas y algunos tienen comentarios y adjun
 
 | Breakpoint | Comportamiento |
 |---|---|
-| 320px (móvil) | Sidebar oculto con toggle hamburguesa, tabla con scroll horizontal, métricas 2×2 |
-| 768px (tablet) | Sidebar disponible, layouts de 2 columnas en formularios |
-| 1280px+ (desktop) | Layout completo con sidebar fijo y tabla con todas las columnas visibles |
+| 320 px (móvil) | Sidebar oculto con toggle hamburguesa, tabla con scroll horizontal, métricas en grid 2×2 |
+| 768 px (tablet) | Sidebar disponible, layouts de 2 columnas en formularios |
+| 1280 px+ (desktop) | Layout completo con sidebar fijo y tabla con todas las columnas visibles |
 
 ---
 

@@ -6,11 +6,12 @@ if (window.location.pathname.includes("detalle-caso")) {
   let _currentFilter = "todos";
   let _allAdjuntos = [];
   let _currentAdjuntoFilter = "todos";
+  let _allHistorial = [];
+  let _currentHistorialFilter = "todos";
+  let _allRespuestas = [];
 
   $(document).ready(function () {
-    /* -------------------------------------------------------
-       Leer ID de la URL
-       ------------------------------------------------------- */
+    // Leer ID del caso desde la URL
     const params = new URLSearchParams(window.location.search);
     const caseId = params.get("id");
 
@@ -19,9 +20,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       return;
     }
 
-    /* -------------------------------------------------------
-       Cargar caso
-       ------------------------------------------------------- */
+    // Cargar Casos
     loadJSON("data/casos.json")
       .done(function (data) {
         const allCasos = mergeCasos(data);
@@ -38,9 +37,36 @@ if (window.location.pathname.includes("detalle-caso")) {
       })
       .fail(showError);
 
-    /* -------------------------------------------------------
-       Renderizar el caso completo
-       ------------------------------------------------------- */
+    const HISTORIAL_TIPOS = {
+      creacion:     { label: "Caso creado",         icon: "bi-plus-circle",      dotBg: "#dcfce7", dotColor: "#16a34a", badgeBg: "#dcfce7", badgeColor: "#166534" },
+      asignacion:   { label: "Asignación inicial",  icon: "bi-person-plus",      dotBg: "#dbeafe", dotColor: "#2563eb", badgeBg: "#dbeafe", badgeColor: "#1e40af" },
+      estado:       { label: "Cambio de estado",    icon: "bi-arrow-left-right", dotBg: "#e0f2fe", dotColor: "#0284c7", badgeBg: "#e0f2fe", badgeColor: "#0369a1" },
+      reasignacion: { label: "Reasignación",        icon: "bi-arrow-repeat",     dotBg: "#ede9fe", dotColor: "#7c3aed", badgeBg: "#ede9fe", badgeColor: "#6d28d9" },
+      prioridad:    { label: "Cambio de prioridad", icon: "bi-graph-up-arrow",   dotBg: "#fef9c3", dotColor: "#ca8a04", badgeBg: "#fef9c3", badgeColor: "#854d0e" },
+      observacion:  { label: "Observación",         icon: "bi-eye",              dotBg: "#f1f5f9", dotColor: "#64748b", badgeBg: "#f1f5f9", badgeColor: "#475569" },
+      comentario:   { label: "Comentario",          icon: "bi-chat-dots",        dotBg: "#f0fdf4", dotColor: "#22c55e", badgeBg: "#f0fdf4", badgeColor: "#166534" },
+      adjunto:      { label: "Adjunto cargado",     icon: "bi-paperclip",        dotBg: "#e0e7ff", dotColor: "#4f46e5", badgeBg: "#e0e7ff", badgeColor: "#4338ca" },
+      cierre:       { label: "Cierre de caso",      icon: "bi-check-circle",     dotBg: "#dcfce7", dotColor: "#16a34a", badgeBg: "#dcfce7", badgeColor: "#166534" },
+      anulacion:    { label: "Anulación",           icon: "bi-x-circle",         dotBg: "#fee2e2", dotColor: "#dc2626", badgeBg: "#fee2e2", badgeColor: "#b91c1c" },
+      respuesta:    { label: "Respuesta enviada",   icon: "bi-send",             dotBg: "#dbeafe", dotColor: "#2563eb", badgeBg: "#dbeafe", badgeColor: "#1e40af" },
+    };
+    const HISTORIAL_DEFAULT = { label: "Evento", icon: "bi-circle", dotBg: "#f1f5f9", dotColor: "#64748b", badgeBg: "#f1f5f9", badgeColor: "#475569" };
+
+    function detectTipoHistorial(accion) {
+      if (/creado/i.test(accion))                        return "creacion";
+      if (/asignad|asignaci[oó]n\s+inicial/i.test(accion)) return "asignacion";
+      if (/reasignad/i.test(accion))                     return "reasignacion";
+      if (/estado\s+cambiado|en\s+gesti[oó]n|radicado|cerrado|pendiente/i.test(accion)) return "estado";
+      if (/prioridad/i.test(accion))                     return "prioridad";
+      if (/observaci[oó]n/i.test(accion))                return "observacion";
+      if (/comentario/i.test(accion))                    return "comentario";
+      if (/adjunto\s+cargado/i.test(accion))             return "adjunto";
+      if (/caso\s+cerrado/i.test(accion))                return "cierre";
+      if (/caso\s+anulado/i.test(accion))                return "anulacion";
+      return "estado";
+    }
+
+    // Reenderizar el caso completo
     function renderCase(c) {
       document.title = `${c.id} — GestorFPQRS`;
 
@@ -105,6 +131,11 @@ if (window.location.pathname.includes("detalle-caso")) {
       renderComentarios(c.comentarios || []);
       renderAdjuntos(c.adjuntos || []);
       renderHistorial(c.historial || []);
+      renderRespuestas(c.respuestas || []);
+
+      // Auto-rellenar formulario de respuesta
+      $("#respuestaPara").text(c.email || "—");
+      $("#respuestaAsunto").val(`Re: Caso ${c.id}`);
     }
 
     function refreshPanelEstado(c) {
@@ -133,9 +164,7 @@ if (window.location.pathname.includes("detalle-caso")) {
         </div>`;
     }
 
-    /* -------------------------------------------------------
-       Renderizar comentarios
-       ------------------------------------------------------- */
+    // Reenderizar comentarios
     function renderComentarios(comentarios) {
       _allComentarios = comentarios;
       $("#badgeComentarios, #badgeComentariosHeader").text(comentarios.length);
@@ -202,9 +231,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#listaComentarios").html(html);
     }
 
-    /* -------------------------------------------------------
-       Renderizar adjuntos
-       ------------------------------------------------------- */
+    // Reenderizar adjuntos
     function renderAdjuntos(adjuntos) {
       _allAdjuntos = adjuntos;
       $("#badgeAdjuntos, #badgeAdjuntosHeader").text(adjuntos.length);
@@ -305,34 +332,134 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#listaAdjuntos").html(html);
     }
 
-    /* -------------------------------------------------------
-       Renderizar historial
-       ------------------------------------------------------- */
+    // Reenderizar historial
     function renderHistorial(historial) {
-      $("#badgeHistorial").text(historial.length);
-      if (!historial.length) {
-        $("#listaHistorial").html(
-          '<p class="text-muted text-center">Sin historial.</p>',
-        );
+      _allHistorial = historial;
+      const total = historial.length;
+      $("#badgeHistorial").text(total);
+      $("#badgeHistorialHeader").text(total);
+
+      // Contar por tipo para chips de resumen
+      const counts = {};
+      historial.forEach((h) => {
+        const t = h.tipo || detectTipoHistorial(h.accion);
+        counts[t] = (counts[t] || 0) + 1;
+      });
+
+      // Chips de resumen
+      const chipsHtml = Object.entries(counts).map(([t, n]) => {
+        const cfg = HISTORIAL_TIPOS[t] || HISTORIAL_DEFAULT;
+        return `<span class="historial-chip" style="background:${cfg.badgeBg};color:${cfg.badgeColor};">
+          <i class="bi ${cfg.icon}"></i>${cfg.label} <strong>${n}</strong>
+        </span>`;
+      }).join("");
+      $("#historialSummaryChips").html(chipsHtml);
+
+      // Filtros
+      const tiposPresentes = Object.keys(counts);
+      let filtersHtml = `<button class="historial-filter-btn${_currentHistorialFilter === "todos" ? " active" : ""}" data-tipo="todos">Todos <strong>${total}</strong></button>`;
+      tiposPresentes.forEach((t) => {
+        const cfg = HISTORIAL_TIPOS[t] || HISTORIAL_DEFAULT;
+        const active = _currentHistorialFilter === t ? " active" : "";
+        filtersHtml += `<button class="historial-filter-btn${active}" data-tipo="${t}"><i class="bi ${cfg.icon} me-1"></i>${cfg.label} <strong>${counts[t]}</strong></button>`;
+      });
+      $("#historialFilters").html(filtersHtml);
+
+      // Filtrar y renderizar
+      const filtered = _currentHistorialFilter === "todos"
+        ? historial
+        : historial.filter((h) => (h.tipo || detectTipoHistorial(h.accion)) === _currentHistorialFilter);
+
+      if (!filtered.length) {
+        $("#listaHistorial").html('<p class="text-muted text-center py-3">Sin eventos para este filtro.</p>');
         return;
       }
-      const html = [...historial]
-        .reverse()
-        .map(
-          (h) => `
-        <div class="timeline-item">
-          <div class="timeline-date">${formatDateTime(h.fecha)}</div>
-          <div class="timeline-action">${h.accion}</div>
-          <div class="timeline-user">Por: ${h.usuario}</div>
-        </div>`,
-        )
-        .join("");
+
+      const html = [...filtered].reverse().map((h, idx) => {
+        const tipo = h.tipo || detectTipoHistorial(h.accion);
+        const cfg = HISTORIAL_TIPOS[tipo] || HISTORIAL_DEFAULT;
+        const collapseId = `histEvt${idx}${Date.now().toString(36)}`;
+
+        let transitionHtml = "";
+        if (h.desde && h.hasta) {
+          transitionHtml = `<div class="historial-transition">
+            <span class="historial-transition-pill">${h.desde}</span>
+            <i class="bi bi-arrow-right" style="color:var(--color-text-muted);"></i>
+            <span class="historial-transition-pill">${h.hasta}</span>
+          </div>`;
+        }
+
+        const desc = h.descripcion || h.accion;
+        const rol = h.rol ? ` · ${h.rol}` : "";
+
+        return `<div class="historial-event">
+          <div class="historial-event-dot" style="background:${cfg.dotBg};color:${cfg.dotColor};">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div class="historial-event-card">
+            <div class="historial-event-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false">
+              <span class="historial-event-badge" style="background:${cfg.badgeBg};color:${cfg.badgeColor};">
+                <i class="bi ${cfg.icon}"></i>${cfg.label}
+              </span>
+              <span class="historial-event-date">${formatDateTime(h.fecha)}</span>
+              <i class="bi bi-chevron-up historial-event-toggle collapsed"></i>
+            </div>
+            <div class="collapse" id="${collapseId}">
+              <div class="historial-event-body">
+                ${transitionHtml}
+                <div class="historial-event-desc">${desc}</div>
+                <div class="historial-event-user"><i class="bi bi-person-circle me-1"></i>${h.usuario}${rol}</div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+
       $("#listaHistorial").html(html);
     }
 
-    /* -------------------------------------------------------
-       Comentarios — mostrar/ocultar formulario
-       ------------------------------------------------------- */
+    // Reenderizar respuestas
+    function renderRespuestas(respuestas) {
+      _allRespuestas = respuestas;
+      $("#badgeRespuestas").text(respuestas.length);
+
+      if (!respuestas.length) {
+        $("#listaRespuestas").html(`
+          <div class="empty-state">
+            <i class="bi bi-reply-all d-block mb-3" style="font-size:2.5rem; opacity:0.3;"></i>
+            <p class="text-muted mb-0" style="font-size:var(--font-size-sm);">No hay respuestas formales registradas para este caso.</p>
+          </div>`);
+        return;
+      }
+
+      const html = [...respuestas].reverse().map((r, idx) => {
+        const collapseId = `respEvt${idx}`;
+        const inicial = (r.usuario || "?").charAt(0).toUpperCase();
+        const rol = r.rol ? ` · ${r.rol}` : "";
+        return `<div class="respuesta-card">
+          <div class="respuesta-card-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false">
+            <div class="comment-avatar">${inicial}</div>
+            <div class="respuesta-card-meta">
+              <div class="respuesta-card-author">${r.usuario}${rol}</div>
+              <div class="respuesta-card-sub"><i class="bi bi-envelope me-1"></i>Para: ${r.para}</div>
+            </div>
+            <span class="respuesta-badge"><i class="bi bi-send"></i>Respuesta formal</span>
+            <span class="respuesta-card-date">${formatDateTime(r.fecha)}</span>
+            <i class="bi bi-chevron-up respuesta-card-toggle collapsed"></i>
+          </div>
+          <div class="collapse" id="${collapseId}">
+            <div class="respuesta-card-body">
+              <div class="respuesta-card-asunto"><i class="bi bi-chat-square-quote me-1"></i>${r.asunto}</div>
+              <div class="respuesta-card-cuerpo">${r.cuerpo}</div>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+
+      $("#listaRespuestas").html(html);
+    }
+
+    // Comentarios
     $("#btnAgregarComentario").on("click", function () {
       const $form = $("#formNuevoComentario");
       $form.toggleClass("d-none");
@@ -391,6 +518,7 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: nuevoComentario.fecha,
         accion: `Comentario ${tipo === "visible" ? "visible" : "interno"} registrado`,
         usuario: nuevoComentario.usuario,
+        tipo: "comentario",
       });
 
       saveCasoOverride(currentCaso);
@@ -407,7 +535,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       showToast("Comentario registrado exitosamente.", "success");
     });
 
-    /* Filtros */
+    // Filtros
     $("#commentFilters").on("click", ".comment-filter-btn", function () {
       $("#commentFilters .comment-filter-btn").removeClass("active");
       $(this).addClass("active");
@@ -415,7 +543,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       renderComentarios(_allComentarios);
     });
 
-    /* Collapse toggle — rotar chevron */
+    // Collapse toggle — rotar chevron
     $(document)
       .on("hide.bs.collapse", ".comment-card .collapse", function () {
         $(this)
@@ -430,9 +558,7 @@ if (window.location.pathname.includes("detalle-caso")) {
           .removeClass("collapsed");
       });
 
-    /* -------------------------------------------------------
-       Panel derecho — Cambiar estado
-       ------------------------------------------------------- */
+    // Panel derecho — Cambiar estado
     $("#btnAplicarEstado").on("click", function () {
       const nuevoEstado = $("#panelNuevoEstado").val();
       if (!nuevoEstado) {
@@ -442,11 +568,15 @@ if (window.location.pathname.includes("detalle-caso")) {
       $("#panelNuevoEstado").removeClass("is-invalid");
 
       const user = getSessionUser();
+      const estadoAnterior = currentCaso.estado;
       currentCaso.estado = nuevoEstado;
       currentCaso.historial.push({
         fecha: new Date().toISOString(),
         accion: `Estado cambiado a ${nuevoEstado}`,
         usuario: user ? user.nombre : "Usuario",
+        tipo: "estado",
+        desde: estadoAnterior,
+        hasta: nuevoEstado,
       });
       saveCasoOverride(currentCaso);
 
@@ -464,19 +594,21 @@ if (window.location.pathname.includes("detalle-caso")) {
       $(this).removeClass("is-invalid");
     });
 
-    /* -------------------------------------------------------
-       Panel derecho — Cambiar prioridad
-       ------------------------------------------------------- */
+    // Panel derecho — Cambiar prioridad
     $("#panelNuevaPrioridad").on("change", function () {
       const nuevaPrioridad = $(this).val();
       if (!nuevaPrioridad) return;
 
       const user = getSessionUser();
+      const prioridadAnterior = currentCaso.prioridad;
       currentCaso.prioridad = nuevaPrioridad;
       currentCaso.historial.push({
         fecha: new Date().toISOString(),
         accion: `Prioridad cambiada a ${nuevaPrioridad}`,
         usuario: user ? user.nombre : "Usuario",
+        tipo: "prioridad",
+        desde: prioridadAnterior,
+        hasta: nuevaPrioridad,
       });
       saveCasoOverride(currentCaso);
 
@@ -489,9 +621,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       );
     });
 
-    /* -------------------------------------------------------
-       Panel derecho — Reasignar
-       ------------------------------------------------------- */
+    // Panel derecho — Reasignar responsable
     $("#btnAplicarReasignar").on("click", function () {
       const nuevoResp = $("#panelNuevoResponsable").val();
       if (!nuevoResp) {
@@ -507,6 +637,9 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: new Date().toISOString(),
         accion: `Caso reasignado de ${anteriorResp} a ${nuevoResp}`,
         usuario: user ? user.nombre : "Usuario",
+        tipo: "reasignacion",
+        desde: anteriorResp,
+        hasta: nuevoResp,
       });
       saveCasoOverride(currentCaso);
 
@@ -528,9 +661,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $(this).removeClass("is-invalid");
     });
 
-    /* -------------------------------------------------------
-       Panel derecho — Registrar observación
-       ------------------------------------------------------- */
+    // Panel derecho — Agregar observación
     $("#btnAplicarObservacion").on("click", function () {
       const texto = $("#panelObservacion").val().trim();
       if (!texto) {
@@ -549,6 +680,8 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: entrada.fecha,
         accion: "Observación registrada",
         usuario: entrada.usuario,
+        tipo: "observacion",
+        descripcion: texto,
       });
       saveCasoOverride(currentCaso);
 
@@ -564,9 +697,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       $(this).removeClass("is-invalid");
     });
 
-    /* -------------------------------------------------------
-       Panel derecho — Cerrar caso
-       ------------------------------------------------------- */
+    // Panel derecho — Cerrar caso
     $("#btnCerrarCaso").on("click", function () {
       const obs = prompt(
         `¿Confirmas el cierre del caso ${currentCaso.id}?\n\nEscribe la observación de cierre (requerida):`,
@@ -582,6 +713,8 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: new Date().toISOString(),
         accion: `Caso cerrado: ${obs.trim()}`,
         usuario: user ? user.nombre : "Usuario",
+        tipo: "cierre",
+        descripcion: obs.trim(),
       });
       saveCasoOverride(currentCaso);
 
@@ -591,9 +724,7 @@ if (window.location.pathname.includes("detalle-caso")) {
       showToast("Caso cerrado exitosamente.", "success");
     });
 
-    /* -------------------------------------------------------
-       Panel derecho — Anular caso
-       ------------------------------------------------------- */
+    // Panel derecho — Anular caso
     $("#btnAnularCaso").on("click", function () {
       const obs = prompt(
         `¿Confirmas la anulación del caso ${currentCaso.id}?\n\nEscribe el motivo de anulación (requerido):`,
@@ -609,6 +740,8 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: new Date().toISOString(),
         accion: `Caso anulado: ${obs.trim()}`,
         usuario: user ? user.nombre : "Usuario",
+        tipo: "anulacion",
+        descripcion: obs.trim(),
       });
       saveCasoOverride(currentCaso);
 
@@ -618,9 +751,54 @@ if (window.location.pathname.includes("detalle-caso")) {
       showToast("Caso anulado.", "warning");
     });
 
-    /* -------------------------------------------------------
-       Adjuntos — mostrar/ocultar formulario
-       ------------------------------------------------------- */
+    // Respuestas formales
+    $("#btnEnviarRespuesta").on("click", function () {
+      const cuerpo = $("#respuestaCuerpo").val().trim();
+      if (!cuerpo) {
+        $("#respuestaCuerpo").addClass("is-invalid");
+        return;
+      }
+      $("#respuestaCuerpo").removeClass("is-invalid");
+
+      const user = getSessionUser();
+      const userName = user ? user.nombre : "Usuario";
+      const nuevaRespuesta = {
+        fecha: new Date().toISOString(),
+        para: currentCaso.email || "—",
+        asunto: $("#respuestaAsunto").val().trim() || `Re: Caso ${currentCaso.id}`,
+        cuerpo: cuerpo,
+        usuario: userName,
+        rol: user ? (user.rol || "Operador") : "Operador",
+      };
+
+      currentCaso.respuestas = currentCaso.respuestas || [];
+      currentCaso.respuestas.push(nuevaRespuesta);
+      currentCaso.historial.push({
+        fecha: nuevaRespuesta.fecha,
+        accion: `Respuesta formal enviada a ${nuevaRespuesta.para}`,
+        usuario: userName,
+        tipo: "respuesta",
+        descripcion: nuevaRespuesta.asunto,
+      });
+
+      saveCasoOverride(currentCaso);
+      renderRespuestas(currentCaso.respuestas);
+      renderHistorial(currentCaso.historial);
+
+      $("#respuestaCuerpo").val("");
+      showToast("Respuesta enviada al asociado.", "success");
+    });
+
+    /* Collapse toggle — rotar chevron respuestas */
+    $(document)
+      .on("hide.bs.collapse", ".respuesta-card .collapse", function () {
+        $(this).closest(".respuesta-card").find(".respuesta-card-toggle").addClass("collapsed");
+      })
+      .on("show.bs.collapse", ".respuesta-card .collapse", function () {
+        $(this).closest(".respuesta-card").find(".respuesta-card-toggle").removeClass("collapsed");
+      });
+
+    // Adjuntar archivos
     $("#btnCargarAdjunto").on("click", function () {
       $("#formNuevoAdjunto").toggleClass("d-none");
     });
@@ -718,6 +896,8 @@ if (window.location.pathname.includes("detalle-caso")) {
         fecha: new Date().toISOString(),
         accion: `Adjunto cargado: ${nombre}`,
         usuario: userName,
+        tipo: "adjunto",
+        descripcion: `Archivo "${nombre}" cargado con visibilidad "${visibilidad}".`,
       });
 
       saveCasoOverride(currentCaso);
@@ -756,14 +936,27 @@ if (window.location.pathname.includes("detalle-caso")) {
           .removeClass("collapsed");
       });
 
-    /* -------------------------------------------------------
-       Error state
-       ------------------------------------------------------- */
+    /* Filtros historial */
+    $(document).on("click", "#historialFilters .historial-filter-btn", function () {
+      _currentHistorialFilter = $(this).data("tipo");
+      renderHistorial(_allHistorial);
+    });
+
+    /* Collapse toggle historial — rotar chevron */
+    $(document)
+      .on("hide.bs.collapse", ".historial-event .collapse", function () {
+        $(this).closest(".historial-event").find(".historial-event-toggle").addClass("collapsed");
+      })
+      .on("show.bs.collapse", ".historial-event .collapse", function () {
+        $(this).closest(".historial-event").find(".historial-event-toggle").removeClass("collapsed");
+      });
+
+    // Manejo de estados de carga y error
     function showError() {
       $("#loadingState").addClass("d-none");
       $("#errorState").removeClass("d-none");
     }
-  }); // end document.ready
+  });
 
   document.addEventListener("DOMContentLoaded", () => {
     const modalReasignar = new bootstrap.Modal(

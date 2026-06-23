@@ -5,8 +5,8 @@
       "nombre": "Crédito",
       "categorias": [
         { "nombre": "Credito de consumo", "subcategorias": ["Descuento no reconocido en cuota", "Certificado de crédito vigente", "Liquidación anticipada de crédito", "Error en tasa de interés aplicada", "Cobro de seguro no autorizado", "Solicitud de refinanciación", "Tabla de amortización", "Inconformidad con cuota calculada"] },
-        { "nombre": "Crédito de Vivienda", "subcategorias": ["Demora en desembolso", "Error en monto desembolsado", "Error en tasa de interés", "Condiciones no acordadas"] },
-        { "nombre": "Crédito Empresarial", "subcategorias": ["Cuota cobrada incorrectamente", "Pago no aplicado", "Pago duplicado", "Refinanciación de deuda"] },
+        { "nombre": "Crédito de Vivienda", "subcategorias": ["Estudio de crédito vivienda", "Demora en desembolso de vivienda", "Error en amortización hipotecaria", "Paz y salvo hipotecario", "Levantamiento de hipoteca"] },
+        { "nombre": "Crédito Empresarial", "subcategorias": ["Solicitud de crédito para capital de trabajo", "Demora en aprobación empresarial", "Error en condiciones del crédito empresarial"] },
         { "nombre": "Crédito Educativo", "subcategorias": ["Error en extracto de cuenta", "Solicitud de paz y salvo", "Certificado de saldo de deuda"] },
         { "nombre": "Refinanciación de Crédito", "subcategorias": ["Error en desembolso", "Error en tasa de interés", "Condiciones no acordadas", "Cobro indebido de cuota manejo"] }
       ]

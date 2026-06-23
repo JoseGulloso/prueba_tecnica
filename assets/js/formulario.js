@@ -1,9 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-  /* =====================================================
-     Catálogo cargado desde JSON externo
-     ===================================================== */
+  // Catalogo de servicios, categorías y subcategorías
   let catalogo = null;
 
   loadJSON("../data/catalogo-fpqrs.json").done(function (data) {
@@ -14,9 +12,7 @@ $(document).ready(function () {
     );
   });
 
-  /* =====================================================
-     Dropdowns en cascada
-     ===================================================== */
+  //  Dropdowns en cascada
   function populateSelect($select, options, defaultText) {
     if (defaultText !== undefined) {
       $select.empty().append(`<option value="">— ${defaultText} —</option>`);
@@ -91,9 +87,7 @@ $(document).ready(function () {
     }
   }
 
-  /* =====================================================
-     File Upload — drag-and-drop simulado
-     ===================================================== */
+  // Carga de archivos - arrastrar y soltar simulado
   const MAX_FILES = 5;
   const MAX_SIZE = 5 * 1024 * 1024; // 5MB
   const ALLOWED_TYPES = [
@@ -209,9 +203,7 @@ $(document).ready(function () {
     renderFileList();
   });
 
-  /* =====================================================
-     Validación del formulario
-     ===================================================== */
+  // Validación del formulario
   function validateField($field) {
     const val = $field.val()?.trim();
     if ($field.prop("required") && !val) {
@@ -246,9 +238,7 @@ $(document).ready(function () {
       validateField($(this));
     });
 
-  /* =====================================================
-     Submit
-     ===================================================== */
+  // Enviar data— Formulario FPQRS
   $("#fpqrsForm").on("submit", function (e) {
     e.preventDefault();
 
@@ -361,4 +351,4 @@ $(document).ready(function () {
     $("#campoUrgencia, #campoSugerenciaDetalle").addClass("d-none");
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-}); // end document.ready
+});
