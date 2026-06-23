@@ -594,10 +594,25 @@ if (window.location.pathname.includes("detalle-caso")) {
       $(this).removeClass("is-invalid");
     });
 
-    // Panel derecho — Cambiar prioridad
-    $("#panelNuevaPrioridad").on("change", function () {
-      const nuevaPrioridad = $(this).val();
-      if (!nuevaPrioridad) return;
+    // Modal Cambiar Prioridad — pre-seleccionar prioridad actual al abrir
+    $("#cambiarPrioridadModal").on("show.bs.modal", function () {
+      $(`input[name="nuevaPrioridad"][value="${currentCaso.prioridad}"]`).prop("checked", true);
+      $("#motivoCambioPrioridad").val("");
+    });
+
+    // Modal Cambiar Prioridad — aplicar cambio al confirmar
+    $("#confirmarCambioPrioridad").on("click", function () {
+      const nuevaPrioridad = $("input[name='nuevaPrioridad']:checked").val();
+      const motivo = $("#motivoCambioPrioridad").val().trim();
+
+      if (!nuevaPrioridad) {
+        showToast("Selecciona una prioridad.", "warning");
+        return;
+      }
+      if (!motivo) {
+        showToast("El motivo del cambio es obligatorio.", "warning");
+        return;
+      }
 
       const user = getSessionUser();
       const prioridadAnterior = currentCaso.prioridad;
@@ -610,15 +625,13 @@ if (window.location.pathname.includes("detalle-caso")) {
         desde: prioridadAnterior,
         hasta: nuevaPrioridad,
       });
-      saveCasoOverride(currentCaso);
 
-      $(this).val("");
+      saveCasoOverride(currentCaso);
       refreshPanelEstado(currentCaso);
       renderHistorial(currentCaso.historial);
-      showToast(
-        `Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`,
-        "success",
-      );
+
+      bootstrap.Modal.getInstance(document.getElementById("cambiarPrioridadModal")).hide();
+      showToast(`Prioridad actualizada a <strong>${nuevaPrioridad}</strong>.`, "success");
     });
 
     // Panel derecho — Reasignar responsable

@@ -434,17 +434,13 @@
                   <h3 class="action-panel-title d-flex align-items-center">
                     <i class="bi bi-flag" aria-hidden="true"></i>Cambiar prioridad
                   </h3>
-                  <p class="action-panel-hint">Solo se muestran las prioridades permitidas para esta categoría. Si SLA
-                    se recalculará automáticamente.</p>
+                  <p class="action-panel-hint">Solo prioridades permitidas para esta categoría. El SLA se recalculará.</p>
                   <div class="mb-2" id="panelPrioridadActualBadge"></div>
-                  <select id="panelNuevaPrioridad" class="form-select form-select-sm input-rounded"
-                    aria-label="Seleccionar nueva prioridad">
-                    <option value="">— Selecciona —</option>
-                    <option>Baja</option>
-                    <option>Normal</option>
-                    <option>Alta</option>
-                    <option>Crítica</option>
-                  </select>
+                  <button class="btn btn-outline-secondary btn-sm w-100 d-flex align-items-center justify-content-between"
+                    data-bs-toggle="modal" data-bs-target="#cambiarPrioridadModal">
+                    <span>Modificar prioridad</span>
+                    <i class="bi bi-flag"></i>
+                  </button>
                 </div>
 
                 <!-- Reasignar caso -->
@@ -500,6 +496,62 @@
           </div><!-- /row -->
 
         </div><!-- /caseContent -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cambiar Prioridad -->
+  <div class="modal fade" id="cambiarPrioridadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title">Cambiar Prioridad</h5>
+            <small class="text-muted">Solo prioridades permitidas para esta categoría. El SLA se recalculará.</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <label class="form-label fw-semibold mb-3">
+            Nueva prioridad <span class="text-danger">*</span>
+          </label>
+          <div id="prioridadOptions" class="mb-4">
+            <label class="prioridad-option-card">
+              <input type="radio" name="nuevaPrioridad" value="Baja" class="form-check-input">
+              <span class="badge-prioridad baja">Baja</span>
+              <span class="prioridad-option-sla">72h SLA</span>
+            </label>
+            <label class="prioridad-option-card">
+              <input type="radio" name="nuevaPrioridad" value="Normal" class="form-check-input">
+              <span class="badge-prioridad normal">Normal</span>
+              <span class="text-muted small">(predeterminada)</span>
+              <span class="prioridad-option-sla">24h SLA</span>
+            </label>
+            <label class="prioridad-option-card">
+              <input type="radio" name="nuevaPrioridad" value="Alta" class="form-check-input">
+              <span class="badge-prioridad alta">Alta</span>
+              <span class="prioridad-option-sla">8h SLA</span>
+            </label>
+            <label class="prioridad-option-card">
+              <input type="radio" name="nuevaPrioridad" value="Crítica" class="form-check-input">
+              <span class="badge-prioridad critica">Crítica</span>
+              <span class="prioridad-option-sla">4h SLA</span>
+            </label>
+          </div>
+          <label class="form-label fw-semibold" for="motivoCambioPrioridad">
+            Motivo del cambio <span class="text-danger">*</span>
+          </label>
+          <textarea id="motivoCambioPrioridad" class="form-control input-rounded" rows="3"
+            placeholder="Justifique el cambio de prioridad..." aria-required="true"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-dark" id="confirmarCambioPrioridad">Cambiar prioridad</button>
+        </div>
 
       </div>
     </div>
