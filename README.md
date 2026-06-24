@@ -1,6 +1,6 @@
 # GestorFPQRS — Prueba Técnica Maquetador Web · Estrategia Segura S.A.S
 
-Sistema web de gestión de FPQRS (Felicitaciones, Peticiones, Quejas, Reclamos y Sugerencias) para una cooperativa financiera ficticia llamada **CoopFinanzas**. Desarrollado como prueba técnica con HTML, CSS y JavaScript puros — sin frameworks de JS, sin build step, sin dependencias que instalar.
+Sistema web de gestión de FPQRS (Felicitaciones, Peticiones, Quejas, Reclamos y Sugerencias) para una cooperativa financiera ficticia llamada **CoopFinanzas**. Desarrollado como prueba técnica con HTML, CSS y JavaScript.
 
 ---
 
